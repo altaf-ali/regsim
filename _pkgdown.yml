@@ -1,0 +1,6 @@
+url: https://altaf-ali.github.io/regsim
+
+template:
+  params:
+    bootswatch: cerulean
+

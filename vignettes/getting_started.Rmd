@@ -1,0 +1,47 @@
+---
+title: "Getting Started"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+```{r}
+library(regsim)
+
+df <- read.csv("http://philippbroniecki.github.io/ML2017.io/data/communities.csv")
+```
+
+
+```{r}
+m1 <- lm(PctUnemployed ~ pctUrban + householdsize + racePctWhite, data = df)
+
+summary(m1)
+```
+
+```{r}
+set.seed(123)
+
+x <- list(
+  pctUrban = seq(from = 0, to = 1, by = .1), 
+  householdsize = mean(df$householdsize)
+)
+
+sim <- regsim(m1, x)
+```
+
+```{r}
+plot(sim, ~pctUrban, ylim = c(0.3, 0.5), bty = "n", xlab = "Pct Urban", ylab = "Unemployment Rate")
+```
+
+```{r}
+summary(sim)
+```
+
+```{r}
+sim
+```
+

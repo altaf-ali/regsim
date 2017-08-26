@@ -16,7 +16,7 @@
 plot.regsim <- function(object, xvar, ...) {
   regsim_summary <- summary(object)
 
-  x <- labels(terms(xvar))[1]
+  x <- labels(stats::terms(xvar))[1]
   if (!x %in% names(regsim_summary)) {
     stop(paste(x, "not in the model"))
   }

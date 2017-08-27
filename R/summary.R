@@ -13,7 +13,7 @@
 #' summary(sim)
 #' @export
 summary.regsim <- function(object, ...) {
-  x <- as.data.frame(t(object$x))
+  x <- as.data.frame(object$x)
   colnames(x) <- names(stats::coefficients(object$model))
 
   ev_summary <- cbind(

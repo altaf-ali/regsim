@@ -18,7 +18,25 @@ regsim <- function (object, x, num = 1000, ...) {
   UseMethod("regsim", object)
 }
 
-regsim_common <- function(object, x, num, link = NULL) {
+formula_rhs <- function(object) {
+  f <- stats::formula(object)[[3]]
+  eval(substitute(~ f))
+}
+
+central_tendency <- function(x) {
+  if (is.character(x))
+    x <- as.factor(x)
+
+  if (is.factor(x))
+    return(factor(names(which.max(table(x))), levels = levels(x)))
+
+  if (is.integer(x) && unique(x) == 2)
+    return(stats::median(x))
+
+  return(mean(x))
+}
+
+regsim_common <- function(object, x, num = 1000, link = NULL) {
   coefs <- stats::coefficients(object)
 
   # check explanatory variables given to us
@@ -29,41 +47,30 @@ regsim_common <- function(object, x, num, link = NULL) {
   }
 
   # convert list of explanatory variables to a data.frame
-  xdf <- as.data.frame(x)
+  xprofiles <- expand.grid(x)
 
-  # setup profile matrix
-  xprofiles <- matrix(nrow = length(coefs), ncol = nrow(xdf))
+  formula_rhs_terms <- attr(stats::terms(stats::formula(object)), "term.labels")
+  missing_vars <- setdiff(formula_rhs_terms, names(x))
+  available_vars <- intersect(missing_vars, colnames(object$model))
 
-  # fill in what's given and set other variables to mean
-  for (i in seq_along(coefs)) {
-    xval <- NA # hopefully this will catch bugs or user errors
-    term <- names(coefs)[i]
+  xprofiles[,available_vars] <- lapply(object$model[,available_vars, drop = FALSE], central_tendency)
 
-    if (term %in% names(xdf)) {
-      xval <- xdf[, term]
-    } else {
-      if (term == "(Intercept)") {
-        xval <- 1
-      } else {
-        xval <- mean(object$model[, term])
-      }
-    }
-    xprofiles[i,] <- xval
-  }
+  # construct model matrix from model formula and data provided
+  design_matrix <- stats::model.matrix(formula_rhs(object), xprofiles)
 
   # abort if anything is still NA
   if (any(is.na(xprofiles))) {
     stop("can't continue with NAs")
   }
 
-  ev <- MASS::mvrnorm(num, coefs, stats::vcov(object)) %*% xprofiles
+  ev <- MASS::mvrnorm(num, coefs, stats::vcov(object)) %*% t(design_matrix)
 
   if (!is.null(link))
     ev <- link(ev)
 
   return_value <- list(
     model = object,
-    x = xprofiles,
+    x = design_matrix,
     ev = ev
   )
 
@@ -71,3 +78,4 @@ regsim_common <- function(object, x, num, link = NULL) {
 
   return(return_value)
 }
+

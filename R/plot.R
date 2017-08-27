@@ -2,9 +2,9 @@
 #'
 #' plots regression simulation results
 #'
-#' @param object an object of class "regsim", usually obtained by calling the
+#' @param x an object of class "regsim", usually obtained by calling the
 #' \code{regsim} function.
-#' @param xvar variable to plot on the x-axis
+#' @param var variable to plot on the x-axis
 #' @param ... additional arguments passed to class-specific functions
 #' @examples
 #' library(regsim)
@@ -13,22 +13,44 @@
 #' sim <- regsim(model, list(wt = seq(1, 5, 0.1), cyl = mean(mtcars$cyl)))
 #' plot(sim, ~wt)
 #' @export
-plot.regsim <- function(object, xvar, ...) {
-  regsim_summary <- summary(object)
+plot.regsim <- function(x, var, ...) {
+  # defaults
+  lty <- 1
+  lty.ci <- 2
+  regsim_summary <- summary(x)
 
-  x <- labels(stats::terms(xvar))[1]
-  if (!x %in% names(regsim_summary)) {
-    stop(paste(x, "not in the model"))
+  xvar <- labels(stats::terms(var))[1]
+  if (!xvar %in% names(regsim_summary)) {
+    stop(paste(xvar, "not in the model"))
   }
 
   ci <- data.frame(
-    x = regsim_summary[, x],
+    x = regsim_summary[, xvar],
     y = regsim_summary[, "50%"],
     y_min = regsim_summary[, "2.5%"],
     y_max = regsim_summary[, "97.5%"]
   )
+  colnames(ci)[1] <- xvar
+  colnames(ci)[2] <- "Expected.Value"
 
-  graphics::plot(y ~ x, data = ci, type = "l", ...)
-  graphics::lines(ci$x, ci$y_min, lty = 2)
-  graphics::lines(ci$x, ci$y_max, lty = 2)
+  do_plot <- function(f, data, lty, lty.ci, ...) {
+    graphics::plot(f,
+                   data,
+                   type = "l",
+                   lty = lty,
+                   ...)
+
+    graphics::lines(data[,1], data$y_min, lty = lty.ci)
+    graphics::lines(data[,1], data$y_max, lty = lty.ci)
+  }
+
+  do.call(
+    do_plot,
+    list(
+      stats::as.formula(paste(rev(colnames(ci)[1:2]), collapse = " ~ ")),
+      data = ci,
+      lty = lty,
+      lty.ci = lty.ci
+    )
+  )
 }

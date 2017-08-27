@@ -14,9 +14,6 @@
 #' plot(sim, ~wt)
 #' @export
 plot.regsim <- function(x, var, ...) {
-  # defaults
-  lty <- 1
-  lty.ci <- 2
   regsim_summary <- summary(x)
 
   xvar <- labels(stats::terms(var))[1]
@@ -24,33 +21,53 @@ plot.regsim <- function(x, var, ...) {
     stop(paste(xvar, "not in the model"))
   }
 
-  ci <- data.frame(
+  plot_data <- data.frame(
     x = regsim_summary[, xvar],
     y = regsim_summary[, "50%"],
     y_min = regsim_summary[, "2.5%"],
     y_max = regsim_summary[, "97.5%"]
   )
-  colnames(ci)[1] <- xvar
-  colnames(ci)[2] <- "Expected.Value"
 
-  do_plot <- function(f, data, lty, lty.ci, ...) {
-    graphics::plot(f,
-                   data,
-                   type = "l",
-                   lty = lty,
-                   ...)
-
-    graphics::lines(data[,1], data$y_min, lty = lty.ci)
-    graphics::lines(data[,1], data$y_max, lty = lty.ci)
+  plot_mean <- function(x, y, ...) {
+    graphics::plot(x, y, ...)
   }
 
-  do.call(
-    do_plot,
-    list(
-      stats::as.formula(paste(rev(colnames(ci)[1:2]), collapse = " ~ ")),
-      data = ci,
-      lty = lty,
-      lty.ci = lty.ci
-    )
+  default_args <- list(
+    type = "l",
+    xlab = xvar,
+    ylab = "Expected Value"
   )
+
+  # capture ... args and split between plot and ci args
+  args <- list(...)
+  ci_suffix <- ".ci$"
+  ci_arg_indices <- grepl(ci_suffix, names(args))
+  plot_args <- args[!ci_arg_indices]
+  ci_args <- args[ci_arg_indices]
+  names(ci_args) <- gsub(ci_suffix, "", names(ci_args))
+
+  default_args <- default_args[setdiff(names(default_args), names(plot_args))]
+
+  do.call(plot_mean, c(list(x = plot_data$x,
+                            y = plot_data$y),
+                       default_args,
+                       plot_args))
+
+  # plot confidence interval
+  plot_ci <- function(x, y_min, y_max, ...) {
+    graphics::lines(x, y_min, ...)
+    graphics::lines(x, y_max, ...)
+  }
+
+  default_args <- list(
+    lty = 2
+  )
+
+  default_args <- default_args[setdiff(names(default_args), names(ci_args))]
+
+  do.call(plot_ci, c(list(x = plot_data$x,
+                          y_min = plot_data$y_min,
+                          y_max = plot_data$y_max),
+                     default_args,
+                     ci_args))
 }

@@ -30,7 +30,7 @@ central_tendency <- function(x) {
   if (is.factor(x))
     return(factor(names(which.max(table(x))), levels = levels(x)))
 
-  if (is.integer(x) && unique(x) == 2)
+  if (any(is.integer(x), is.numeric(x)) && length(unique(x)) == 2)
     return(stats::median(x))
 
   return(mean(x))

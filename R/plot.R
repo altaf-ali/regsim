@@ -16,58 +16,77 @@
 plot.regsim <- function(x, var, ...) {
   regsim_summary <- summary(x)
 
-  xvar <- labels(stats::terms(var))[1]
-  if (!xvar %in% names(regsim_summary)) {
-    stop(paste(xvar, "not in the model"))
+  var_labels <- labels(stats::terms(var))
+
+  # if (!all(var_labels %in% names(regsim_summary))) {
+  #   stop(paste(xvar, "not in the model"))
+  # }
+
+  xvar <- var_labels[1]
+
+  if (length(var_labels) > 1) {
+    zvar <- var_labels[2]
+  } else {
+    zvar <- "group"
+    regsim_summary[, zvar] <- 1
   }
 
   plot_data <- data.frame(
     x = regsim_summary[, xvar],
     y = regsim_summary[, "50%"],
     y_min = regsim_summary[, "2.5%"],
-    y_max = regsim_summary[, "97.5%"]
+    y_max = regsim_summary[, "97.5%"],
+    z = regsim_summary[, zvar]
   )
 
-  plot_mean <- function(x, y, ...) {
-    graphics::plot(x, y, ...)
-  }
-
   default_args <- list(
-    type = "l",
+    xlim = range(plot_data$x),
+    ylim = range(plot_data$y),
     xlab = xvar,
     ylab = "Expected Value"
   )
 
-  # capture ... args and split between plot and ci args
+  # capture ... args
   args <- list(...)
-  ci_suffix <- ".ci$"
-  ci_arg_indices <- grepl(ci_suffix, names(args))
-  plot_args <- args[!ci_arg_indices]
-  ci_args <- args[ci_arg_indices]
-  names(ci_args) <- gsub(ci_suffix, "", names(ci_args))
+  default_args <- default_args[setdiff(names(default_args), names(args))]
 
-  default_args <- default_args[setdiff(names(default_args), names(plot_args))]
-
-  do.call(plot_mean, c(list(x = plot_data$x,
-                            y = plot_data$y),
-                       default_args,
-                       plot_args))
-
-  # plot confidence interval
-  plot_ci <- function(x, y_min, y_max, ...) {
-    graphics::lines(x, y_min, ...)
-    graphics::lines(x, y_max, ...)
+  plot_create <- function(...) {
+    graphics::plot(0, ...)
   }
 
-  default_args <- list(
-    lty = 2
+  do.call(plot_create, c(default_args, args))
+
+  groups <- sort(unique(regsim_summary[, zvar]))
+
+  # not a good idea to do this, but ok for now
+  color_map <- color_add_alpha(
+    c("#E41A1C", "#377EB8", "#4DAF4A", "#984EA3", "#FF7F00", "#FFFF33", "#A65628", "#F781BF"),
+    alpha = 0.4
   )
 
-  default_args <- default_args[setdiff(names(default_args), names(ci_args))]
+  for (i in 1:length(groups)) {
+    group_data <- plot_data[plot_data$z == groups[i], ]
 
-  do.call(plot_ci, c(list(x = plot_data$x,
-                          y_min = plot_data$y_min,
-                          y_max = plot_data$y_max),
-                     default_args,
-                     ci_args))
+    graphics::polygon(x = c(group_data$x, rev(group_data$x)),
+                      y = c(group_data$y_min, rev(group_data$y_max)),
+                      border = NA,
+                      col = color_map[i])
+
+    graphics::lines(group_data$x, group_data$y)
+  }
+
+  if (length(groups) > 1) {
+    legend("bottomright",
+           y = NULL,
+           groups,
+           inset = .02,
+           title = zvar,
+           fill = color_map)
+  }
+}
+
+color_add_alpha <- function(col, alpha = 1) {
+  apply(sapply(col, grDevices::col2rgb)/255, 2, function(x) {
+    grDevices::rgb(x[1], x[2], x[3], alpha = alpha)
+  })
 }

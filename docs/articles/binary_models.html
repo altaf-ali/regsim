@@ -81,159 +81,181 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bes &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/foreign/topics/read.dta">read.dta</a></span>(<span class="st">"http://uclspp.github.io/PUBLG100/data/bes.dta"</span>)
 
 bes<span class="op">$</span>Gender &lt;-<span class="st"> </span><span class="kw">factor</span>(bes<span class="op">$</span>Gender, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">"Female"</span>, <span class="st">"Male"</span>))</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model &lt;-<span class="st"> </span><span class="kw">glm</span>(Turnout <span class="op">~</span><span class="st"> </span>Income <span class="op">+</span><span class="st"> </span>polinfoindex <span class="op">+</span><span class="st"> </span>Gender <span class="op">+</span><span class="st"> </span>edu15 <span class="op">+</span><span class="st"> </span>edu17 <span class="op">+</span><span class="st"> </span>edu18 <span class="op">+</span><span class="st"> </span>edu19plus <span class="op">+</span><span class="st"> </span>in_school <span class="op">+</span><span class="st"> </span>in_uni, 
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model &lt;-<span class="st"> </span><span class="kw">glm</span>(Turnout <span class="op">~</span><span class="st"> </span>Income <span class="op">+</span><span class="st"> </span>polinfoindex <span class="op">+</span><span class="st"> </span>Influence <span class="op">+</span><span class="st"> </span>Gender <span class="op">+</span><span class="st"> </span>Age <span class="op">+</span><span class="st"> </span>
+<span class="st">               </span>edu15 <span class="op">+</span><span class="st"> </span>edu17 <span class="op">+</span><span class="st"> </span>edu18 <span class="op">+</span><span class="st"> </span>edu19plus <span class="op">+</span><span class="st"> </span>in_school <span class="op">+</span><span class="st"> </span>in_uni,
              <span class="dt">family =</span> binomial,
              <span class="dt">data =</span> bes)
 
 <span class="kw">summary</span>(model)</code></pre></div>
 <pre><code>## 
 ## Call:
-## glm(formula = Turnout ~ Income + polinfoindex + Gender + edu15 + 
-##     edu17 + edu18 + edu19plus + in_school + in_uni, family = binomial, 
-##     data = bes)
+## glm(formula = Turnout ~ Income + polinfoindex + Influence + Gender + 
+##     Age + edu15 + edu17 + edu18 + edu19plus + in_school + in_uni, 
+##     family = binomial, data = bes)
 ## 
 ## Deviance Residuals: 
 ##     Min       1Q   Median       3Q      Max  
-## -2.2687  -0.9372   0.5915   0.7879   1.7798  
+## -3.0011  -0.6358   0.4995   0.7267   2.0876  
 ## 
 ## Coefficients:
 ##              Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)  -1.13925    0.14935  -7.628 2.38e-14 ***
-## Income        0.03437    0.01862   1.846  0.06495 .  
-## polinfoindex  0.37947    0.02230  17.019  &lt; 2e-16 ***
-## GenderMale   -0.35236    0.07741  -4.552 5.32e-06 ***
-## edu15         0.37946    0.09619   3.945 7.99e-05 ***
-## edu17         0.46013    0.14902   3.088  0.00202 ** 
-## edu18         0.10982    0.14319   0.767  0.44312    
-## edu19plus     0.24044    0.12266   1.960  0.04998 *  
-## in_school     0.14754    0.39279   0.376  0.70719    
-## in_uni       -0.71977    0.25498  -2.823  0.00476 ** 
+## (Intercept)  -3.90484    0.22364 -17.461  &lt; 2e-16 ***
+## Income        0.15397    0.02138   7.201 5.96e-13 ***
+## polinfoindex  0.25066    0.02424  10.339  &lt; 2e-16 ***
+## Influence     0.21015    0.01930  10.889  &lt; 2e-16 ***
+## GenderMale   -0.35511    0.08203  -4.329 1.50e-05 ***
+## Age           0.04873    0.00313  15.567  &lt; 2e-16 ***
+## edu15        -0.33626    0.11213  -2.999  0.00271 ** 
+## edu17         0.35910    0.15907   2.257  0.02398 *  
+## edu18         0.14084    0.15221   0.925  0.35479    
+## edu19plus     0.01483    0.12997   0.114  0.90914    
+## in_school     1.12978    0.40270   2.805  0.00502 ** 
+## in_uni       -0.05110    0.27029  -0.189  0.85006    
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## (Dispersion parameter for binomial family taken to be 1)
 ## 
 ##     Null deviance: 4763.0  on 4160  degrees of freedom
-## Residual deviance: 4381.2  on 4151  degrees of freedom
+## Residual deviance: 3979.9  on 4149  degrees of freedom
 ##   (630 observations deleted due to missingness)
-## AIC: 4401.2
+## AIC: 4003.9
 ## 
-## Number of Fisher Scoring iterations: 4</code></pre>
+## Number of Fisher Scoring iterations: 5</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">list</span>(
-  <span class="dt">Gender =</span> <span class="kw">c</span>(<span class="st">"Male"</span>, <span class="st">"Female"</span>),
-  <span class="dt">edu18 =</span> <span class="dv">1</span>, 
-  <span class="dt">edu15 =</span> <span class="dv">0</span>, 
-  <span class="dt">edu17 =</span> <span class="dv">0</span>, 
-  <span class="dt">edu19plus =</span> <span class="dv">0</span>, 
-  <span class="dt">in_school =</span> <span class="dv">0</span>, 
-  <span class="dt">in_uni =</span> <span class="dv">0</span>
+  <span class="dt">Gender =</span> <span class="kw">c</span>(<span class="st">"Male"</span>, <span class="st">"Female"</span>)
 )
 
 sim &lt;-<span class="st"> </span><span class="kw"><a href="../reference/regsim.html">regsim</a></span>(model, x)
 
 <span class="kw">summary</span>(sim, <span class="dt">detail =</span> <span class="ot">TRUE</span>, <span class="dt">rotate =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<pre><code>##                     1
-## Income       5.321557
-## polinfoindex 5.409277
-## GenderMale   1.000000
-## edu15        0.000000
-## edu17        0.000000
-## edu18        1.000000
-## edu19plus    0.000000
-## in_school    0.000000
-## in_uni       0.000000
+<pre><code>##                         1
+## Income        5.321557318
+## polinfoindex  5.409276616
+## Influence     3.608507570
+## GenderMale    1.000000000
+## Age          50.918529200
+## edu15         0.333093006
+## edu17         0.090122567
+## edu18         0.086998318
+## edu19plus     0.205719779
+## in_school     0.008061408
+## in_uni        0.017303533
 ## 
 ##        mean         sd      2.5%       50%     97.5%
-## 1 0.7013192 0.02741004 0.6509045 0.7001738 0.7528427
+## 1 0.7500049 0.01142841 0.7275294 0.7504211 0.7714293
 ## ------------------------------------------------
 ## 
-##                     2
-## Income       5.321557
-## polinfoindex 5.409277
-## GenderMale   0.000000
-## edu15        0.000000
-## edu17        0.000000
-## edu18        1.000000
-## edu19plus    0.000000
-## in_school    0.000000
-## in_uni       0.000000
+##                         2
+## Income        5.321557318
+## polinfoindex  5.409276616
+## Influence     3.608507570
+## GenderMale    0.000000000
+## Age          50.918529200
+## edu15         0.333093006
+## edu17         0.090122567
+## edu18         0.086998318
+## edu19plus     0.205719779
+## in_school     0.008061408
+## in_uni        0.017303533
 ## 
-##        mean         sd      2.5%       50%     97.5%
-## 2 0.7689929 0.02241123 0.7217829 0.7698233 0.8117806
+##        mean          sd      2.5%       50%     97.5%
+## 2 0.8106002 0.008854289 0.7927839 0.8105192 0.8264596
 ## ------------------------------------------------
 ## 
 ## First Differences:
 ## 
-##         mean           sd       2.5%       50%      97.5%
-## 2 0.06767364 -0.004998813 0.07087841 0.0696495 0.05893787</code></pre>
+##         mean        sd       2.5%        50%      97.5%
+## fd 0.0605953 0.0143507 0.03270834 0.06025331 0.08989023</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">list</span>(
   <span class="dt">Gender =</span> <span class="kw">c</span>(<span class="st">"Male"</span>, <span class="st">"Female"</span>),
-  <span class="dt">Income =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">13</span>,
-  <span class="dt">edu18 =</span> <span class="dv">1</span>, 
-  <span class="dt">edu15 =</span> <span class="dv">0</span>, 
-  <span class="dt">edu17 =</span> <span class="dv">0</span>, 
-  <span class="dt">edu19plus =</span> <span class="dv">0</span>, 
-  <span class="dt">in_school =</span> <span class="dv">0</span>, 
-  <span class="dt">in_uni =</span> <span class="dv">0</span>
+  <span class="dt">Income =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">13</span>
 )
 
 sim &lt;-<span class="st"> </span><span class="kw"><a href="../reference/regsim.html">regsim</a></span>(model, x)
 
 <span class="kw">summary</span>(sim)</code></pre></div>
-<pre><code>##    Income polinfoindex GenderMale edu15 edu17 edu18 edu19plus in_school
-## 1       1     5.409277          1     0     0     1         0         0
-## 2       1     5.409277          0     0     0     1         0         0
-## 3       2     5.409277          1     0     0     1         0         0
-## 4       2     5.409277          0     0     0     1         0         0
-## 5       3     5.409277          1     0     0     1         0         0
-## 6       3     5.409277          0     0     0     1         0         0
-## 7       4     5.409277          1     0     0     1         0         0
-## 8       4     5.409277          0     0     0     1         0         0
-## 9       5     5.409277          1     0     0     1         0         0
-## 10      5     5.409277          0     0     0     1         0         0
-## 11      6     5.409277          1     0     0     1         0         0
-## 12      6     5.409277          0     0     0     1         0         0
-## 13      7     5.409277          1     0     0     1         0         0
-## 14      7     5.409277          0     0     0     1         0         0
-## 15      8     5.409277          1     0     0     1         0         0
-## 16      8     5.409277          0     0     0     1         0         0
-## 17      9     5.409277          1     0     0     1         0         0
-## 18      9     5.409277          0     0     0     1         0         0
-## 19     10     5.409277          1     0     0     1         0         0
-## 20     10     5.409277          0     0     0     1         0         0
-## 21     11     5.409277          1     0     0     1         0         0
-## 22     11     5.409277          0     0     0     1         0         0
-## 23     12     5.409277          1     0     0     1         0         0
-## 24     12     5.409277          0     0     0     1         0         0
-## 25     13     5.409277          1     0     0     1         0         0
-## 26     13     5.409277          0     0     0     1         0         0
-##    in_uni      mean         sd      2.5%       50%     97.5%
-## 1       0 0.6679970 0.03576331 0.5991169 0.6686079 0.7366267
-## 2       0 0.7408631 0.02847774 0.6852196 0.7413337 0.7949050
-## 3       0 0.6757063 0.03313394 0.6109661 0.6759082 0.7385877
-## 4       0 0.7475475 0.02630255 0.6962452 0.7478632 0.7962883
-## 5       0 0.6833044 0.03091480 0.6249567 0.6828289 0.7420519
-## 6       0 0.7540902 0.02455673 0.7061189 0.7542834 0.8013113
-## 7       0 0.6907854 0.02916522 0.6346262 0.6904190 0.7481364
-## 8       0 0.7604890 0.02328333 0.7128757 0.7611042 0.8056300
-## 9       0 0.6981440 0.02793432 0.6446560 0.6982244 0.7542812
-## 10      0 0.7667420 0.02250739 0.7190266 0.7677554 0.8093638
-## 11      0 0.7053756 0.02724977 0.6510822 0.7054413 0.7593925
-## 12      0 0.7728480 0.02222608 0.7273760 0.7735549 0.8151299
-## 13      0 0.7124758 0.02710831 0.6605026 0.7124042 0.7660765
-## 14      0 0.7788062 0.02240508 0.7313810 0.7791051 0.8213253
-## 15      0 0.7194410 0.02747327 0.6665793 0.7198683 0.7739552
-## 16      0 0.7846161 0.02298407 0.7353972 0.7854135 0.8289274
-## 17      0 0.7262681 0.02828102 0.6704121 0.7263542 0.7819835
-## 18      0 0.7902780 0.02388854 0.7419392 0.7905888 0.8353578
-## 19      0 0.7329544 0.02945315 0.6757680 0.7333589 0.7887673
-## 20      0 0.7957921 0.02504235 0.7441327 0.7965567 0.8431038
-## 21      0 0.7394979 0.03090895 0.6779938 0.7398329 0.7972121
-## 22      0 0.8011593 0.02637644 0.7449915 0.8021385 0.8513963
-## 23      0 0.7458969 0.03257423 0.6797786 0.7463123 0.8074611
-## 24      0 0.8063807 0.02783290 0.7460637 0.8077507 0.8581176
-## 25      0 0.7521503 0.03438563 0.6806091 0.7526566 0.8182747
-## 26      0 0.8114578 0.02936557 0.7481427 0.8127627 0.8660649</code></pre>
+<pre><code>##    Income polinfoindex Influence GenderMale      Age    edu15      edu17
+## 1       1     5.409277  3.608508          1 50.91853 0.333093 0.09012257
+## 2       1     5.409277  3.608508          0 50.91853 0.333093 0.09012257
+## 3       2     5.409277  3.608508          1 50.91853 0.333093 0.09012257
+## 4       2     5.409277  3.608508          0 50.91853 0.333093 0.09012257
+## 5       3     5.409277  3.608508          1 50.91853 0.333093 0.09012257
+## 6       3     5.409277  3.608508          0 50.91853 0.333093 0.09012257
+## 7       4     5.409277  3.608508          1 50.91853 0.333093 0.09012257
+## 8       4     5.409277  3.608508          0 50.91853 0.333093 0.09012257
+## 9       5     5.409277  3.608508          1 50.91853 0.333093 0.09012257
+## 10      5     5.409277  3.608508          0 50.91853 0.333093 0.09012257
+## 11      6     5.409277  3.608508          1 50.91853 0.333093 0.09012257
+## 12      6     5.409277  3.608508          0 50.91853 0.333093 0.09012257
+## 13      7     5.409277  3.608508          1 50.91853 0.333093 0.09012257
+## 14      7     5.409277  3.608508          0 50.91853 0.333093 0.09012257
+## 15      8     5.409277  3.608508          1 50.91853 0.333093 0.09012257
+## 16      8     5.409277  3.608508          0 50.91853 0.333093 0.09012257
+## 17      9     5.409277  3.608508          1 50.91853 0.333093 0.09012257
+## 18      9     5.409277  3.608508          0 50.91853 0.333093 0.09012257
+## 19     10     5.409277  3.608508          1 50.91853 0.333093 0.09012257
+## 20     10     5.409277  3.608508          0 50.91853 0.333093 0.09012257
+## 21     11     5.409277  3.608508          1 50.91853 0.333093 0.09012257
+## 22     11     5.409277  3.608508          0 50.91853 0.333093 0.09012257
+## 23     12     5.409277  3.608508          1 50.91853 0.333093 0.09012257
+## 24     12     5.409277  3.608508          0 50.91853 0.333093 0.09012257
+## 25     13     5.409277  3.608508          1 50.91853 0.333093 0.09012257
+## 26     13     5.409277  3.608508          0 50.91853 0.333093 0.09012257
+##         edu18 edu19plus   in_school     in_uni      mean          sd
+## 1  0.08699832 0.2057198 0.008061408 0.01730353 0.6050016 0.025621897
+## 2  0.08699832 0.2057198 0.008061408 0.01730353 0.6861832 0.021228130
+## 3  0.08699832 0.2057198 0.008061408 0.01730353 0.6413971 0.020746975
+## 4  0.08699832 0.2057198 0.008061408 0.01730353 0.7186343 0.016591942
+## 5  0.08699832 0.2057198 0.008061408 0.01730353 0.6762539 0.016499912
+## 6  0.08699832 0.2057198 0.008061408 0.01730353 0.7489529 0.012825743
+## 7  0.08699832 0.2057198 0.008061408 0.01730353 0.7092557 0.013254141
+## 8  0.08699832 0.2057198 0.008061408 0.01730353 0.7769974 0.010224554
+## 9  0.08699832 0.2057198 0.008061408 0.01730353 0.7401643 0.011365665
+## 10 0.08699832 0.2057198 0.008061408 0.01730353 0.8027016 0.008988946
+## 11 0.08699832 0.2057198 0.008061408 0.01730353 0.7688225 0.010902913
+## 12 0.08699832 0.2057198 0.008061408 0.01730353 0.8260664 0.008939867
+## 13 0.08699832 0.2057198 0.008061408 0.01730353 0.7951496 0.011449315
+## 14 0.08699832 0.2057198 0.008061408 0.01730353 0.8471474 0.009542577
+## 15 0.08699832 0.2057198 0.008061408 0.01730353 0.8191335 0.012415869
+## 16 0.08699832 0.2057198 0.008061408 0.01730353 0.8660430 0.010311586
+## 17 0.08699832 0.2057198 0.008061408 0.01730353 0.8408193 0.013390477
+## 18 0.08699832 0.2057198 0.008061408 0.01730353 0.8828821 0.010982946
+## 19 0.08699832 0.2057198 0.008061408 0.01730353 0.8602969 0.014170254
+## 20 0.08699832 0.2057198 0.008061408 0.01730353 0.8978131 0.011452041
+## 21 0.08699832 0.2057198 0.008061408 0.01730353 0.8776887 0.014681200
+## 22 0.08699832 0.2057198 0.008061408 0.01730353 0.9109947 0.011695898
+## 23 0.08699832 0.2057198 0.008061408 0.01730353 0.8931388 0.014915706
+## 24 0.08699832 0.2057198 0.008061408 0.01730353 0.9225883 0.011728902
+## 25 0.08699832 0.2057198 0.008061408 0.01730353 0.9068031 0.014897865
+## 26 0.08699832 0.2057198 0.008061408 0.01730353 0.9327527 0.011580817
+##         2.5%       50%     97.5%
+## 1  0.5544915 0.6049414 0.6556952
+## 2  0.6454822 0.6861045 0.7272012
+## 3  0.5997418 0.6415422 0.6829124
+## 4  0.6869814 0.7186706 0.7506278
+## 5  0.6445324 0.6766781 0.7092501
+## 6  0.7235428 0.7491368 0.7734577
+## 7  0.6838839 0.7096574 0.7358636
+## 8  0.7555025 0.7774153 0.7964279
+## 9  0.7170911 0.7403784 0.7619877
+## 10 0.7845795 0.8029279 0.8199981
+## 11 0.7464501 0.7691871 0.7893478
+## 12 0.8083160 0.8260414 0.8429019
+## 13 0.7711833 0.7951167 0.8170222
+## 14 0.8273815 0.8474114 0.8655907
+## 15 0.7943788 0.8193327 0.8427577
+## 16 0.8438565 0.8662469 0.8859833
+## 17 0.8140072 0.8409884 0.8662164
+## 18 0.8594147 0.8831874 0.9044329
+## 19 0.8317595 0.8607598 0.8877046
+## 20 0.8734593 0.8983004 0.9196227
+## 21 0.8476735 0.8785347 0.9055342
+## 22 0.8859564 0.9117329 0.9326433
+## 23 0.8619454 0.8940804 0.9212184
+## 24 0.8966051 0.9235534 0.9442161
+## 25 0.8748673 0.9078643 0.9345870
+## 26 0.9072273 0.9338138 0.9533448</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(sim, <span class="op">~</span>Income <span class="op">+</span><span class="st"> </span>GenderMale, 
      <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="fl">0.5</span>, <span class="dv">1</span>), 
      <span class="dt">bty =</span> <span class="st">"n"</span>,

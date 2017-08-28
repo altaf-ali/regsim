@@ -20,7 +20,8 @@ bes$Gender <- factor(bes$Gender, levels = c(0, 1), labels = c("Female", "Male"))
 ```
 
 ```{r}
-model <- glm(Turnout ~ Income + polinfoindex + Gender + edu15 + edu17 + edu18 + edu19plus + in_school + in_uni, 
+model <- glm(Turnout ~ Income + polinfoindex + Influence + Gender + Age + 
+               edu15 + edu17 + edu18 + edu19plus + in_school + in_uni,
              family = binomial,
              data = bes)
 
@@ -29,13 +30,7 @@ summary(model)
 
 ```{r}
 x <- list(
-  Gender = c("Male", "Female"),
-  edu18 = 1, 
-  edu15 = 0, 
-  edu17 = 0, 
-  edu19plus = 0, 
-  in_school = 0, 
-  in_uni = 0
+  Gender = c("Male", "Female")
 )
 
 sim <- regsim(model, x)
@@ -46,13 +41,7 @@ summary(sim, detail = TRUE, rotate = TRUE)
 ```{r}
 x <- list(
   Gender = c("Male", "Female"),
-  Income = 1:13,
-  edu18 = 1, 
-  edu15 = 0, 
-  edu17 = 0, 
-  edu19plus = 0, 
-  in_school = 0, 
-  in_uni = 0
+  Income = 1:13
 )
 
 sim <- regsim(model, x)

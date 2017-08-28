@@ -19,10 +19,15 @@
 #' sim <- regsim(model, x)
 #' summary(sim)
 #' @export
-regsim.glm <- function(object, x, num = 1000, link = logit, ...) {
+regsim.glm <- function(object, x, num = 1000, link = get(object$family$link), ...) {
   regsim_common(object, x, num, link)
 }
 
 logit <- function(x) {
   return(1/(1+exp(-x)))
 }
+
+probit <- function(x){
+  return(stats::pnorm(x))
+}
+

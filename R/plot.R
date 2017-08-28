@@ -51,7 +51,7 @@ plot.regsim <- function(x, var, ...) {
   default_args <- default_args[setdiff(names(default_args), names(args))]
 
   plot_create <- function(...) {
-    graphics::plot(0, ...)
+    graphics::plot(0,pch = "",...)
   }
 
   do.call(plot_create, c(default_args, args))

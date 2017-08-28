@@ -4,26 +4,50 @@
 #'
 #' @param object an object of class "regsim", usually obtained by calling the
 #' \code{regsim} function.
+#' @param intercept include intercept in output
+#' @param detail print detail format
+#' @param rotate rotate covariates vertically
 #' @param ... additional arguments passed to class-specific functions
 #' @examples
 #' library(regsim)
 #'
 #' model <- lm(mpg ~ wt + cyl, data = mtcars)
-#' sim <- regsim(model, list(wt = seq(1, 5, 0.1), cyl = mean(mtcars$cyl)))
-#' summary(sim)
+#' sim <- regsim(model, list(wt = seq(1, 5), cyl = mean(mtcars$cyl)))
+#' summary(sim, detail = TRUE, rotate = TRUE)
 #' @export
-summary.regsim <- function(object, ...) {
+summary.regsim <- function(object, intercept = FALSE, detail = FALSE, rotate = FALSE, ...) {
   x <- as.data.frame(object$x)
-  colnames(x) <- names(stats::coefficients(object$model))
+  if (!intercept)
+    x <- x[, names(x) != "(Intercept)"]
 
-  ev_summary <- cbind(
-    x,
-    t(apply(object$ev, 2, function(x) {
-      c(mean = mean(x),
-        sd = stats::sd(x),
-        stats::quantile(x, probs = c(.025, .5, .975))
-      )
-    })))
+  qi <- as.data.frame(t(apply(object$ev, 2, function(x) {
+    c(mean = mean(x),
+      sd = stats::sd(x),
+      stats::quantile(x, probs = c(.025, .5, .975))
+    )
+  })))
 
-  return(ev_summary)
+  if (detail) {
+    for (i in 1:nrow(x)) {
+      profile <- x[i,]
+      if (rotate)
+        print(t(profile))
+      else
+        print(profile)
+
+      cat("\n")
+      print(qi[i,])
+      cat(paste0(paste(rep("-", 48), collapse = ""), "\n\n"))
+    }
+
+    if (nrow(x) == 2) {
+      cat("First Differences:\n\n")
+      print(qi[2,] - qi[1,])
+      cat("\n")
+    }
+
+  } else {
+    # return as data.frame, don't use print in this mode
+    return(cbind(x, qi))
+  }
 }

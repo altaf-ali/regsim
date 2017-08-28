@@ -37,19 +37,25 @@ central_tendency <- function(x) {
 }
 
 regsim_common <- function(object, x, num = 1000, link = NULL) {
-  coefs <- stats::coefficients(object)
+  formula_rhs_terms <- attr(stats::terms(stats::formula(object)), "term.labels")
 
   # check explanatory variables given to us
-  unknown_vars <- setdiff(names(x), names(coefs))
+  unknown_vars <- setdiff(names(x), formula_rhs_terms)
 
   if (length(unknown_vars)) {
     stop(paste(paste(unknown_vars, collapse = ", "), "not in the model"))
   }
 
+  # convert any character variables to factor - just hope they are already
+  # factors in the original data
+  char_vars <- names(x[sapply(x, is.character)])
+  x[char_vars] = lapply(char_vars, function(i) {
+    factor(x[[i]], levels = levels(object$model[,i]))
+  })
+
   # convert list of explanatory variables to a data.frame
   xprofiles <- expand.grid(x)
 
-  formula_rhs_terms <- attr(stats::terms(stats::formula(object)), "term.labels")
   missing_vars <- setdiff(formula_rhs_terms, names(x))
   available_vars <- intersect(missing_vars, colnames(object$model))
 
@@ -63,7 +69,9 @@ regsim_common <- function(object, x, num = 1000, link = NULL) {
     stop("can't continue with NAs")
   }
 
-  ev <- MASS::mvrnorm(num, coefs, stats::vcov(object)) %*% t(design_matrix)
+  sims <- MASS::mvrnorm(num, stats::coefficients(object), stats::vcov(object))
+
+  ev <- sims %*% t(design_matrix)
 
   if (!is.null(link))
     ev <- link(ev)

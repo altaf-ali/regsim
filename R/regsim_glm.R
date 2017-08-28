@@ -19,7 +19,8 @@
 #' sim <- regsim(model, x)
 #' summary(sim)
 #' @export
-regsim.glm <- function(object, x, num = 1000, link = get(object$family$link), ...) {
+regsim.glm <- function(object, x, num = 1000, link = logit, ...) {
+  if (object$family$link != "logit") link <- get(object$family$link)
   regsim_common(object, x, num, link)
 }
 

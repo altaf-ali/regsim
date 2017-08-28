@@ -35,6 +35,9 @@
   </a>
 </li>
 <li>
+  <a href="../articles/regsim.html">Get Started</a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -46,9 +49,6 @@
   <ul class="dropdown-menu" role="menu">
 <li>
       <a href="../articles/binary_models.html">Binary Models</a>
-    </li>
-    <li>
-      <a href="../articles/getting_started.html">Getting Started</a>
     </li>
     <li>
       <a href="../articles/interaction_terms.html">Interaction Terms</a>
@@ -112,7 +112,7 @@ x &lt;-<span class="st"> </span><span class="kw">list</span>(
 
 sim &lt;-<span class="st"> </span><span class="kw"><a href="../reference/regsim.html">regsim</a></span>(m1, x)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(sim, <span class="op">~</span>pctUrban, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="fl">0.3</span>, <span class="fl">0.5</span>), <span class="dt">bty =</span> <span class="st">"n"</span>, <span class="dt">xlab =</span> <span class="st">"Pct Urban"</span>, <span class="dt">ylab =</span> <span class="st">"Unemployment Rate"</span>)</code></pre></div>
-<p><img src="getting_started_files/figure-html/unnamed-chunk-4-1.png" width="672"></p>
+<p><img src="regsim_files/figure-html/unnamed-chunk-4-1.png" width="672"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(sim)</code></pre></div>
 <pre><code>##    pctUrban householdsize racePctWhite      mean          sd      2.5%
 ## 1       0.0     0.4633952    0.7537161 0.4449968 0.006799959 0.4316010

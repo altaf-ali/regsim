@@ -2,8 +2,10 @@ Package: regsim
 Type: Package
 Title: Regression Model Simulations
 Version: 0.1.0
-Authors@R: person("Altaf", "Ali", email = "altaf@fastmail.com", role = c("aut", "cre"))
-Maintainer: Altaf Ali <altaf@fastmail.com>
+Authors@R: c(
+    person("Altaf", "Ali", email = "altaf@fastmail.com", role = c("aut", "cre")),
+    person("Philipp", "Broniecki", email = "philippbroniecki@gmail.com", role = c("aut"))
+  )
 Description: An R Package for dealing with statistical uncertainty in regression models.
 License: GPL (>= 2)
 Encoding: UTF-8

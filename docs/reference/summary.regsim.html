@@ -58,6 +58,9 @@
   </a>
 </li>
 <li>
+  <a href="../articles/regsim.html">Get Started</a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -68,7 +71,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/getting_started.html">Getting Started</a>
+      <a href="../articles/binary_models.html">Binary Models</a>
+    </li>
+    <li>
+      <a href="../articles/interaction_terms.html">Interaction Terms</a>
     </li>
   </ul>
 </li>
@@ -95,7 +101,8 @@
     
 
     <pre class="usage"><span class='co'># S3 method for regsim</span>
-<span class='fu'>summary</span>(<span class='no'>object</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>summary</span>(<span class='no'>object</span>, <span class='kw'>intercept</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>detail</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>rotate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -104,6 +111,18 @@
       <th>object</th>
       <td><p>an object of class "regsim", usually obtained by calling the
 <code>regsim</code> function.</p></td>
+    </tr>
+    <tr>
+      <th>intercept</th>
+      <td><p>include intercept in output</p></td>
+    </tr>
+    <tr>
+      <th>detail</th>
+      <td><p>print detail format</p></td>
+    </tr>
+    <tr>
+      <th>rotate</th>
+      <td><p>rotate covariates vertically</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -116,49 +135,47 @@
     <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>regsim</span>)
 
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'>lm</span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
-<span class='no'>sim</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='regsim.html'>regsim</a></span>(<span class='no'>model</span>, <span class='fu'>list</span>(<span class='kw'>wt</span> <span class='kw'>=</span> <span class='fu'>seq</span>(<span class='fl'>1</span>, <span class='fl'>5</span>, <span class='fl'>0.1</span>), <span class='kw'>cyl</span> <span class='kw'>=</span> <span class='fu'>mean</span>(<span class='no'>mtcars</span>$<span class='no'>cyl</span>)))
-<span class='fu'>summary</span>(<span class='no'>sim</span>)</div><div class='output co'>#&gt;    (Intercept)  wt    cyl     mean        sd     2.5%      50%    97.5%
-#&gt; 1            1 1.0 6.1875 27.13410 1.7779557 23.79492 27.11576 30.72753
-#&gt; 2            1 1.1 6.1875 26.81708 1.7030012 23.60277 26.81209 30.25734
-#&gt; 3            1 1.2 6.1875 26.50005 1.6282945 23.41738 26.49350 29.80154
-#&gt; 4            1 1.3 6.1875 26.18302 1.5538713 23.23198 26.17136 29.34573
-#&gt; 5            1 1.4 6.1875 25.86600 1.4797745 23.04787 25.84820 28.88992
-#&gt; 6            1 1.5 6.1875 25.54897 1.4060557 22.86398 25.53324 28.43435
-#&gt; 7            1 1.6 6.1875 25.23195 1.3327775 22.67433 25.20988 27.97692
-#&gt; 8            1 1.7 6.1875 24.91492 1.2600169 22.46713 24.88005 27.50065
-#&gt; 9            1 1.8 6.1875 24.59789 1.1878689 22.26165 24.55540 27.03159
-#&gt; 10           1 1.9 6.1875 24.28087 1.1164523 22.12430 24.24722 26.57517
-#&gt; 11           1 2.0 6.1875 23.96384 1.0459170 21.94068 23.92788 26.09904
-#&gt; 12           1 2.1 6.1875 23.64682 0.9764540 21.78269 23.60683 25.63144
-#&gt; 13           1 2.2 6.1875 23.32979 0.9083093 21.63791 23.28519 25.15551
-#&gt; 14           1 2.3 6.1875 23.01276 0.8418031 21.45806 22.97017 24.69762
-#&gt; 15           1 2.4 6.1875 22.69574 0.7773561 21.22513 22.66750 24.24775
-#&gt; 16           1 2.5 6.1875 22.37871 0.7155249 21.01740 22.34995 23.79268
-#&gt; 17           1 2.6 6.1875 22.06169 0.6570484 20.79974 22.04286 23.35028
-#&gt; 18           1 2.7 6.1875 21.74466 0.6029035 20.59412 21.72555 22.94658
-#&gt; 19           1 2.8 6.1875 21.42763 0.5543610 20.40648 21.41605 22.53760
-#&gt; 20           1 2.9 6.1875 21.11061 0.5130136 20.18121 21.10461 22.11058
-#&gt; 21           1 3.0 6.1875 20.79358 0.4807214 19.91368 20.78462 21.72791
-#&gt; 22           1 3.1 6.1875 20.47656 0.4593980 19.62569 20.47254 21.37402
-#&gt; 23           1 3.2 6.1875 20.15953 0.4506034 19.29470 20.15676 21.04558
-#&gt; 24           1 3.3 6.1875 19.84250 0.4550644 18.99329 19.83463 20.75657
-#&gt; 25           1 3.4 6.1875 19.52548 0.4724057 18.64908 19.52176 20.47670
-#&gt; 26           1 3.5 6.1875 19.20845 0.5012923 18.25875 19.19991 20.22638
-#&gt; 27           1 3.6 6.1875 18.89143 0.5398743 17.84833 18.86476 19.98667
-#&gt; 28           1 3.7 6.1875 18.57440 0.5862404 17.44409 18.55136 19.75999
-#&gt; 29           1 3.8 6.1875 18.25738 0.6386977 17.04043 18.24011 19.55012
-#&gt; 30           1 3.9 6.1875 17.94035 0.6958700 16.61671 17.92206 19.32151
-#&gt; 31           1 4.0 6.1875 17.62332 0.7566893 16.18013 17.60500 19.13037
-#&gt; 32           1 4.1 6.1875 17.30630 0.8203448 15.73377 17.28948 18.92918
-#&gt; 33           1 4.2 6.1875 16.98927 0.8862257 15.25861 16.96756 18.76883
-#&gt; 34           1 4.3 6.1875 16.67225 0.9538709 14.81036 16.64991 18.58216
-#&gt; 35           1 4.4 6.1875 16.35522 1.0229304 14.34420 16.33402 18.40207
-#&gt; 36           1 4.5 6.1875 16.03819 1.0931363 13.91436 16.01693 18.23235
-#&gt; 37           1 4.6 6.1875 15.72117 1.1642812 13.48883 15.71657 18.04661
-#&gt; 38           1 4.7 6.1875 15.40414 1.2362030 13.00837 15.39861 17.84063
-#&gt; 39           1 4.8 6.1875 15.08712 1.3087736 12.55796 15.10865 17.67573
-#&gt; 40           1 4.9 6.1875 14.77009 1.3818908 12.09586 14.78585 17.51083
-#&gt; 41           1 5.0 6.1875 14.45306 1.4554721 11.64084 14.46362 17.34719</div></pre>
+<span class='no'>sim</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='regsim.html'>regsim</a></span>(<span class='no'>model</span>, <span class='fu'>list</span>(<span class='kw'>wt</span> <span class='kw'>=</span> <span class='fu'>seq</span>(<span class='fl'>1</span>, <span class='fl'>5</span>), <span class='kw'>cyl</span> <span class='kw'>=</span> <span class='fu'>mean</span>(<span class='no'>mtcars</span>$<span class='no'>cyl</span>)))
+<span class='fu'>summary</span>(<span class='no'>sim</span>, <span class='kw'>detail</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>rotate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;          1
+#&gt; wt  1.0000
+#&gt; cyl 6.1875
+#&gt; 
+#&gt;      mean       sd     2.5%      50%    97.5%
+#&gt; 1 27.1341 1.777956 23.79492 27.11576 30.72753
+#&gt; ------------------------------------------------
+#&gt; 
+#&gt;          2
+#&gt; wt  2.0000
+#&gt; cyl 6.1875
+#&gt; 
+#&gt;       mean       sd     2.5%      50%    97.5%
+#&gt; 2 23.96384 1.045917 21.94068 23.92788 26.09904
+#&gt; ------------------------------------------------
+#&gt; 
+#&gt;          3
+#&gt; wt  3.0000
+#&gt; cyl 6.1875
+#&gt; 
+#&gt;       mean        sd     2.5%      50%    97.5%
+#&gt; 3 20.79358 0.4807214 19.91368 20.78462 21.72791
+#&gt; ------------------------------------------------
+#&gt; 
+#&gt;          4
+#&gt; wt  4.0000
+#&gt; cyl 6.1875
+#&gt; 
+#&gt;       mean        sd     2.5%    50%    97.5%
+#&gt; 4 17.62332 0.7566893 16.18013 17.605 19.13037
+#&gt; ------------------------------------------------
+#&gt; 
+#&gt;          5
+#&gt; wt  5.0000
+#&gt; cyl 6.1875
+#&gt; 
+#&gt;       mean       sd     2.5%      50%    97.5%
+#&gt; 5 14.45306 1.455472 11.64084 14.46362 17.34719
+#&gt; ------------------------------------------------
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -173,7 +190,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Altaf Ali.</p>
+  <p>Developed by Altaf Ali, Philipp Broniecki.</p>
 </div>
 
 <div class="pkgdown">

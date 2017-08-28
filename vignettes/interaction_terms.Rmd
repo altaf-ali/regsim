@@ -1,0 +1,36 @@
+---
+title: "Interaction Terms"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r}
+library(foreign)
+library(regsim)
+
+world_data <- read.dta("http://uclspp.github.io/PUBLG100/data/QoG2012.dta")
+```
+
+```{r}
+model <- lm(undp_hdi ~ wbgi_cce + former_col + wbgi_cce:former_col, data = world_data)
+summary(model)
+```
+
+```{r}
+x <- list(
+  former_col = 0:1,
+  wbgi_cce = -2:3
+)
+
+sim <- regsim(model, x)
+summary(sim, detail = TRUE, rotate = TRUE)
+```
+
+```{r}
+plot(sim, ~wbgi_cce + former_col, xlab = "Corruption Control", ylim = c(0.35, 1.15), bty = "n")
+```
+

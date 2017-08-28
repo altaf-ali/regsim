@@ -2,5 +2,7 @@ urls:
   reference: https://altaf-ali.github.io/regsim/reference
   article: https://altaf-ali.github.io/regsim/articles
 articles:
-  getting_started: getting_started.html
+  binary_models: binary_models.html
+  interaction_terms: interaction_terms.html
+  regsim: regsim.html
 

@@ -4,11 +4,18 @@
 \alias{summary.regsim}
 \title{Summarizing Regression Simulations}
 \usage{
-\method{summary}{regsim}(object, ...)
+\method{summary}{regsim}(object, intercept = FALSE, detail = FALSE,
+  rotate = FALSE, ...)
 }
 \arguments{
 \item{object}{an object of class "regsim", usually obtained by calling the
 \code{regsim} function.}
+
+\item{intercept}{include intercept in output}
+
+\item{detail}{print detail format}
+
+\item{rotate}{rotate covariates vertically}
 
 \item{...}{additional arguments passed to class-specific functions}
 }
@@ -19,6 +26,6 @@ summary method for class "regsim"
 library(regsim)
 
 model <- lm(mpg ~ wt + cyl, data = mtcars)
-sim <- regsim(model, list(wt = seq(1, 5, 0.1), cyl = mean(mtcars$cyl)))
-summary(sim)
+sim <- regsim(model, list(wt = seq(1, 5), cyl = mean(mtcars$cyl)))
+summary(sim, detail = TRUE, rotate = TRUE)
 }

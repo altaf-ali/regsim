@@ -1,0 +1,70 @@
+---
+title: "Binary Models"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r}
+library(foreign)
+library(regsim)
+```
+
+```{r}
+bes <- read.dta("http://uclspp.github.io/PUBLG100/data/bes.dta")
+
+bes$Gender <- factor(bes$Gender, levels = c(0, 1), labels = c("Female", "Male"))
+```
+
+```{r}
+model <- glm(Turnout ~ Income + polinfoindex + Gender + edu15 + edu17 + edu18 + edu19plus + in_school + in_uni, 
+             family = binomial,
+             data = bes)
+
+summary(model)
+```
+
+```{r}
+x <- list(
+  Gender = c("Male", "Female"),
+  edu18 = 1, 
+  edu15 = 0, 
+  edu17 = 0, 
+  edu19plus = 0, 
+  in_school = 0, 
+  in_uni = 0
+)
+
+sim <- regsim(model, x)
+
+summary(sim, detail = TRUE, rotate = TRUE)
+```
+
+```{r}
+x <- list(
+  Gender = c("Male", "Female"),
+  Income = 1:13,
+  edu18 = 1, 
+  edu15 = 0, 
+  edu17 = 0, 
+  edu19plus = 0, 
+  in_school = 0, 
+  in_uni = 0
+)
+
+sim <- regsim(model, x)
+
+summary(sim)
+```
+
+```{r}
+plot(sim, ~Income + GenderMale, 
+     ylim = c(0.5, 1), 
+     bty = "n",
+     ylab = "Predicted Probability of Voting",
+     main = "Effect of Income by Gender")
+```
+

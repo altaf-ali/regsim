@@ -37,8 +37,6 @@ central_tendency <- function(x) {
 }
 
 regsim_common <- function(object, x, num = 1000, link = NULL) {
-  stop("DANGER, DANGER, breaking build intentionally")
-
   formula_rhs_terms <- attr(stats::terms(stats::formula(object)), "term.labels")
 
   # check explanatory variables given to us

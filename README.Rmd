@@ -1,26 +1,35 @@
+---
+output: github_document
+---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-regsim
-======
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
+```
+
+# regsim
 
 [![Travis-CI Build Status](https://travis-ci.org/altaf-ali/regsim.svg?branch=master)](https://travis-ci.org/altaf-ali/regsim)
 
 An R Package for dealing with statistical uncertainty in regression models.
 
-Installation
-------------
+## Installation
 
 You can install regsim from github with:
 
-``` r
+```{r gh-installation, eval = FALSE}
 # install.packages("devtools")
 devtools::install_github("altaf-ali/regsim")
 ```
 
-Example
--------
+## Example
 
-``` r
+```{r example}
 library(regsim)
 
 model <- lm(mpg ~ wt + cyl, data = mtcars)
@@ -33,5 +42,3 @@ sim <- regsim(model, x)
 
 plot(sim, ~ wt, ylim = c(10, 30))
 ```
-
-![](README-example-1.png)

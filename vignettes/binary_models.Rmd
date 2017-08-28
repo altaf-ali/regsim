@@ -35,6 +35,7 @@ x <- list(
 
 sim <- regsim(model, x)
 
+summary(sim, detail = TRUE, rotate = FALSE)
 summary(sim, detail = TRUE, rotate = TRUE)
 ```
 

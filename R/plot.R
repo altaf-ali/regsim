@@ -27,8 +27,8 @@ plot.regsim <- function(x, var, ...) {
   if (length(var_labels) > 1) {
     zvar <- var_labels[2]
   } else {
-    zvar <- "group"
-    regsim_summary[, zvar] <- 1
+    zvar <- "z"
+    regsim_summary[, zvar] <- 0
   }
 
   plot_data <- data.frame(
@@ -86,7 +86,7 @@ plot.regsim <- function(x, var, ...) {
 }
 
 color_add_alpha <- function(col, alpha = 1) {
-  apply(sapply(col, grDevices::col2rgb)/255, 2, function(x) {
+  apply(sapply(col, grDevices::col2rgb) / 255, 2, function(x) {
     grDevices::rgb(x[1], x[2], x[3], alpha = alpha)
   })
 }

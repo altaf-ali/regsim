@@ -81,7 +81,12 @@
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/altaf-ali/regsim">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -136,44 +141,44 @@
 
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'>lm</span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
 <span class='no'>sim</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='regsim.html'>regsim</a></span>(<span class='no'>model</span>, <span class='fu'>list</span>(<span class='kw'>wt</span> <span class='kw'>=</span> <span class='fu'>seq</span>(<span class='fl'>1</span>, <span class='fl'>5</span>), <span class='kw'>cyl</span> <span class='kw'>=</span> <span class='fu'>mean</span>(<span class='no'>mtcars</span>$<span class='no'>cyl</span>)))
-<span class='fu'>summary</span>(<span class='no'>sim</span>, <span class='kw'>detail</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>rotate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;          1
-#&gt; wt  1.0000
-#&gt; cyl 6.1875
-#&gt; 
-#&gt;      mean       sd     2.5%      50%    97.5%
-#&gt; 1 27.1341 1.777956 23.79492 27.11576 30.72753
-#&gt; ------------------------------------------------
-#&gt; 
-#&gt;          2
-#&gt; wt  2.0000
-#&gt; cyl 6.1875
+<span class='fu'>summary</span>(<span class='no'>sim</span>, <span class='kw'>detail</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>rotate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;     Profile 1
+#&gt; wt     1.0000
+#&gt; cyl    6.1875
 #&gt; 
 #&gt;       mean       sd     2.5%      50%    97.5%
-#&gt; 2 23.96384 1.045917 21.94068 23.92788 26.09904
+#&gt; p1 27.1341 1.777956 23.79492 27.11576 30.72753
 #&gt; ------------------------------------------------
 #&gt; 
-#&gt;          3
-#&gt; wt  3.0000
-#&gt; cyl 6.1875
+#&gt;     Profile 2
+#&gt; wt     2.0000
+#&gt; cyl    6.1875
 #&gt; 
-#&gt;       mean        sd     2.5%      50%    97.5%
-#&gt; 3 20.79358 0.4807214 19.91368 20.78462 21.72791
+#&gt;        mean       sd     2.5%      50%    97.5%
+#&gt; p2 23.96384 1.045917 21.94068 23.92788 26.09904
 #&gt; ------------------------------------------------
 #&gt; 
-#&gt;          4
-#&gt; wt  4.0000
-#&gt; cyl 6.1875
+#&gt;     Profile 3
+#&gt; wt     3.0000
+#&gt; cyl    6.1875
 #&gt; 
-#&gt;       mean        sd     2.5%    50%    97.5%
-#&gt; 4 17.62332 0.7566893 16.18013 17.605 19.13037
+#&gt;        mean        sd     2.5%      50%    97.5%
+#&gt; p3 20.79358 0.4807214 19.91368 20.78462 21.72791
 #&gt; ------------------------------------------------
 #&gt; 
-#&gt;          5
-#&gt; wt  5.0000
-#&gt; cyl 6.1875
+#&gt;     Profile 4
+#&gt; wt     4.0000
+#&gt; cyl    6.1875
 #&gt; 
-#&gt;       mean       sd     2.5%      50%    97.5%
-#&gt; 5 14.45306 1.455472 11.64084 14.46362 17.34719
+#&gt;        mean        sd     2.5%    50%    97.5%
+#&gt; p4 17.62332 0.7566893 16.18013 17.605 19.13037
+#&gt; ------------------------------------------------
+#&gt; 
+#&gt;     Profile 5
+#&gt; wt     5.0000
+#&gt; cyl    6.1875
+#&gt; 
+#&gt;        mean       sd     2.5%      50%    97.5%
+#&gt; p5 14.45306 1.455472 11.64084 14.46362 17.34719
 #&gt; ------------------------------------------------
 #&gt; </div></pre>
   </div>

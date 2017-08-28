@@ -15,7 +15,7 @@
 <![endif]-->
 </head>
 <body>
-    <div class="container template-home">
+    <div class="container template-vignette">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -56,7 +56,14 @@
   </ul>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/altaf-ali/regsim">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -66,24 +73,67 @@
 
       
       </header><div class="row">
-  <div class="contents col-md-9">
-    <div id="regsim" class="section level1">
+  <div class="col-md-9">
+    
+
+    
+    
+<div class="contents">
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+<div id="regsim" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#regsim" class="anchor"></a>regsim</h1></div>
-<p>Regression Model Simulations</p>
+
 <p>An R Package for dealing with statistical uncertainty in regression models.</p>
+<div id="installation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#installation" class="anchor"></a>Installation</h2>
+<p>You can install regsim from github with:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages("devtools")</span>
+devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"altaf-ali/regsim"</span>)</code></pre></div>
+</div>
+<div id="example" class="section level2">
+<h2 class="hasAnchor">
+<a href="#example" class="anchor"></a>Example</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(regsim)
+
+model &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>wt <span class="op">+</span><span class="st"> </span>cyl, <span class="dt">data =</span> mtcars)
+x &lt;-<span class="st"> </span><span class="kw">list</span>(
+  <span class="dt">wt =</span> <span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">5</span>, <span class="fl">0.1</span>), 
+  <span class="dt">cyl =</span> <span class="kw">mean</span>(mtcars<span class="op">$</span>cyl)
+)
+
+sim &lt;-<span class="st"> </span><span class="kw"><a href="reference/regsim.html">regsim</a></span>(model, x)
+
+<span class="kw">plot</span>(sim, <span class="op">~</span><span class="st"> </span>wt, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">30</span>))</code></pre></div>
+<p><img src="README-example-1.png" width="672"></p>
+</div>
+</div>
 </div>
   </div>
 
-  <div class="col-md-3" id="sidebar">
-    <h2>License</h2>
-<p>GPL (&gt;= 2)</p>
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+    <h2 class="hasAnchor">
+<a href="#sidebar" class="anchor"></a>Links</h2>
+<ul class="list-unstyled">
+<li>Browse source code at <br><a href="https://github.com/altaf-ali/regsim">https://​github.com/​altaf-ali/​regsim</a>
+</li>
+<li>Report a bug at <br><a href="https://github.com/altaf-ali/regsim/issues">https://​github.com/​altaf-ali/​regsim/​issues</a>
+</li>
+</ul>
+<h2>License</h2>
+<p><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></p>
 <h2>Developers</h2>
 <ul class="list-unstyled">
 <li>Altaf Ali <br><small class="roles"> Author, maintainer </small> </li>
 <li>Philipp Broniecki <br><small class="roles"> Author </small> </li>
 </ul>
+<h2>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://travis-ci.org/altaf-ali/regsim"><img src="https://travis-ci.org/altaf-ali/regsim.svg?branch=master" alt="Travis-CI Build Status"></a></li>
+</ul>
 </div>
+
 </div>
 
 

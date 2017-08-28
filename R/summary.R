@@ -22,33 +22,32 @@ summary.regsim <- function(object, intercept = FALSE, detail = FALSE, rotate = F
 
   qi <- calc_summary(object$ev)
 
-  if (detail) {
-    for (i in 1:nrow(x)) {
-      profile <- x[i,]
-      if (rotate){
-        r.profile <- t(profile)
-        colnames(r.profile) <- paste("Profile",i)
-        print(r.profile)
-      }else{
-        rownames(profile) <- paste("Profile",i)
-        print(profile)
-        }
+  if (!detail)
+    return(cbind(x, qi)) # return as data.frame, don't use print in this mode
 
-      cat("\n")
-      print(qi[i,])
-      cat(paste0(paste(rep("-", 48), collapse = ""), "\n\n"))
-    }
+  profile_id <- paste("Profile", rownames(x))
+  profile_id_short <- paste0("p", rownames(x))
 
-    if (nrow(x) == 2) {
-      fd <- object$ev[,2] - object$ev[,1]
-      cat("First Differences:\n\n")
-      print(calc_summary(as.data.frame(fd)))
-      cat("\n")
-    }
+  rownames(x) <- ifelse(rep(rotate, nrow(x)), profile_id, profile_id_short)
+  rownames(qi) <- profile_id_short
 
-  } else {
-    # return as data.frame, don't use print in this mode
-    return(cbind(x, qi))
+  for (i in 1:nrow(x)) {
+    profile <- x[i,]
+    if (rotate)
+      print(t(profile))
+    else
+      print(profile)
+
+    cat("\n")
+    print(qi[i,])
+    cat(paste0(paste(rep("-", 48), collapse = ""), "\n\n"))
+  }
+
+  if (nrow(x) == 2) {
+    fd <- object$ev[,2] - object$ev[,1]
+    cat("First Differences:\n\n")
+    print(calc_summary(as.data.frame(fd)))
+    cat("\n")
   }
 }
 

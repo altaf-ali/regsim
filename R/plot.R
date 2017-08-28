@@ -76,12 +76,12 @@ plot.regsim <- function(x, var, ...) {
   }
 
   if (length(groups) > 1) {
-    legend("bottomright",
-           y = NULL,
-           groups,
-           inset = .02,
-           title = zvar,
-           fill = color_map)
+    graphics::legend("bottomright",
+                     y = NULL,
+                     groups,
+                     inset = .02,
+                     title = zvar,
+                     fill = color_map)
   }
 }
 

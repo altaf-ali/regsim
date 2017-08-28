@@ -25,13 +25,14 @@ summary.regsim <- function(object, intercept = FALSE, detail = FALSE, rotate = F
   if (detail) {
     for (i in 1:nrow(x)) {
       profile <- x[i,]
-      if (rotate)
+      if (rotate){
         r.profile <- t(profile)
         colnames(r.profile) <- paste("Profile",i)
         print(r.profile)
-      else
+      }else{
         rownames(profile) <- paste("Profile",i)
         print(profile)
+        }
 
       cat("\n")
       print(qi[i,])

@@ -20,12 +20,7 @@ summary.regsim <- function(object, intercept = FALSE, detail = FALSE, rotate = F
   if (!intercept)
     x <- x[, names(x) != "(Intercept)"]
 
-  qi <- as.data.frame(t(apply(object$ev, 2, function(x) {
-    c(mean = mean(x),
-      sd = stats::sd(x),
-      stats::quantile(x, probs = c(.025, .5, .975))
-    )
-  })))
+  qi <- calc_summary(object$ev)
 
   if (detail) {
     for (i in 1:nrow(x)) {
@@ -41,8 +36,9 @@ summary.regsim <- function(object, intercept = FALSE, detail = FALSE, rotate = F
     }
 
     if (nrow(x) == 2) {
+      fd <- object$ev[,2] - object$ev[,1]
       cat("First Differences:\n\n")
-      print(qi[2,] - qi[1,])
+      print(calc_summary(as.data.frame(fd)))
       cat("\n")
     }
 
@@ -51,3 +47,13 @@ summary.regsim <- function(object, intercept = FALSE, detail = FALSE, rotate = F
     return(cbind(x, qi))
   }
 }
+
+calc_summary <- function(obj) {
+  as.data.frame(t(apply(obj, 2, function(x) {
+    c(mean = mean(x),
+      sd = stats::sd(x),
+      stats::quantile(x, probs = c(.025, .5, .975))
+    )
+  })))
+}
+

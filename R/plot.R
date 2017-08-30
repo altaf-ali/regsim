@@ -90,7 +90,6 @@ plot.regsim <- function(x, var, emphedges = FALSE, ...) {
                          title = zvar,
                          fill = color_map)
         }
-
     }
   }
 

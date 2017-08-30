@@ -13,7 +13,7 @@
 #' sim <- regsim(model, list(wt = seq(1, 5, 0.1), cyl = mean(mtcars$cyl)))
 #' plot(sim, ~wt)
 #' @export
-plot.regsim <- function(x, var, emphedges = FALSE, ...) {
+plot.regsim <- function(x, var, ...) {
   regsim_summary <- summary(x)
 
   var_labels <- labels(stats::terms(var))
@@ -29,68 +29,6 @@ plot.regsim <- function(x, var, emphedges = FALSE, ...) {
   } else {
     zvar <- "z"
     regsim_summary[, zvar] <- 0
-  }
-
-  # demphazie edges
-  if (emphedges){
-
-     # sample 200 ev's
-    ifelse(nrow(x$ev)>201, p.ev <- apply(x$ev, 2, function(x) sample(x, 201)), p.ev <- x$ev)
-
-    # oder each column
-    p.ev <- apply(p.ev, 2, sort)
-
-    default_args <- list(
-      xlim = range(regsim_summary[, xvar]),
-      ylim = c(max(0, min(p.ev)-sd(p.ev)), c(min(1, max(p.ev)+sd(p.ev)))),
-      xlab = xvar,
-      ylab = "Expected Value"
-    )
-
-    plot_data <- data.frame(
-        z = regsim_summary[, zvar]
-    )
-
-    # capture ... args
-    args <- list(...)
-    default_args <- default_args[setdiff(names(default_args), names(args))]
-
-    plot_create <- function(...) {
-      graphics::plot(0,pch = "",...)
-    }
-
-    do.call(plot_create, c(default_args, args))
-
-    groups <- sort(unique(regsim_summary[, zvar]))
-
-    for (i in 1:length(groups)) {
-      group_data <- plot_data[plot_data$z == groups[i], ]
-
-      # uncertainty
-      for (a in 1:100){
-
-        # not a good idea to do this, but ok for now
-        color_map <- color_add_alpha(
-          c("#E41A1C", "#377EB8", "#4DAF4A", "#984EA3", "#FF7F00", "#FFFF33", "#A65628", "#F781BF"),
-          alpha = max(30,60-a*.4) / 100
-        )
-
-        graphics::lines(regsim_summary[, xvar], p.ev[101-a,], col=color_map[i])
-        graphics::lines(regsim_summary[, xvar], p.ev[101+a,], col=color_map[i])
-      }
-
-      # expected value
-      graphics::lines(regsim_summary[, xvar], p.ev[101,], col=color_map[i], lwd = 2)
-
-      if (length(groups) > 1) {
-        graphics::legend("bottomright",
-                         y = NULL,
-                         groups,
-                         inset = .02,
-                         title = zvar,
-                         fill = color_map)
-        }
-    }
   }
 
   # default plot

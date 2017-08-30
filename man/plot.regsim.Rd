@@ -4,15 +4,13 @@
 \alias{plot.regsim}
 \title{Plot Regression Simulations}
 \usage{
-\method{plot}{regsim}(x, var, emphedges = FALSE, ...)
+\method{plot}{regsim}(x, var, ...)
 }
 \arguments{
 \item{x}{an object of class "regsim", usually obtained by calling the
 \code{regsim} function.}
 
 \item{var}{variable to plot on the x-axis}
-
-\item{emphedges}{de-emphasize edges of uncertainty bounds}
 
 \item{...}{additional arguments passed to class-specific functions}
 }

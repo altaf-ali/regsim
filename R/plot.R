@@ -41,7 +41,7 @@ plot.regsim <- function(x, var, ...) {
 
   default_args <- list(
     xlim = range(plot_data$x),
-    ylim = c(max(0, min(plot_data$y)-sd(plot_data$y)), c(min(1, max(plot_data$y)+sd(plot_data$y)))),
+    ylim = c(min(plot_data$y_min), max(plot_data$y_max)),
     xlab = xvar,
     ylab = "Expected Value"
   )

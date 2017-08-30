@@ -75,13 +75,34 @@ plot.regsim <- function(x, var, ...) {
     graphics::lines(group_data$x, group_data$y)
   }
 
-  if (length(groups) > 1) {
-    graphics::legend("bottomright",
-                     y = NULL,
-                     groups,
-                     inset = .02,
-                     title = zvar,
-                     fill = color_map)
+  if (length(groups) > 1 ) {
+    if (group_data$y[nrow(group_data)] > max(ylim) /2 ){
+      graphics::legend("bottomright",
+                       y = NULL,
+                       groups,
+                       inset = .02,
+                       title = zvar,
+                       fill = color_map,
+                       cex = 1,
+                       y.intersp = 0.55,
+                       x.intersp = 0.25,
+                       bty = "n",
+                       bg = "transparent",
+                       horiz = FALSE)
+    } else{
+      graphics::legend("topright",
+                       y = NULL,
+                       groups,
+                       inset = .02,
+                       title = zvar,
+                       fill = color_map,
+                       cex = 1,
+                       y.intersp = 0.55,
+                       x.intersp = 0.25,
+                       bty = "n",
+                       bg = "transparent",
+                       horiz = FALSE)
+      }
   }
 }
 

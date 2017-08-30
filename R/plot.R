@@ -31,63 +31,58 @@ plot.regsim <- function(x, var, ...) {
     regsim_summary[, zvar] <- 0
   }
 
-  # default plot
-  if (!emphedges) {
-    plot_data <- data.frame(
-      x = regsim_summary[, xvar],
-      y = regsim_summary[, "50%"],
-      y_min = regsim_summary[, "2.5%"],
-      y_max = regsim_summary[, "97.5%"],
-      z = regsim_summary[, zvar]
-    )
+  plot_data <- data.frame(
+    x = regsim_summary[, xvar],
+    y = regsim_summary[, "50%"],
+    y_min = regsim_summary[, "2.5%"],
+    y_max = regsim_summary[, "97.5%"],
+    z = regsim_summary[, zvar]
+  )
 
-    default_args <- list(
-      xlim = range(plot_data$x),
-      ylim = c(max(0, min(plot_data$y)-sd(plot_data$y)), c(min(1, max(plot_data$y)+sd(plot_data$y)))),
-      xlab = xvar,
-      ylab = "Expected Value"
-    )
+  default_args <- list(
+    xlim = range(plot_data$x),
+    ylim = c(max(0, min(plot_data$y)-sd(plot_data$y)), c(min(1, max(plot_data$y)+sd(plot_data$y)))),
+    xlab = xvar,
+    ylab = "Expected Value"
+  )
 
-    # capture ... args
-    args <- list(...)
-    default_args <- default_args[setdiff(names(default_args), names(args))]
+  # capture ... args
+  args <- list(...)
+  default_args <- default_args[setdiff(names(default_args), names(args))]
 
-    plot_create <- function(...) {
-      graphics::plot(0,pch = "",...)
-    }
-
-    do.call(plot_create, c(default_args, args))
-
-    groups <- sort(unique(regsim_summary[, zvar]))
-
-    # not a good idea to do this, but ok for now
-    color_map <- color_add_alpha(
-      c("#E41A1C", "#377EB8", "#4DAF4A", "#984EA3", "#FF7F00", "#FFFF33", "#A65628", "#F781BF"),
-      alpha = 0.4
-    )
-
-    for (i in 1:length(groups)) {
-      group_data <- plot_data[plot_data$z == groups[i], ]
-
-      graphics::polygon(x = c(group_data$x, rev(group_data$x)),
-                        y = c(group_data$y_min, rev(group_data$y_max)),
-                        border = NA,
-                        col = color_map[i])
-
-      graphics::lines(group_data$x, group_data$y)
-    }
-
-    if (length(groups) > 1) {
-      graphics::legend("bottomright",
-                       y = NULL,
-                       groups,
-                       inset = .02,
-                       title = zvar,
-                       fill = color_map)
-    }
+  plot_create <- function(...) {
+    graphics::plot(0,pch = "",...)
   }
 
+  do.call(plot_create, c(default_args, args))
 
+  groups <- sort(unique(regsim_summary[, zvar]))
+
+  # not a good idea to do this, but ok for now
+  color_map <- color_add_alpha(
+    c("#E41A1C", "#377EB8", "#4DAF4A", "#984EA3", "#FF7F00", "#FFFF33", "#A65628", "#F781BF"),
+    alpha = 0.4
+  )
+
+  for (i in 1:length(groups)) {
+    group_data <- plot_data[plot_data$z == groups[i], ]
+
+    graphics::polygon(x = c(group_data$x, rev(group_data$x)),
+                      y = c(group_data$y_min, rev(group_data$y_max)),
+                      border = NA,
+                      col = color_map[i])
+
+    graphics::lines(group_data$x, group_data$y)
+  }
+
+  if (length(groups) > 1) {
+    graphics::legend("bottomright",
+                     y = NULL,
+                     groups,
+                     inset = .02,
+                     title = zvar,
+                     fill = color_map)
+  }
 }
 
 color_add_alpha <- function(col, alpha = 1) {

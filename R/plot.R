@@ -76,7 +76,7 @@ plot.regsim <- function(x, var, ...) {
   }
 
   if (length(groups) > 1 ) {
-    if (plot_data$y[nrow(group_data)] > max(ylim) /2 ){
+    if (plot_data$y[nrow(group_data)] > par("usr")[4] /2 ){
       graphics::legend("bottomright",
                        y = NULL,
                        groups,

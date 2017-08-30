@@ -52,8 +52,6 @@ summary(sim)
 
 ```{r}
 plot(sim, ~Income + GenderMale, 
-     ylim = c(0.5, 1), 
-     bty = "n",
      ylab = "Predicted Probability of Voting",
      main = "Effect of Income by Gender")
 ```

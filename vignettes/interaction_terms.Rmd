@@ -31,6 +31,6 @@ summary(sim, detail = TRUE, rotate = TRUE)
 ```
 
 ```{r}
-plot(sim, ~wbgi_cce + former_col, xlab = "Corruption Control", ylim = c(0.35, 1.15), bty = "n")
+plot(sim, ~wbgi_cce + former_col, xlab = "Corruption Control")
 ```
 

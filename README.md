@@ -31,7 +31,7 @@ x <- list(
 
 sim <- regsim(model, x)
 
-plot(sim, ~ wt, ylim = c(10, 30))
+plot(sim, ~ wt)
 ```
 
 ![](README-example-1.png)

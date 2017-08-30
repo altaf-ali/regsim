@@ -118,7 +118,7 @@ x &lt;-<span class="st"> </span><span class="kw">list</span>(
 )
 
 sim &lt;-<span class="st"> </span><span class="kw"><a href="../reference/regsim.html">regsim</a></span>(m1, x)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(sim, <span class="op">~</span>pctUrban, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="fl">0.3</span>, <span class="fl">0.5</span>), <span class="dt">bty =</span> <span class="st">"n"</span>, <span class="dt">xlab =</span> <span class="st">"Pct Urban"</span>, <span class="dt">ylab =</span> <span class="st">"Unemployment Rate"</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(sim, <span class="op">~</span>pctUrban, <span class="dt">xlab =</span> <span class="st">"Pct Urban"</span>, <span class="dt">ylab =</span> <span class="st">"Unemployment Rate"</span>)</code></pre></div>
 <p><img src="regsim_files/figure-html/unnamed-chunk-4-1.png" width="672"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(sim)</code></pre></div>
 <pre><code>##    pctUrban householdsize racePctWhite      mean          sd      2.5%

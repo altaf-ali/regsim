@@ -33,7 +33,7 @@ sim <- regsim(m1, x)
 ```
 
 ```{r}
-plot(sim, ~pctUrban, ylim = c(0.3, 0.5), bty = "n", xlab = "Pct Urban", ylab = "Unemployment Rate")
+plot(sim, ~pctUrban, xlab = "Pct Urban", ylab = "Unemployment Rate")
 ```
 
 ```{r}

@@ -25,7 +25,7 @@ plot.regsim <- function(x, formula, ...) {
   xvar <- vars[1]
 
   if (length(vars) > 1) {
-    zvar <- vars[2]
+    zvar <- colnames(stats::model.matrix(formula, x$model$model))[3]
   } else {
     zvar <- "z"
     regsim_summary[, zvar] <- 0

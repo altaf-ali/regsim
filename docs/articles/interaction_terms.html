@@ -86,7 +86,7 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(foreign)
 <span class="kw">library</span>(regsim)
 
-world_data &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/foreign/topics/read.dta">read.dta</a></span>(<span class="st">"http://uclspp.github.io/PUBLG100/data/QoG2012.dta"</span>)</code></pre></div>
+world_data &lt;-<span class="st"> </span><span class="kw">read.dta</span>(<span class="st">"http://uclspp.github.io/PUBLG100/data/QoG2012.dta"</span>)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model &lt;-<span class="st"> </span><span class="kw">lm</span>(undp_hdi <span class="op">~</span><span class="st"> </span>wbgi_cce <span class="op">+</span><span class="st"> </span>former_col <span class="op">+</span><span class="st"> </span>wbgi_cce<span class="op">:</span>former_col, <span class="dt">data =</span> world_data)
 <span class="kw">summary</span>(model)</code></pre></div>
 <pre><code>## 
@@ -124,7 +124,7 @@ sim &lt;-<span class="st"> </span><span class="kw"><a href="../reference/regsim.
 ## wbgi_cce:former_col         0
 ## 
 ##         mean         sd      2.5%       50%     97.5%
-## p1 0.6284438 0.03788442 0.5523543 0.6291492 0.7049955
+## p1 0.6264835 0.03783496 0.5541606 0.6274166 0.7024445
 ## ------------------------------------------------
 ## 
 ##                     Profile 2
@@ -133,7 +133,7 @@ sim &lt;-<span class="st"> </span><span class="kw"><a href="../reference/regsim.
 ## wbgi_cce:former_col        -2
 ## 
 ##         mean         sd      2.5%       50%     97.5%
-## p2 0.4072759 0.02877629 0.3532705 0.4066569 0.4643222
+## p2 0.4065895 0.02687647 0.3542497 0.4055551 0.4609421
 ## ------------------------------------------------
 ## 
 ##                     Profile 3
@@ -141,8 +141,8 @@ sim &lt;-<span class="st"> </span><span class="kw"><a href="../reference/regsim.
 ## former_col                  0
 ## wbgi_cce:former_col         0
 ## 
-##         mean         sd     2.5%       50%     97.5%
-## p3 0.7070516 0.02583444 0.657238 0.7078147 0.7577875
+##         mean         sd      2.5%       50%     97.5%
+## p3 0.7060333 0.02606609 0.6567899 0.7064905 0.7583669
 ## ------------------------------------------------
 ## 
 ##                     Profile 4
@@ -150,8 +150,8 @@ sim &lt;-<span class="st"> </span><span class="kw"><a href="../reference/regsim.
 ## former_col                  1
 ## wbgi_cce:former_col        -1
 ## 
-##         mean         sd      2.5%       50%     97.5%
-## p4 0.5388138 0.01586726 0.5096198 0.5383758 0.5703242
+##         mean        sd     2.5%       50%     97.5%
+## p4 0.5382053 0.0148969 0.509233 0.5384407 0.5663208
 ## ------------------------------------------------
 ## 
 ##                     Profile 5
@@ -160,7 +160,7 @@ sim &lt;-<span class="st"> </span><span class="kw"><a href="../reference/regsim.
 ## wbgi_cce:former_col         0
 ## 
 ##         mean         sd      2.5%       50%     97.5%
-## p5 0.7856594 0.01692947 0.7526462 0.7861051 0.8181337
+## p5 0.7855832 0.01741487 0.7524017 0.7851869 0.8184653
 ## ------------------------------------------------
 ## 
 ##                     Profile 6
@@ -168,8 +168,8 @@ sim &lt;-<span class="st"> </span><span class="kw"><a href="../reference/regsim.
 ## former_col                  1
 ## wbgi_cce:former_col         0
 ## 
-##         mean         sd      2.5%       50%     97.5%
-## p6 0.6703517 0.01212568 0.6458693 0.6709581 0.6931247
+##         mean         sd    2.5%       50%     97.5%
+## p6 0.6698211 0.01215241 0.64516 0.6696406 0.6935833
 ## ------------------------------------------------
 ## 
 ##                     Profile 7
@@ -177,8 +177,8 @@ sim &lt;-<span class="st"> </span><span class="kw"><a href="../reference/regsim.
 ## former_col                  0
 ## wbgi_cce:former_col         0
 ## 
-##         mean         sd      2.5%       50%     97.5%
-## p7 0.8642672 0.01711128 0.8305272 0.8645465 0.8979881
+##        mean         sd      2.5%       50%     97.5%
+## p7 0.865133 0.01740675 0.8315896 0.8644322 0.8985373
 ## ------------------------------------------------
 ## 
 ##                     Profile 8
@@ -186,8 +186,8 @@ sim &lt;-<span class="st"> </span><span class="kw"><a href="../reference/regsim.
 ## former_col                  1
 ## wbgi_cce:former_col         1
 ## 
-##         mean         sd      2.5%       50%     97.5%
-## p8 0.8018897 0.02266851 0.7562543 0.8028075 0.8475378
+##         mean         sd      2.5%      50%     97.5%
+## p8 0.8014369 0.02235251 0.7582989 0.801454 0.8444965
 ## ------------------------------------------------
 ## 
 ##                     Profile 9
@@ -195,8 +195,8 @@ sim &lt;-<span class="st"> </span><span class="kw"><a href="../reference/regsim.
 ## former_col                  0
 ## wbgi_cce:former_col         0
 ## 
-##        mean         sd      2.5%       50%     97.5%
-## p9 0.942875 0.02619131 0.8900567 0.9425533 0.9937283
+##         mean        sd      2.5%       50%     97.5%
+## p9 0.9446829 0.0260498 0.8917847 0.9444443 0.9948127
 ## ------------------------------------------------
 ## 
 ##                     Profile 10
@@ -205,7 +205,7 @@ sim &lt;-<span class="st"> </span><span class="kw"><a href="../reference/regsim.
 ## wbgi_cce:former_col          2
 ## 
 ##          mean         sd      2.5%       50%    97.5%
-## p10 0.9334276 0.03677306 0.8619069 0.9339153 1.009735
+## p10 0.9330527 0.03574603 0.8617173 0.9342342 1.000835
 ## ------------------------------------------------
 ## 
 ##                     Profile 11
@@ -214,7 +214,7 @@ sim &lt;-<span class="st"> </span><span class="kw"><a href="../reference/regsim.
 ## wbgi_cce:former_col          0
 ## 
 ##         mean         sd      2.5%      50%    97.5%
-## p11 1.021483 0.03829065 0.9449612 1.021531 1.096842
+## p11 1.024233 0.03781626 0.9512799 1.023801 1.095837
 ## ------------------------------------------------
 ## 
 ##                     Profile 12
@@ -222,8 +222,8 @@ sim &lt;-<span class="st"> </span><span class="kw"><a href="../reference/regsim.
 ## former_col                   1
 ## wbgi_cce:former_col          3
 ## 
-##         mean         sd      2.5%      50%    97.5%
-## p12 1.064966 0.05159673 0.9671594 1.064899 1.171362
+##         mean        sd      2.5%     50%    97.5%
+## p12 1.064668 0.0498208 0.9630945 1.06696 1.159469
 ## ------------------------------------------------</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(sim, <span class="op">~</span>wbgi_cce <span class="op">+</span><span class="st"> </span>former_col, <span class="dt">xlab =</span> <span class="st">"Corruption Control"</span>)</code></pre></div>
 <p><img src="interaction_terms_files/figure-html/unnamed-chunk-4-1.png" width="672"></p>

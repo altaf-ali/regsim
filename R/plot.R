@@ -25,7 +25,8 @@ plot.regsim <- function(x, formula, ...) {
   xvar <- vars[1]
 
   if (length(vars) > 1) {
-    zvar <- tryCatch(colnames(stats::model.matrix(formula, x$model$model))[3], error = vars[2])
+    zvar <- try(colnames(stats::model.matrix(formula, x$model$model))[3], silent = TRUE)
+    if(class(zvar)=="try-error") zvar <- vars[2]
   } else {
     zvar <- "z"
     regsim_summary[, zvar] <- 0

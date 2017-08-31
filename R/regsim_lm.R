@@ -2,7 +2,7 @@
 #'
 #' \code{regsim.lm} simulate quantities of interest from a linear regression model
 #'
-#' @param object a regression model, usually, a result of a call to lm
+#' @param object a regression model, usually, a result of a call to \link[stats]{lm}
 #' @param x a list of explanatory variables
 #' @param num number of iterations to run
 #' @param ... additional arguments passed to class-specific functions

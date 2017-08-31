@@ -2,8 +2,8 @@
 #'
 #' \code{regsim} simulates quantities of interest from regression models
 #'
-#' @param object a regression model, usually, a result of a call to \code{lm} or
-#' \code{glm}
+#' @param object a regression model, usually, a result of a call to
+#' \link[stats]{lm} or \link[stats]{glm}
 #' @param x a list of explanatory variables
 #' @param num number of iterations to run
 #' @param ... additional arguments passed to class-specific functions

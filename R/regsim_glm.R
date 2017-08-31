@@ -2,7 +2,7 @@
 #'
 #' \code{regsim.glm} simulates quantities of interest from a generalized linear model
 #'
-#' @param object a regression model, usually, a result of a call to glm
+#' @param object a regression model, usually, a result of a call to \link[stats]{glm}
 #' @param x a list of explanatory variables
 #' @param num number of iterations to run
 #' @param link model link function

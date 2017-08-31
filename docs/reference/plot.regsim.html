@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot Regression Simulations � plot.regsim • regsim</title>
+<title>Plot Regression Simulations — plot.regsim • regsim</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -106,19 +106,19 @@
     
 
     <pre class="usage"><span class='co'># S3 method for regsim</span>
-<span class='fu'>plot</span>(<span class='no'>x</span>, <span class='no'>var</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>plot</span>(<span class='no'>x</span>, <span class='no'>formula</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>an object of class "regsim", usually obtained by calling the
-<code>regsim</code> function.</p></td>
+      <td><p>an object of class <code>regsim</code>, usually obtained by calling the
+<a href='regsim.html'>regsim</a> function.</p></td>
     </tr>
     <tr>
-      <th>var</th>
-      <td><p>variable to plot on the x-axis</p></td>
+      <th>formula</th>
+      <td><p>a <a href='http://www.rdocumentation.org/packages/stats/topics/formula'>formula</a> such as ~x or ~x1 + x2</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -132,7 +132,7 @@
 
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'>lm</span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
 <span class='no'>sim</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='regsim.html'>regsim</a></span>(<span class='no'>model</span>, <span class='fu'>list</span>(<span class='kw'>wt</span> <span class='kw'>=</span> <span class='fu'>seq</span>(<span class='fl'>1</span>, <span class='fl'>5</span>, <span class='fl'>0.1</span>), <span class='kw'>cyl</span> <span class='kw'>=</span> <span class='fu'>mean</span>(<span class='no'>mtcars</span>$<span class='no'>cyl</span>)))
-<span class='fu'>plot</span>(<span class='no'>sim</span>, ~<span class='no'>wt</span>)</div><div class='img'><img src='plot.regsim-5.png' alt='' width='700' height='432.632880098887' /></div></pre>
+<span class='fu'>plot</span>(<span class='no'>sim</span>, ~<span class='no'>wt</span>)</div><div class='img'><img src='plot.regsim-1.png' alt='' width='700' height='432.632880098887' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

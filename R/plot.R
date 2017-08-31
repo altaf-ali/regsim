@@ -2,9 +2,9 @@
 #'
 #' plots regression simulation results
 #'
-#' @param x an object of class "regsim", usually obtained by calling the
-#' \code{regsim} function.
-#' @param var variable to plot on the x-axis
+#' @param x an object of class \code{regsim}, usually obtained by calling the
+#' \link{regsim} function.
+#' @param formula a \link[stats]{formula} such as ~x or ~x1 + x2
 #' @param ... additional arguments passed to class-specific functions
 #' @examples
 #' library(regsim)
@@ -13,19 +13,19 @@
 #' sim <- regsim(model, list(wt = seq(1, 5, 0.1), cyl = mean(mtcars$cyl)))
 #' plot(sim, ~wt)
 #' @export
-plot.regsim <- function(x, var, ...) {
+plot.regsim <- function(x, formula, ...) {
   regsim_summary <- summary(x)
 
-  var_labels <- labels(stats::terms(var))
+  vars <- labels(stats::terms(formula))
 
-  # if (!all(var_labels %in% names(regsim_summary))) {
+  # if (!all(vars %in% names(regsim_summary))) {
   #   stop(paste(xvar, "not in the model"))
   # }
 
-  xvar <- var_labels[1]
+  xvar <- vars[1]
 
-  if (length(var_labels) > 1) {
-    zvar <- var_labels[2]
+  if (length(vars) > 1) {
+    zvar <- vars[2]
   } else {
     zvar <- "z"
     regsim_summary[, zvar] <- 0
@@ -38,76 +38,103 @@ plot.regsim <- function(x, var, ...) {
     y_max = regsim_summary[, "97.5%"],
     z = regsim_summary[, zvar]
   )
+  plot_data <- plot_data[order(plot_data$z, plot_data$x), ]
 
-  default_args <- list(
+  plot_args <- list(
+    x = NULL,
     xlim = range(plot_data$x),
     ylim = c(min(plot_data$y_min), max(plot_data$y_max)),
     xlab = xvar,
     ylab = "Expected Value"
   )
 
-  # capture ... args
+  # capture all ... args
   args <- list(...)
-  default_args <- default_args[setdiff(names(default_args), names(args))]
 
-  plot_create <- function(...) {
-    graphics::plot(0,pch = "",...)
+  # split args by each layer
+  layers <- c("lines", "legend", "polygon")
+
+  arg_matrix <- as.data.frame(sapply(layers, function(arg_type, args) {
+    suffix <- sprintf("^%s.", arg_type)
+    grepl(suffix, names(args))
+  }, args, simplify = FALSE))
+
+  layer_args <- sapply(arg_matrix, function(arg_type, args) {
+    args <- args[arg_type]
+    names(args) <- gsub("^.*?\\.", "", names(args))
+    return(args)
+  }, args, simplify = FALSE)
+
+  # merge default and user-specified args
+  merge_args <- function(default_args, args) {
+    c(default_args[setdiff(names(default_args), names(args))], args)
   }
 
-  do.call(plot_create, c(default_args, args))
+  if (nrow(arg_matrix))
+    plot_args <- merge_args(plot_args, args[apply(!arg_matrix, 1, all)])
+
+  do.call(graphics::plot, plot_args)
 
   groups <- sort(unique(regsim_summary[, zvar]))
 
-  # not a good idea to do this, but ok for now
-  color_map <- color_add_alpha(
-    c("#E41A1C", "#377EB8", "#4DAF4A", "#984EA3", "#FF7F00", "#FFFF33", "#A65628", "#F781BF"),
-    alpha = 0.4
+  polygon_args <- list(
+    border = NA,
+    col = "Set1"
   )
 
+  polygon_args <- merge_args(polygon_args, layer_args$polygon)
+
+  # see if it's a brewer palette
+  if (length(polygon_args$col) == 1) {
+    if (polygon_args$col %in% rownames(RColorBrewer::brewer.pal.info)) {
+      polygon_args$col <- as.vector(grDevices::adjustcolor(
+        RColorBrewer::brewer.pal(max(3, length(groups)), polygon_args$col),
+        alpha.f = 0.4
+      ))
+    }
+  }
+
+  # if not enough colors, then just duplicate them
+  if (length(polygon_args$col) < length(groups))
+    polygon_args$col <- rep(polygon_args$col, length(groups))
+
+  # run through all the groups
   for (i in 1:length(groups)) {
     group_data <- plot_data[plot_data$z == groups[i], ]
 
-    graphics::polygon(x = c(group_data$x, rev(group_data$x)),
-                      y = c(group_data$y_min, rev(group_data$y_max)),
-                      border = NA,
-                      col = color_map[i])
+    group_args <- list(
+      x = c(group_data$x, rev(group_data$x)),
+      y = c(group_data$y_min, rev(group_data$y_max)),
+      col = polygon_args$col[i]
+    )
 
-    graphics::lines(group_data$x, group_data$y)
+    do.call(graphics::polygon, merge_args(polygon_args, group_args))
+
+    lines_args <- list(
+      x = group_data$x,
+      y = group_data$y
+    )
+
+    do.call(graphics::lines, merge_args(lines_args, layer_args$lines))
   }
 
-  if (length(groups) > 1 ) {
-    if (plot_data$y[nrow(group_data)] > par("usr")[4] /2 ){
-      graphics::legend("bottomright",
-                       y = NULL,
-                       groups,
-                       inset = .02,
-                       title = zvar,
-                       fill = color_map,
-                       cex = 1,
-                       y.intersp = 0.55,
-                       x.intersp = 0.25,
-                       bty = "n",
-                       bg = "transparent",
-                       horiz = FALSE)
-    } else{
-      graphics::legend("topright",
-                       y = NULL,
-                       groups,
-                       inset = .02,
-                       title = zvar,
-                       fill = color_map,
-                       cex = 1,
-                       y.intersp = 0.55,
-                       x.intersp = 0.25,
-                       bty = "n",
-                       bg = "transparent",
-                       horiz = FALSE)
-      }
+  if (length(groups) > 1) {
+
+    # create legend if there are more groups
+    legend_args <- list(
+      x = "bottomright",
+      y = NULL,
+      legend = groups,
+      title = zvar,
+      fill = polygon_args$col,
+      y.intersp = 0.8
+    )
+
+    if (plot_data$y[nrow(plot_data)/length(groups)] < mean(graphics::par("usr")[3:4]))
+      legend_args$x <- "topright"
+
+    do.call(graphics::legend, merge_args(legend_args, layer_args$legend))
   }
 }
 
-color_add_alpha <- function(col, alpha = 1) {
-  apply(sapply(col, grDevices::col2rgb) / 255, 2, function(x) {
-    grDevices::rgb(x[1], x[2], x[3], alpha = alpha)
-  })
-}
+

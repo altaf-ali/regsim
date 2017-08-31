@@ -8,8 +8,8 @@
   rotate = FALSE, ...)
 }
 \arguments{
-\item{object}{an object of class "regsim", usually obtained by calling the
-\code{regsim} function.}
+\item{object}{an object of class \code{regsim}, usually obtained by calling the
+\link{regsim} function.}
 
 \item{intercept}{include intercept in output}
 

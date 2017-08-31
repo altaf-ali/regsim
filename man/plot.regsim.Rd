@@ -4,13 +4,13 @@
 \alias{plot.regsim}
 \title{Plot Regression Simulations}
 \usage{
-\method{plot}{regsim}(x, var, ...)
+\method{plot}{regsim}(x, formula, ...)
 }
 \arguments{
-\item{x}{an object of class "regsim", usually obtained by calling the
-\code{regsim} function.}
+\item{x}{an object of class \code{regsim}, usually obtained by calling the
+\link{regsim} function.}
 
-\item{var}{variable to plot on the x-axis}
+\item{formula}{a \link[stats]{formula} such as ~x or ~x1 + x2}
 
 \item{...}{additional arguments passed to class-specific functions}
 }

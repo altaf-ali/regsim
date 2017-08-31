@@ -1,7 +1,7 @@
 Package: regsim
 Type: Package
 Title: Regression Model Simulations
-Version: 0.1.1
+Version: 0.1.2
 Authors@R: c(
     person("Altaf", "Ali", email = "altaf@fastmail.com", role = c("aut", "cre")),
     person("Philipp", "Broniecki", email = "philippbroniecki@gmail.com", role = c("aut"))
@@ -17,9 +17,10 @@ BugReports: https://github.com/altaf-ali/regsim/issues
 Imports: 
   MASS, 
   stats, 
-  graphics
+  graphics,
+  RColorBrewer
 Suggests: 
   foreign,
-    testthat,
-    knitr,
-    rmarkdown
+  testthat,
+  knitr,
+  rmarkdown

@@ -7,7 +7,7 @@
 \method{regsim}{glm}(object, x, num = 1000, link = logit, ...)
 }
 \arguments{
-\item{object}{a regression model, usually, a result of a call to glm}
+\item{object}{a regression model, usually, a result of a call to \link[stats]{glm}}
 
 \item{x}{a list of explanatory variables}
 

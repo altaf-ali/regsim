@@ -2,8 +2,8 @@
 #'
 #' summary method for class "regsim"
 #'
-#' @param object an object of class "regsim", usually obtained by calling the
-#' \code{regsim} function.
+#' @param object an object of class \code{regsim}, usually obtained by calling the
+#' \link{regsim} function.
 #' @param intercept include intercept in output
 #' @param detail print detail format
 #' @param rotate rotate covariates vertically

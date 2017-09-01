@@ -22,7 +22,7 @@ summary(model)
 
 ```{r}
 x <- list(
-  wt = seq(min(mtcars$wt), max(mtcars$wt)),
+  wt = seq(1, 5),
   cyl = levels(mtcars$cyl)
 )
 
@@ -31,6 +31,6 @@ summary(sim)
 ```
 
 ```{r}
-plot(sim, ~ wt + cyl)
+plot(sim, ~ wt + cyl, lines.col = "Set1", lines.lwd = 1.5)
 ```
 

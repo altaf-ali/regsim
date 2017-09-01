@@ -51,6 +51,9 @@
       <a href="../articles/binary_models.html">Binary Models</a>
     </li>
     <li>
+      <a href="../articles/categorical_variables.html">Categorical Variables</a>
+    </li>
+    <li>
       <a href="../articles/interaction_terms.html">Interaction Terms</a>
     </li>
   </ul>
@@ -77,7 +80,7 @@
     <div class="page-header toc-ignore">
       <h1>Binary Models</h1>
             
-            <h4 class="date">2017-08-31</h4>
+            <h4 class="date">2017-09-01</h4>
           </div>
 
     
@@ -85,7 +88,7 @@
 <div class="contents">
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(foreign)
 <span class="kw">library</span>(regsim)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bes &lt;-<span class="st"> </span><span class="kw">read.dta</span>(<span class="st">"http://uclspp.github.io/PUBLG100/data/bes.dta"</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bes &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/foreign/topics/read.dta">read.dta</a></span>(<span class="st">"http://uclspp.github.io/PUBLG100/data/bes.dta"</span>)
 
 bes<span class="op">$</span>Gender &lt;-<span class="st"> </span><span class="kw">factor</span>(bes<span class="op">$</span>Gender, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">"Female"</span>, <span class="st">"Male"</span>))</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model &lt;-<span class="st"> </span><span class="kw">glm</span>(Turnout <span class="op">~</span><span class="st"> </span>Income <span class="op">+</span><span class="st"> </span>polinfoindex <span class="op">+</span><span class="st"> </span>Influence <span class="op">+</span><span class="st"> </span>Gender <span class="op">+</span><span class="st"> </span>Age <span class="op">+</span><span class="st"> </span>
@@ -130,163 +133,500 @@ bes<span class="op">$</span>Gender &lt;-<span class="st"> </span><span class="kw
 ## 
 ## Number of Fisher Scoring iterations: 5</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">list</span>(
-  <span class="dt">Gender =</span> <span class="kw">c</span>(<span class="st">"Male"</span>, <span class="st">"Female"</span>)
+  <span class="dt">Gender =</span> <span class="kw">levels</span>(bes<span class="op">$</span>Gender)
 )
 
 sim &lt;-<span class="st"> </span><span class="kw"><a href="../reference/regsim.html">regsim</a></span>(model, x)
 
-<span class="kw">summary</span>(sim, <span class="dt">detail =</span> <span class="ot">TRUE</span>, <span class="dt">rotate =</span> <span class="ot">FALSE</span>)</code></pre></div>
-<pre><code>##      Income polinfoindex Influence GenderMale      Age edu15 edu17 edu18
-## p1 5.321557     5.409277  3.608508          1 50.91853     0     0     0
-##    edu19plus   in_school in_uni
-## p1         0 0.008061408      0
+<span class="kw">summary</span>(sim, <span class="dt">detail =</span> <span class="ot">TRUE</span>, <span class="dt">rotate =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>##              Profile 1  
+## Gender       Female     
+## Income       5.321557   
+## polinfoindex 5.409277   
+## Influence    3.608508   
+## Age          50.91853   
+## edu15        0          
+## edu17        0          
+## edu18        0          
+## edu19plus    0          
+## in_school    0.008061408
+## in_uni       0          
 ## 
-##         mean         sd      2.5%       50%    97.5%
-## p1 0.7621348 0.01559306 0.7304526 0.7621165 0.789713
-## ------------------------------------------------
+##         2.5%       50%     97.5%
+## p1 0.7923702 0.8209007 0.8428325
+## ----------------------------------
 ## 
-##      Income polinfoindex Influence GenderMale      Age edu15 edu17 edu18
-## p2 5.321557     5.409277  3.608508          0 50.91853     0     0     0
-##    edu19plus   in_school in_uni
-## p2         0 0.008061408      0
+##              Profile 2  
+## Gender       Male       
+## Income       5.321557   
+## polinfoindex 5.409277   
+## Influence    3.608508   
+## Age          50.91853   
+## edu15        0          
+## edu17        0          
+## edu18        0          
+## edu19plus    0          
+## in_school    0.008061408
+## in_uni       0          
 ## 
-##         mean         sd      2.5%       50%     97.5%
-## p2 0.8204423 0.01342652 0.7933735 0.8210126 0.8448714
-## ------------------------------------------------
-## 
-## First Differences:
-## 
-##          mean         sd       2.5%        50%     97.5%
-## fd 0.05830754 0.01298721 0.03152146 0.05810401 0.0832216</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(sim, <span class="dt">detail =</span> <span class="ot">TRUE</span>, <span class="dt">rotate =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<pre><code>##                 Profile 1
-## Income        5.321557318
-## polinfoindex  5.409276616
-## Influence     3.608507570
-## GenderMale    1.000000000
-## Age          50.918529200
-## edu15         0.000000000
-## edu17         0.000000000
-## edu18         0.000000000
-## edu19plus     0.000000000
-## in_school     0.008061408
-## in_uni        0.000000000
-## 
-##         mean         sd      2.5%       50%    97.5%
-## p1 0.7621348 0.01559306 0.7304526 0.7621165 0.789713
-## ------------------------------------------------
-## 
-##                 Profile 2
-## Income        5.321557318
-## polinfoindex  5.409276616
-## Influence     3.608507570
-## GenderMale    0.000000000
-## Age          50.918529200
-## edu15         0.000000000
-## edu17         0.000000000
-## edu18         0.000000000
-## edu19plus     0.000000000
-## in_school     0.008061408
-## in_uni        0.000000000
-## 
-##         mean         sd      2.5%       50%     97.5%
-## p2 0.8204423 0.01342652 0.7933735 0.8210126 0.8448714
-## ------------------------------------------------
+##         2.5%       50%     97.5%
+## p2 0.7284605 0.7610384 0.7891529
+## ----------------------------------
 ## 
 ## First Differences:
 ## 
-##          mean         sd       2.5%        50%     97.5%
-## fd 0.05830754 0.01298721 0.03152146 0.05810401 0.0832216</code></pre>
+##           2.5%         50%      97.5%
+## fd -0.08633979 -0.05857289 -0.0312613</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">list</span>(
-  <span class="dt">Gender =</span> <span class="kw">c</span>(<span class="st">"Male"</span>, <span class="st">"Female"</span>),
+  <span class="dt">Gender =</span> <span class="kw">levels</span>(bes<span class="op">$</span>Gender),
   <span class="dt">Income =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">13</span>
 )
 
 sim &lt;-<span class="st"> </span><span class="kw"><a href="../reference/regsim.html">regsim</a></span>(model, x)
 
-<span class="kw">summary</span>(sim)</code></pre></div>
-<pre><code>##    Income polinfoindex Influence GenderMale      Age edu15 edu17 edu18
-## 1       1     5.409277  3.608508          1 50.91853     0     0     0
-## 2       1     5.409277  3.608508          0 50.91853     0     0     0
-## 3       2     5.409277  3.608508          1 50.91853     0     0     0
-## 4       2     5.409277  3.608508          0 50.91853     0     0     0
-## 5       3     5.409277  3.608508          1 50.91853     0     0     0
-## 6       3     5.409277  3.608508          0 50.91853     0     0     0
-## 7       4     5.409277  3.608508          1 50.91853     0     0     0
-## 8       4     5.409277  3.608508          0 50.91853     0     0     0
-## 9       5     5.409277  3.608508          1 50.91853     0     0     0
-## 10      5     5.409277  3.608508          0 50.91853     0     0     0
-## 11      6     5.409277  3.608508          1 50.91853     0     0     0
-## 12      6     5.409277  3.608508          0 50.91853     0     0     0
-## 13      7     5.409277  3.608508          1 50.91853     0     0     0
-## 14      7     5.409277  3.608508          0 50.91853     0     0     0
-## 15      8     5.409277  3.608508          1 50.91853     0     0     0
-## 16      8     5.409277  3.608508          0 50.91853     0     0     0
-## 17      9     5.409277  3.608508          1 50.91853     0     0     0
-## 18      9     5.409277  3.608508          0 50.91853     0     0     0
-## 19     10     5.409277  3.608508          1 50.91853     0     0     0
-## 20     10     5.409277  3.608508          0 50.91853     0     0     0
-## 21     11     5.409277  3.608508          1 50.91853     0     0     0
-## 22     11     5.409277  3.608508          0 50.91853     0     0     0
-## 23     12     5.409277  3.608508          1 50.91853     0     0     0
-## 24     12     5.409277  3.608508          0 50.91853     0     0     0
-## 25     13     5.409277  3.608508          1 50.91853     0     0     0
-## 26     13     5.409277  3.608508          0 50.91853     0     0     0
-##    edu19plus   in_school in_uni      mean         sd      2.5%       50%
-## 1          0 0.008061408      0 0.6225892 0.02753198 0.5687817 0.6227098
-## 2          0 0.008061408      0 0.7007335 0.02452051 0.6521291 0.7008177
-## 3          0 0.008061408      0 0.6578542 0.02362226 0.6109569 0.6584354
-## 4          0 0.008061408      0 0.7318814 0.02077451 0.6915977 0.7321996
-## 5          0 0.008061408      0 0.6914677 0.02036186 0.6503270 0.6923084
-## 6          0 0.008061408      0 0.7608863 0.01778324 0.7263327 0.7615185
-## 7          0 0.008061408      0 0.7231604 0.01792561 0.6861335 0.7243251
-## 8          0 0.008061408      0 0.7876434 0.01561337 0.7556865 0.7883215
-## 9          0 0.008061408      0 0.7527386 0.01637434 0.7181642 0.7536543
-## 10         0 0.008061408      0 0.8121162 0.01422454 0.7832799 0.8129691
-## 11         0 0.008061408      0 0.7800838 0.01560867 0.7476242 0.7806907
-## 12         0 0.008061408      0 0.8343268 0.01346366 0.8068839 0.8352694
-## 13         0 0.008061408      0 0.8051468 0.01539822 0.7748502 0.8057339
-## 14         0 0.008061408      0 0.8543448 0.01311395 0.8274864 0.8552974
-## 15         0 0.008061408      0 0.8279389 0.01547887 0.7965293 0.8285578
-## 16         0 0.008061408      0 0.8722759 0.01296804 0.8453567 0.8731368
-## 17         0 0.008061408      0 0.8485210 0.01563648 0.8172846 0.8496314
-## 18         0 0.008061408      0 0.8882511 0.01287334 0.8610686 0.8890127
-## 19         0 0.008061408      0 0.8669920 0.01573410 0.8354469 0.8682491
-## 20         0 0.008061408      0 0.9024166 0.01273848 0.8753640 0.9034832
-## 21         0 0.008061408      0 0.8834777 0.01570133 0.8515566 0.8846753
-## 22         0 0.008061408      0 0.9149262 0.01251969 0.8883671 0.9161625
-## 23         0 0.008061408      0 0.8981211 0.01551359 0.8662493 0.8993962
-## 24         0 0.008061408      0 0.9259345 0.01220422 0.8991402 0.9270498
-## 25         0 0.008061408      0 0.9110739 0.01517393 0.8794863 0.9124749
-## 26         0 0.008061408      0 0.9355926 0.01179713 0.9096107 0.9366447
-##        97.5%
-## 1  0.6727990
-## 2  0.7455440
-## 3  0.7010123
-## 4  0.7689732
-## 5  0.7277023
-## 6  0.7920367
-## 7  0.7548967
-## 8  0.8154723
-## 9  0.7816728
-## 10 0.8368259
-## 11 0.8077806
-## 12 0.8579737
-## 13 0.8324996
-## 14 0.8776274
-## 15 0.8556856
-## 16 0.8953226
-## 17 0.8767018
-## 18 0.9111577
-## 19 0.8956211
-## 20 0.9248650
-## 21 0.9121867
-## 22 0.9364813
-## 23 0.9262915
-## 24 0.9468571
-## 25 0.9383394
-## 26 0.9556201</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(sim, <span class="op">~</span>Income <span class="op">+</span><span class="st"> </span>GenderMale, 
+<span class="kw">summary</span>(sim, <span class="dt">detail =</span> <span class="ot">TRUE</span>, <span class="dt">rotate =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>##              Profile 1  
+## Gender       Female     
+## Income       1          
+## polinfoindex 5.409277   
+## Influence    3.608508   
+## Age          50.91853   
+## edu15        0          
+## edu17        0          
+## edu18        0          
+## edu19plus    0          
+## in_school    0.008061408
+## in_uni       0          
+## 
+##         2.5%       50%     97.5%
+## p1 0.6548068 0.7023794 0.7441117
+## ----------------------------------
+## 
+##              Profile 2  
+## Gender       Male       
+## Income       1          
+## polinfoindex 5.409277   
+## Influence    3.608508   
+## Age          50.91853   
+## edu15        0          
+## edu17        0          
+## edu18        0          
+## edu19plus    0          
+## in_school    0.008061408
+## in_uni       0          
+## 
+##         2.5%       50%     97.5%
+## p2 0.5667986 0.6237996 0.6727053
+## ----------------------------------
+## 
+##              Profile 3  
+## Gender       Female     
+## Income       2          
+## polinfoindex 5.409277   
+## Influence    3.608508   
+## Age          50.91853   
+## edu15        0          
+## edu17        0          
+## edu18        0          
+## edu19plus    0          
+## in_school    0.008061408
+## in_uni       0          
+## 
+##         2.5%      50%     97.5%
+## p3 0.6926429 0.733715 0.7681621
+## ----------------------------------
+## 
+##              Profile 4  
+## Gender       Male       
+## Income       2          
+## polinfoindex 5.409277   
+## Influence    3.608508   
+## Age          50.91853   
+## edu15        0          
+## edu17        0          
+## edu18        0          
+## edu19plus    0          
+## in_school    0.008061408
+## in_uni       0          
+## 
+##         2.5%       50%     97.5%
+## p4 0.6105465 0.6588925 0.7009583
+## ----------------------------------
+## 
+##              Profile 5  
+## Gender       Female     
+## Income       3          
+## polinfoindex 5.409277   
+## Influence    3.608508   
+## Age          50.91853   
+## edu15        0          
+## edu17        0          
+## edu18        0          
+## edu19plus    0          
+## in_school    0.008061408
+## in_uni       0          
+## 
+##        2.5%       50%     97.5%
+## p5 0.728255 0.7624859 0.7908726
+## ----------------------------------
+## 
+##              Profile 6  
+## Gender       Male       
+## Income       3          
+## polinfoindex 5.409277   
+## Influence    3.608508   
+## Age          50.91853   
+## edu15        0          
+## edu17        0          
+## edu18        0          
+## edu19plus    0          
+## in_school    0.008061408
+## in_uni       0          
+## 
+##         2.5%       50%     97.5%
+## p6 0.6504127 0.6927839 0.7290468
+## ----------------------------------
+## 
+##              Profile 7  
+## Gender       Female     
+## Income       4          
+## polinfoindex 5.409277   
+## Influence    3.608508   
+## Age          50.91853   
+## edu15        0          
+## edu17        0          
+## edu18        0          
+## edu19plus    0          
+## in_school    0.008061408
+## in_uni       0          
+## 
+##       2.5%       50%     97.5%
+## p7 0.75834 0.7901226 0.8139051
+## ----------------------------------
+## 
+##              Profile 8  
+## Gender       Male       
+## Income       4          
+## polinfoindex 5.409277   
+## Influence    3.608508   
+## Age          50.91853   
+## edu15        0          
+## edu17        0          
+## edu18        0          
+## edu19plus    0          
+## in_school    0.008061408
+## in_uni       0          
+## 
+##         2.5%       50%     97.5%
+## p8 0.6877551 0.7239922 0.7565137
+## ----------------------------------
+## 
+##              Profile 9  
+## Gender       Female     
+## Income       5          
+## polinfoindex 5.409277   
+## Influence    3.608508   
+## Age          50.91853   
+## edu15        0          
+## edu17        0          
+## edu18        0          
+## edu19plus    0          
+## in_school    0.008061408
+## in_uni       0          
+## 
+##         2.5%       50%     97.5%
+## p9 0.7846235 0.8141918 0.8364776
+## ----------------------------------
+## 
+##              Profile 10 
+## Gender       Male       
+## Income       5          
+## polinfoindex 5.409277   
+## Influence    3.608508   
+## Age          50.91853   
+## edu15        0          
+## edu17        0          
+## edu18        0          
+## edu19plus    0          
+## in_school    0.008061408
+## in_uni       0          
+## 
+##          2.5%       50%     97.5%
+## p10 0.7205918 0.7534647 0.7833212
+## ----------------------------------
+## 
+##              Profile 11 
+## Gender       Female     
+## Income       6          
+## polinfoindex 5.409277   
+## Influence    3.608508   
+## Age          50.91853   
+## edu15        0          
+## edu17        0          
+## edu18        0          
+## edu19plus    0          
+## in_school    0.008061408
+## in_uni       0          
+## 
+##          2.5%       50%     97.5%
+## p11 0.8079689 0.8364961 0.8578665
+## ----------------------------------
+## 
+##              Profile 12 
+## Gender       Male       
+## Income       6          
+## polinfoindex 5.409277   
+## Influence    3.608508   
+## Age          50.91853   
+## edu15        0          
+## edu17        0          
+## edu18        0          
+## edu19plus    0          
+## in_school    0.008061408
+## in_uni       0          
+## 
+##          2.5%       50%     97.5%
+## p12 0.7487198 0.7811985 0.8093472
+## ----------------------------------
+## 
+##              Profile 13 
+## Gender       Female     
+## Income       7          
+## polinfoindex 5.409277   
+## Influence    3.608508   
+## Age          50.91853   
+## edu15        0          
+## edu17        0          
+## edu18        0          
+## edu19plus    0          
+## in_school    0.008061408
+## in_uni       0          
+## 
+##          2.5%       50%     97.5%
+## p13 0.8277158 0.8565613 0.8777382
+## ----------------------------------
+## 
+##              Profile 14 
+## Gender       Male       
+## Income       7          
+## polinfoindex 5.409277   
+## Influence    3.608508   
+## Age          50.91853   
+## edu15        0          
+## edu17        0          
+## edu18        0          
+## edu19plus    0          
+## in_school    0.008061408
+## in_uni       0          
+## 
+##          2.5%       50%     97.5%
+## p14 0.7731159 0.8064775 0.8338288
+## ----------------------------------
+## 
+##              Profile 15 
+## Gender       Female     
+## Income       8          
+## polinfoindex 5.409277   
+## Influence    3.608508   
+## Age          50.91853   
+## edu15        0          
+## edu17        0          
+## edu18        0          
+## edu19plus    0          
+## in_school    0.008061408
+## in_uni       0          
+## 
+##          2.5%       50%     97.5%
+## p15 0.8454523 0.8743847 0.8955765
+## ----------------------------------
+## 
+##              Profile 16 
+## Gender       Male       
+## Income       8          
+## polinfoindex 5.409277   
+## Influence    3.608508   
+## Age          50.91853   
+## edu15        0          
+## edu17        0          
+## edu18        0          
+## edu19plus    0          
+## in_school    0.008061408
+## in_uni       0          
+## 
+##          2.5%       50%     97.5%
+## p16 0.7950138 0.8293582 0.8575103
+## ----------------------------------
+## 
+##              Profile 17 
+## Gender       Female     
+## Income       9          
+## polinfoindex 5.409277   
+## Influence    3.608508   
+## Age          50.91853   
+## edu15        0          
+## edu17        0          
+## edu18        0          
+## edu19plus    0          
+## in_school    0.008061408
+## in_uni       0          
+## 
+##          2.5%       50%     97.5%
+## p17 0.8612785 0.8901446 0.9125277
+## ----------------------------------
+## 
+##              Profile 18 
+## Gender       Male       
+## Income       9          
+## polinfoindex 5.409277   
+## Influence    3.608508   
+## Age          50.91853   
+## edu15        0          
+## edu17        0          
+## edu18        0          
+## edu19plus    0          
+## in_school    0.008061408
+## in_uni       0          
+## 
+##          2.5%      50%     97.5%
+## p18 0.8147583 0.850011 0.8788802
+## ----------------------------------
+## 
+##              Profile 19 
+## Gender       Female     
+## Income       10         
+## polinfoindex 5.409277   
+## Influence    3.608508   
+## Age          50.91853   
+## edu15        0          
+## edu17        0          
+## edu18        0          
+## edu19plus    0          
+## in_school    0.008061408
+## in_uni       0          
+## 
+##          2.5%       50%     97.5%
+## p19 0.8752171 0.9043339 0.9263517
+## ----------------------------------
+## 
+##              Profile 20 
+## Gender       Male       
+## Income       10         
+## polinfoindex 5.409277   
+## Influence    3.608508   
+## Age          50.91853   
+## edu15        0          
+## edu17        0          
+## edu18        0          
+## edu19plus    0          
+## in_school    0.008061408
+## in_uni       0          
+## 
+##          2.5%       50%     97.5%
+## p20 0.8320492 0.8686989 0.8972924
+## ----------------------------------
+## 
+##              Profile 21 
+## Gender       Female     
+## Income       11         
+## polinfoindex 5.409277   
+## Influence    3.608508   
+## Age          50.91853   
+## edu15        0          
+## edu17        0          
+## edu18        0          
+## edu19plus    0          
+## in_school    0.008061408
+## in_uni       0          
+## 
+##          2.5%       50%     97.5%
+## p21 0.8882885 0.9168099 0.9386796
+## ----------------------------------
+## 
+##              Profile 22 
+## Gender       Male       
+## Income       11         
+## polinfoindex 5.409277   
+## Influence    3.608508   
+## Age          50.91853   
+## edu15        0          
+## edu17        0          
+## edu18        0          
+## edu19plus    0          
+## in_school    0.008061408
+## in_uni       0          
+## 
+##         2.5%       50%     97.5%
+## p22 0.849811 0.8852977 0.9135254
+## ----------------------------------
+## 
+##              Profile 23 
+## Gender       Female     
+## Income       12         
+## polinfoindex 5.409277   
+## Influence    3.608508   
+## Age          50.91853   
+## edu15        0          
+## edu17        0          
+## edu18        0          
+## edu19plus    0          
+## in_school    0.008061408
+## in_uni       0          
+## 
+##          2.5%       50%     97.5%
+## p23 0.8999958 0.9279485 0.9487953
+## ----------------------------------
+## 
+##              Profile 24 
+## Gender       Male       
+## Income       12         
+## polinfoindex 5.409277   
+## Influence    3.608508   
+## Age          50.91853   
+## edu15        0          
+## edu17        0          
+## edu18        0          
+## edu19plus    0          
+## in_school    0.008061408
+## in_uni       0          
+## 
+##         2.5%       50%     97.5%
+## p24 0.863677 0.9001958 0.9271483
+## ----------------------------------
+## 
+##              Profile 25 
+## Gender       Female     
+## Income       13         
+## polinfoindex 5.409277   
+## Influence    3.608508   
+## Age          50.91853   
+## edu15        0          
+## edu17        0          
+## edu18        0          
+## edu19plus    0          
+## in_school    0.008061408
+## in_uni       0          
+## 
+##          2.5%       50%     97.5%
+## p25 0.9099683 0.9374669 0.9573648
+## ----------------------------------
+## 
+##              Profile 26 
+## Gender       Male       
+## Income       13         
+## polinfoindex 5.409277   
+## Influence    3.608508   
+## Age          50.91853   
+## edu15        0          
+## edu17        0          
+## edu18        0          
+## edu19plus    0          
+## in_school    0.008061408
+## in_uni       0          
+## 
+##          2.5%       50%     97.5%
+## p26 0.8767771 0.9130659 0.9388878
+## ----------------------------------</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(sim, <span class="op">~</span>Income <span class="op">+</span><span class="st"> </span>Gender, 
      <span class="dt">ylab =</span> <span class="st">"Predicted Probability of Voting"</span>,
      <span class="dt">main =</span> <span class="st">"Effect of Income by Gender"</span>)</code></pre></div>
 <p><img src="binary_models_files/figure-html/unnamed-chunk-6-1.png" width="672"></p>

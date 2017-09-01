@@ -30,28 +30,27 @@ summary(model)
 
 ```{r}
 x <- list(
-  Gender = c("Male", "Female")
+  Gender = levels(bes$Gender)
 )
 
 sim <- regsim(model, x)
 
-summary(sim, detail = TRUE, rotate = FALSE)
 summary(sim, detail = TRUE, rotate = TRUE)
 ```
 
 ```{r}
 x <- list(
-  Gender = c("Male", "Female"),
+  Gender = levels(bes$Gender),
   Income = 1:13
 )
 
 sim <- regsim(model, x)
 
-summary(sim)
+summary(sim, detail = TRUE, rotate = TRUE)
 ```
 
 ```{r}
-plot(sim, ~Income + GenderMale, 
+plot(sim, ~Income + Gender, 
      ylab = "Predicted Probability of Voting",
      main = "Effect of Income by Gender")
 ```

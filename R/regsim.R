@@ -11,7 +11,11 @@
 #' library(regsim)
 #'
 #' model <- lm(mpg ~ wt + cyl, data = mtcars)
-#' sim <- regsim(model, list(wt = seq(1, 5, 0.1), cyl = mean(mtcars$cyl)))
+#' x <- list(
+#'   wt = seq(1, 5, 0.1),
+#'   cyl = mean(mtcars$cyl)
+#' )
+#' sim <- regsim(model, x)
 #' summary(sim)
 #' @export
 regsim <- function (object, x, num = 1000, ...) {
@@ -42,9 +46,8 @@ regsim_common <- function(object, x, num = 1000, link = NULL) {
   # check explanatory variables given to us
   unknown_vars <- setdiff(names(x), formula_rhs_terms)
 
-  if (length(unknown_vars)) {
+  if (length(unknown_vars))
     stop(paste(paste(unknown_vars, collapse = ", "), "not in the model"))
-  }
 
   # convert any character variables to factor - just hope they are already
   # factors in the original data
@@ -78,7 +81,7 @@ regsim_common <- function(object, x, num = 1000, link = NULL) {
 
   return_value <- list(
     model = object,
-    x = design_matrix,
+    x = xprofiles,
     ev = ev
   )
 

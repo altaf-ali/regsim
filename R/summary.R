@@ -40,7 +40,7 @@ summary.regsim <- function(object, intercept = FALSE, detail = FALSE, rotate = F
 
     cat("\n")
     print(qi[i,])
-    cat(paste0(paste(rep("-", 48), collapse = ""), "\n\n"))
+    cat(paste0(paste(rep("-", 34), collapse = ""), "\n\n"))
   }
 
   if (nrow(x) == 2) {
@@ -52,11 +52,6 @@ summary.regsim <- function(object, intercept = FALSE, detail = FALSE, rotate = F
 }
 
 calc_summary <- function(obj) {
-  as.data.frame(t(apply(obj, 2, function(x) {
-    c(mean = mean(x),
-      sd = stats::sd(x),
-      stats::quantile(x, probs = c(.025, .5, .975))
-    )
-  })))
+  as.data.frame(t(apply(obj, 2, stats::quantile, probs = c(.025, .5, .975))))
 }
 

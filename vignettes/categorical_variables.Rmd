@@ -1,0 +1,36 @@
+---
+title: "Categorical Variables"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r}
+library(regsim)
+
+data(mtcars)
+mtcars$cyl <- as.factor(mtcars$cyl)
+```
+
+```{r}
+model <- lm(mpg ~ wt + cyl, mtcars)
+summary(model)
+```
+
+```{r}
+x <- list(
+  wt = seq(min(mtcars$wt), max(mtcars$wt)),
+  cyl = levels(mtcars$cyl)
+)
+
+sim <- regsim(model, x)
+summary(sim)
+```
+
+```{r}
+plot(sim, ~ wt + cyl)
+```
+

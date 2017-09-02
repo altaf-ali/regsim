@@ -109,7 +109,7 @@
     
 
     <pre class="usage"><span class='co'># S3 method for glm</span>
-<span class='fu'><a href='regsim.html'>regsim</a></span>(<span class='no'>object</span>, <span class='no'>x</span>, <span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>link</span> <span class='kw'>=</span> <span class='no'>logit</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='regsim.html'>regsim</a></span>(<span class='no'>object</span>, <span class='no'>x</span>, <span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>link</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -141,7 +141,7 @@
     <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>regsim</span>)
 
 <span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='no'>swiss</span>$<span class='no'>Fertility</span> <span class='kw'>&gt;</span> <span class='fu'>median</span>(<span class='no'>swiss</span>$<span class='no'>Fertility</span>)
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'>glm</span>(<span class='no'>y</span> ~ <span class='no'>Education</span> + <span class='no'>Agriculture</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>swiss</span>)
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'>glm</span>(<span class='no'>y</span> ~ <span class='no'>Education</span> + <span class='no'>Agriculture</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='no'>binomial</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>swiss</span>)
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>list</span>(
   <span class='kw'>Agriculture</span> <span class='kw'>=</span> <span class='fu'>seq</span>(<span class='fl'>1</span>, <span class='fl'>100</span>, <span class='fl'>5</span>),
   <span class='kw'>Education</span> <span class='kw'>=</span> <span class='fu'>mean</span>(<span class='no'>swiss</span>$<span class='no'>Education</span>)

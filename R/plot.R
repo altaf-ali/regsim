@@ -10,23 +10,26 @@
 #' library(regsim)
 #'
 #' model <- lm(mpg ~ wt + cyl, data = mtcars)
-#' sim <- regsim(model, list(wt = seq(1, 5, 0.1), cyl = mean(mtcars$cyl)))
+#' x <- list(
+#'   wt = seq(1, 5, 0.1),
+#'   cyl = mean(mtcars$cyl)
+#' )
+#' sim <- regsim(model, x)
 #' plot(sim, ~wt)
 #' @export
 plot.regsim <- function(x, formula, ...) {
   regsim_summary <- summary(x)
 
   vars <- labels(stats::terms(formula))
+  unknown_vars <- setdiff(vars, names(regsim_summary))
 
-  # if (!all(vars %in% names(regsim_summary))) {
-  #   stop(paste(xvar, "not in the model"))
-  # }
+  if (length(unknown_vars))
+    stop(paste(paste(unknown_vars, collapse = ", "), "not in the model"))
 
   xvar <- vars[1]
 
   if (length(vars) > 1) {
-    zvar <- try(colnames(stats::model.matrix(formula, x$model$model))[3], silent = TRUE)
-    if(class(zvar)=="try-error") zvar <- vars[2]
+    zvar <- vars[2]
   } else {
     zvar <- "z"
     regsim_summary[, zvar] <- 0
@@ -56,8 +59,7 @@ plot.regsim <- function(x, formula, ...) {
   layers <- c("lines", "legend", "polygon")
 
   arg_matrix <- as.data.frame(sapply(layers, function(arg_type, args) {
-    suffix <- sprintf("^%s.", arg_type)
-    grepl(suffix, names(args))
+    grepl(sprintf("^%s.", arg_type), names(args))
   }, args, simplify = FALSE))
 
   layer_args <- sapply(arg_matrix, function(arg_type, args) {
@@ -65,11 +67,6 @@ plot.regsim <- function(x, formula, ...) {
     names(args) <- gsub("^.*?\\.", "", names(args))
     return(args)
   }, args, simplify = FALSE)
-
-  # merge default and user-specified args
-  merge_args <- function(default_args, args) {
-    c(default_args[setdiff(names(default_args), names(args))], args)
-  }
 
   if (nrow(arg_matrix))
     plot_args <- merge_args(plot_args, args[apply(!arg_matrix, 1, all)])
@@ -83,40 +80,31 @@ plot.regsim <- function(x, formula, ...) {
     col = "Set1"
   )
 
-  polygon_args <- merge_args(polygon_args, layer_args$polygon)
+  layer_args$polygon <- merge_args(polygon_args, layer_args$polygon)
 
-  # see if it's a brewer palette
-  if (length(polygon_args$col) == 1) {
-    if (polygon_args$col %in% rownames(RColorBrewer::brewer.pal.info)) {
-      polygon_args$col <- as.vector(grDevices::adjustcolor(
-        RColorBrewer::brewer.pal(max(3, length(groups)), polygon_args$col),
-        alpha.f = 0.4
-      ))
-    }
-  }
-
-  # if not enough colors, then just duplicate them
-  if (length(polygon_args$col) < length(groups))
-    polygon_args$col <- rep(polygon_args$col, length(groups))
+  # special handling of color specific args
+  alpha <- 0.4
+  layer_args$lines <- set_color_args(layer_args$lines, "col", length(groups))
+  layer_args$polygon <- set_color_args(layer_args$polygon, "col", length(groups), alpha = alpha)
+  layer_args$legend <- set_color_args(layer_args$legend, "fill", length(groups), alpha = alpha)
 
   # run through all the groups
   for (i in 1:length(groups)) {
     group_data <- plot_data[plot_data$z == groups[i], ]
 
-    group_args <- list(
+    polygon_args <- list(
       x = c(group_data$x, rev(group_data$x)),
-      y = c(group_data$y_min, rev(group_data$y_max)),
-      col = polygon_args$col[i]
+      y = c(group_data$y_min, rev(group_data$y_max))
     )
 
-    do.call(graphics::polygon, merge_args(polygon_args, group_args))
+    do.call(graphics::polygon, merge_args(polygon_args, layer_args$polygon, length(groups), i))
 
     lines_args <- list(
       x = group_data$x,
       y = group_data$y
     )
 
-    do.call(graphics::lines, merge_args(lines_args, layer_args$lines))
+    do.call(graphics::lines, merge_args(lines_args, layer_args$lines, length(groups), i))
   }
 
   if (length(groups) > 1) {
@@ -127,7 +115,7 @@ plot.regsim <- function(x, formula, ...) {
       y = NULL,
       legend = groups,
       title = zvar,
-      fill = polygon_args$col,
+      fill = layer_args$polygon$col,
       y.intersp = 0.8
     )
 
@@ -138,4 +126,36 @@ plot.regsim <- function(x, formula, ...) {
   }
 }
 
+# merge default and user-specified args
+merge_args <- function(default_args, args, n = 0, i = 0) {
+  args <- c(default_args[setdiff(names(default_args), names(args))], args)
+  sapply(args, function(arg) {
+    if ((length(arg) == n) && i)
+      arg[[i]]
+    else
+      arg
+  }, simplify = FALSE)
+}
 
+# set color arg from brewer palette if one is provided
+set_color_args <- function(arg_list, color_key, n, alpha = 1) {
+
+  is.brewer.pal <- function(arg) {
+    arg %in% rownames(RColorBrewer::brewer.pal.info)
+  }
+
+  sapply(names(arg_list), function(key) {
+    val <- arg_list[[key]]
+
+    if (key == color_key && length(val) == 1 && is.brewer.pal(val)) {
+      color_pal <- as.vector(grDevices::adjustcolor(
+        RColorBrewer::brewer.pal(max(3, n), val),
+        alpha.f = alpha))
+
+      color_pal[1:n]
+    }
+    else {
+      val
+    }
+  }, simplify = FALSE)
+}

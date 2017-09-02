@@ -4,7 +4,6 @@
 #'
 #' @param object an object of class \code{regsim}, usually obtained by calling the
 #' \link{regsim} function.
-#' @param intercept include intercept in output
 #' @param detail print detail format
 #' @param rotate rotate covariates vertically
 #' @param ... additional arguments passed to class-specific functions
@@ -12,13 +11,15 @@
 #' library(regsim)
 #'
 #' model <- lm(mpg ~ wt + cyl, data = mtcars)
-#' sim <- regsim(model, list(wt = seq(1, 5), cyl = mean(mtcars$cyl)))
+#' x <- list(
+#'   wt = seq(1, 5, 0.1),
+#'   cyl = mean(mtcars$cyl)
+#' )
+#' sim <- regsim(model, x)
 #' summary(sim, detail = TRUE, rotate = TRUE)
 #' @export
-summary.regsim <- function(object, intercept = FALSE, detail = FALSE, rotate = FALSE, ...) {
-  x <- as.data.frame(object$x)
-  if (!intercept)
-    x <- x[, names(x) != "(Intercept)"]
+summary.regsim <- function(object, detail = FALSE, rotate = FALSE, ...) {
+  x <- object$x
 
   qi <- calc_summary(object$ev)
 
@@ -34,13 +35,14 @@ summary.regsim <- function(object, intercept = FALSE, detail = FALSE, rotate = F
   for (i in 1:nrow(x)) {
     profile <- x[i,]
     if (rotate)
-      print(t(profile))
+      print(t(profile), quote = FALSE)
     else
-      print(profile)
+      print(profile, quote = FALSE)
 
-    cat("\n")
-    print(qi[i,])
-    cat(paste0(paste(rep("-", 34), collapse = ""), "\n\n"))
+    qi_str <- utils::capture.output(print(qi[i,]))
+    len <- nchar(qi_str[2])
+    cat(paste0("\n", paste(qi_str, collapse = "\n")))
+    cat(paste0("\n", paste(rep("-", len), collapse = ""), "\n\n"))
   }
 
   if (nrow(x) == 2) {

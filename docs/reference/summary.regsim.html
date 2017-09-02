@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Summarizing Regression Simulations � summary.regsim • regsim</title>
+<title>Summarizing Regression Simulations — summary.regsim • regsim</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -74,6 +74,9 @@
       <a href="../articles/binary_models.html">Binary Models</a>
     </li>
     <li>
+      <a href="../articles/categorical_variables.html">Categorical Variables</a>
+    </li>
+    <li>
       <a href="../articles/interaction_terms.html">Interaction Terms</a>
     </li>
   </ul>
@@ -106,8 +109,7 @@
     
 
     <pre class="usage"><span class='co'># S3 method for regsim</span>
-<span class='fu'>summary</span>(<span class='no'>object</span>, <span class='kw'>intercept</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>detail</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>rotate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>summary</span>(<span class='no'>object</span>, <span class='kw'>detail</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>rotate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -116,10 +118,6 @@
       <th>object</th>
       <td><p>an object of class <code>regsim</code>, usually obtained by calling the
 <a href='regsim.html'>regsim</a> function.</p></td>
-    </tr>
-    <tr>
-      <th>intercept</th>
-      <td><p>include intercept in output</p></td>
     </tr>
     <tr>
       <th>detail</th>
@@ -140,46 +138,338 @@
     <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>regsim</span>)
 
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'>lm</span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
-<span class='no'>sim</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='regsim.html'>regsim</a></span>(<span class='no'>model</span>, <span class='fu'>list</span>(<span class='kw'>wt</span> <span class='kw'>=</span> <span class='fu'>seq</span>(<span class='fl'>1</span>, <span class='fl'>5</span>), <span class='kw'>cyl</span> <span class='kw'>=</span> <span class='fu'>mean</span>(<span class='no'>mtcars</span>$<span class='no'>cyl</span>)))
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>list</span>(
+  <span class='kw'>wt</span> <span class='kw'>=</span> <span class='fu'>seq</span>(<span class='fl'>1</span>, <span class='fl'>5</span>, <span class='fl'>0.1</span>),
+  <span class='kw'>cyl</span> <span class='kw'>=</span> <span class='fu'>mean</span>(<span class='no'>mtcars</span>$<span class='no'>cyl</span>)
+)
+<span class='no'>sim</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='regsim.html'>regsim</a></span>(<span class='no'>model</span>, <span class='no'>x</span>)
 <span class='fu'>summary</span>(<span class='no'>sim</span>, <span class='kw'>detail</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>rotate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;     Profile 1
 #&gt; wt     1.0000
 #&gt; cyl    6.1875
 #&gt; 
-#&gt;       mean       sd     2.5%      50%    97.5%
-#&gt; p1 27.1341 1.777956 23.79492 27.11576 30.72753
-#&gt; ------------------------------------------------
+#&gt;        2.5%      50%    97.5%
+#&gt; p1 23.79492 27.11576 30.72753
+#&gt; -----------------------------
 #&gt; 
 #&gt;     Profile 2
-#&gt; wt     2.0000
+#&gt; wt     1.1000
 #&gt; cyl    6.1875
 #&gt; 
-#&gt;        mean       sd     2.5%      50%    97.5%
-#&gt; p2 23.96384 1.045917 21.94068 23.92788 26.09904
-#&gt; ------------------------------------------------
+#&gt;        2.5%      50%    97.5%
+#&gt; p2 23.60277 26.81209 30.25734
+#&gt; -----------------------------
 #&gt; 
 #&gt;     Profile 3
-#&gt; wt     3.0000
+#&gt; wt     1.2000
 #&gt; cyl    6.1875
 #&gt; 
-#&gt;        mean        sd     2.5%      50%    97.5%
-#&gt; p3 20.79358 0.4807214 19.91368 20.78462 21.72791
-#&gt; ------------------------------------------------
+#&gt;        2.5%     50%    97.5%
+#&gt; p3 23.41738 26.4935 29.80154
+#&gt; ----------------------------
 #&gt; 
 #&gt;     Profile 4
-#&gt; wt     4.0000
+#&gt; wt     1.3000
 #&gt; cyl    6.1875
 #&gt; 
-#&gt;        mean        sd     2.5%    50%    97.5%
-#&gt; p4 17.62332 0.7566893 16.18013 17.605 19.13037
-#&gt; ------------------------------------------------
+#&gt;        2.5%      50%    97.5%
+#&gt; p4 23.23198 26.17136 29.34573
+#&gt; -----------------------------
 #&gt; 
 #&gt;     Profile 5
-#&gt; wt     5.0000
+#&gt; wt     1.4000
 #&gt; cyl    6.1875
 #&gt; 
-#&gt;        mean       sd     2.5%      50%    97.5%
-#&gt; p5 14.45306 1.455472 11.64084 14.46362 17.34719
-#&gt; ------------------------------------------------
+#&gt;        2.5%     50%    97.5%
+#&gt; p5 23.04787 25.8482 28.88992
+#&gt; ----------------------------
+#&gt; 
+#&gt;     Profile 6
+#&gt; wt     1.5000
+#&gt; cyl    6.1875
+#&gt; 
+#&gt;        2.5%      50%    97.5%
+#&gt; p6 22.86398 25.53324 28.43435
+#&gt; -----------------------------
+#&gt; 
+#&gt;     Profile 7
+#&gt; wt     1.6000
+#&gt; cyl    6.1875
+#&gt; 
+#&gt;        2.5%      50%    97.5%
+#&gt; p7 22.67433 25.20988 27.97692
+#&gt; -----------------------------
+#&gt; 
+#&gt;     Profile 8
+#&gt; wt     1.7000
+#&gt; cyl    6.1875
+#&gt; 
+#&gt;        2.5%      50%    97.5%
+#&gt; p8 22.46713 24.88005 27.50065
+#&gt; -----------------------------
+#&gt; 
+#&gt;     Profile 9
+#&gt; wt     1.8000
+#&gt; cyl    6.1875
+#&gt; 
+#&gt;        2.5%     50%    97.5%
+#&gt; p9 22.26165 24.5554 27.03159
+#&gt; ----------------------------
+#&gt; 
+#&gt;     Profile 10
+#&gt; wt      1.9000
+#&gt; cyl     6.1875
+#&gt; 
+#&gt;        2.5%      50%    97.5%
+#&gt; p10 22.1243 24.24722 26.57517
+#&gt; -----------------------------
+#&gt; 
+#&gt;     Profile 11
+#&gt; wt      2.0000
+#&gt; cyl     6.1875
+#&gt; 
+#&gt;         2.5%      50%    97.5%
+#&gt; p11 21.94068 23.92788 26.09904
+#&gt; ------------------------------
+#&gt; 
+#&gt;     Profile 12
+#&gt; wt      2.1000
+#&gt; cyl     6.1875
+#&gt; 
+#&gt;         2.5%      50%    97.5%
+#&gt; p12 21.78269 23.60683 25.63144
+#&gt; ------------------------------
+#&gt; 
+#&gt;     Profile 13
+#&gt; wt      2.2000
+#&gt; cyl     6.1875
+#&gt; 
+#&gt;         2.5%      50%    97.5%
+#&gt; p13 21.63791 23.28519 25.15551
+#&gt; ------------------------------
+#&gt; 
+#&gt;     Profile 14
+#&gt; wt      2.3000
+#&gt; cyl     6.1875
+#&gt; 
+#&gt;         2.5%      50%    97.5%
+#&gt; p14 21.45806 22.97017 24.69762
+#&gt; ------------------------------
+#&gt; 
+#&gt;     Profile 15
+#&gt; wt      2.4000
+#&gt; cyl     6.1875
+#&gt; 
+#&gt;         2.5%     50%    97.5%
+#&gt; p15 21.22513 22.6675 24.24775
+#&gt; -----------------------------
+#&gt; 
+#&gt;     Profile 16
+#&gt; wt      2.5000
+#&gt; cyl     6.1875
+#&gt; 
+#&gt;        2.5%      50%    97.5%
+#&gt; p16 21.0174 22.34995 23.79268
+#&gt; -----------------------------
+#&gt; 
+#&gt;     Profile 17
+#&gt; wt      2.6000
+#&gt; cyl     6.1875
+#&gt; 
+#&gt;         2.5%      50%    97.5%
+#&gt; p17 20.79974 22.04286 23.35028
+#&gt; ------------------------------
+#&gt; 
+#&gt;     Profile 18
+#&gt; wt      2.7000
+#&gt; cyl     6.1875
+#&gt; 
+#&gt;         2.5%      50%    97.5%
+#&gt; p18 20.59412 21.72555 22.94658
+#&gt; ------------------------------
+#&gt; 
+#&gt;     Profile 19
+#&gt; wt      2.8000
+#&gt; cyl     6.1875
+#&gt; 
+#&gt;         2.5%      50%   97.5%
+#&gt; p19 20.40648 21.41605 22.5376
+#&gt; -----------------------------
+#&gt; 
+#&gt;     Profile 20
+#&gt; wt      2.9000
+#&gt; cyl     6.1875
+#&gt; 
+#&gt;         2.5%      50%    97.5%
+#&gt; p20 20.18121 21.10461 22.11058
+#&gt; ------------------------------
+#&gt; 
+#&gt;     Profile 21
+#&gt; wt      3.0000
+#&gt; cyl     6.1875
+#&gt; 
+#&gt;         2.5%      50%    97.5%
+#&gt; p21 19.91368 20.78462 21.72791
+#&gt; ------------------------------
+#&gt; 
+#&gt;     Profile 22
+#&gt; wt      3.1000
+#&gt; cyl     6.1875
+#&gt; 
+#&gt;         2.5%      50%    97.5%
+#&gt; p22 19.62569 20.47254 21.37402
+#&gt; ------------------------------
+#&gt; 
+#&gt;     Profile 23
+#&gt; wt      3.2000
+#&gt; cyl     6.1875
+#&gt; 
+#&gt;        2.5%      50%    97.5%
+#&gt; p23 19.2947 20.15676 21.04558
+#&gt; -----------------------------
+#&gt; 
+#&gt;     Profile 24
+#&gt; wt      3.3000
+#&gt; cyl     6.1875
+#&gt; 
+#&gt;         2.5%      50%    97.5%
+#&gt; p24 18.99329 19.83463 20.75657
+#&gt; ------------------------------
+#&gt; 
+#&gt;     Profile 25
+#&gt; wt      3.4000
+#&gt; cyl     6.1875
+#&gt; 
+#&gt;         2.5%      50%   97.5%
+#&gt; p25 18.64908 19.52176 20.4767
+#&gt; -----------------------------
+#&gt; 
+#&gt;     Profile 26
+#&gt; wt      3.5000
+#&gt; cyl     6.1875
+#&gt; 
+#&gt;         2.5%      50%    97.5%
+#&gt; p26 18.25875 19.19991 20.22638
+#&gt; ------------------------------
+#&gt; 
+#&gt;     Profile 27
+#&gt; wt      3.6000
+#&gt; cyl     6.1875
+#&gt; 
+#&gt;         2.5%      50%    97.5%
+#&gt; p27 17.84833 18.86476 19.98667
+#&gt; ------------------------------
+#&gt; 
+#&gt;     Profile 28
+#&gt; wt      3.7000
+#&gt; cyl     6.1875
+#&gt; 
+#&gt;         2.5%      50%    97.5%
+#&gt; p28 17.44409 18.55136 19.75999
+#&gt; ------------------------------
+#&gt; 
+#&gt;     Profile 29
+#&gt; wt      3.8000
+#&gt; cyl     6.1875
+#&gt; 
+#&gt;         2.5%      50%    97.5%
+#&gt; p29 17.04043 18.24011 19.55012
+#&gt; ------------------------------
+#&gt; 
+#&gt;     Profile 30
+#&gt; wt      3.9000
+#&gt; cyl     6.1875
+#&gt; 
+#&gt;         2.5%      50%    97.5%
+#&gt; p30 16.61671 17.92206 19.32151
+#&gt; ------------------------------
+#&gt; 
+#&gt;     Profile 31
+#&gt; wt      4.0000
+#&gt; cyl     6.1875
+#&gt; 
+#&gt;         2.5%    50%    97.5%
+#&gt; p31 16.18013 17.605 19.13037
+#&gt; ----------------------------
+#&gt; 
+#&gt;     Profile 32
+#&gt; wt      4.1000
+#&gt; cyl     6.1875
+#&gt; 
+#&gt;         2.5%      50%    97.5%
+#&gt; p32 15.73377 17.28948 18.92918
+#&gt; ------------------------------
+#&gt; 
+#&gt;     Profile 33
+#&gt; wt      4.2000
+#&gt; cyl     6.1875
+#&gt; 
+#&gt;         2.5%      50%    97.5%
+#&gt; p33 15.25861 16.96756 18.76883
+#&gt; ------------------------------
+#&gt; 
+#&gt;     Profile 34
+#&gt; wt      4.3000
+#&gt; cyl     6.1875
+#&gt; 
+#&gt;         2.5%      50%    97.5%
+#&gt; p34 14.81036 16.64991 18.58216
+#&gt; ------------------------------
+#&gt; 
+#&gt;     Profile 35
+#&gt; wt      4.4000
+#&gt; cyl     6.1875
+#&gt; 
+#&gt;        2.5%      50%    97.5%
+#&gt; p35 14.3442 16.33402 18.40207
+#&gt; -----------------------------
+#&gt; 
+#&gt;     Profile 36
+#&gt; wt      4.5000
+#&gt; cyl     6.1875
+#&gt; 
+#&gt;         2.5%      50%    97.5%
+#&gt; p36 13.91436 16.01693 18.23235
+#&gt; ------------------------------
+#&gt; 
+#&gt;     Profile 37
+#&gt; wt      4.6000
+#&gt; cyl     6.1875
+#&gt; 
+#&gt;         2.5%      50%    97.5%
+#&gt; p37 13.48883 15.71657 18.04661
+#&gt; ------------------------------
+#&gt; 
+#&gt;     Profile 38
+#&gt; wt      4.7000
+#&gt; cyl     6.1875
+#&gt; 
+#&gt;         2.5%      50%    97.5%
+#&gt; p38 13.00837 15.39861 17.84063
+#&gt; ------------------------------
+#&gt; 
+#&gt;     Profile 39
+#&gt; wt      4.8000
+#&gt; cyl     6.1875
+#&gt; 
+#&gt;         2.5%      50%    97.5%
+#&gt; p39 12.55796 15.10865 17.67573
+#&gt; ------------------------------
+#&gt; 
+#&gt;     Profile 40
+#&gt; wt      4.9000
+#&gt; cyl     6.1875
+#&gt; 
+#&gt;         2.5%      50%    97.5%
+#&gt; p40 12.09586 14.78585 17.51083
+#&gt; ------------------------------
+#&gt; 
+#&gt;     Profile 41
+#&gt; wt      5.0000
+#&gt; cyl     6.1875
+#&gt; 
+#&gt;         2.5%      50%    97.5%
+#&gt; p41 11.64084 14.46362 17.34719
+#&gt; ------------------------------
 #&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

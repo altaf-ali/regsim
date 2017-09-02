@@ -11,7 +11,7 @@
 #' library(regsim)
 #'
 #' y <- swiss$Fertility > median(swiss$Fertility)
-#' model <- glm(y ~ Education + Agriculture, family = "binomial", data = swiss)
+#' model <- glm(y ~ Education + Agriculture, family = binomial, data = swiss)
 #' x <- list(
 #'   Agriculture = seq(1, 100, 5),
 #'   Education = mean(swiss$Education)
@@ -19,16 +19,9 @@
 #' sim <- regsim(model, x)
 #' summary(sim)
 #' @export
-regsim.glm <- function(object, x, num = 1000, link = logit, ...) {
-  if (object$family$link != "logit") link <- get(object$family$link)
+regsim.glm <- function(object, x, num = 1000, link = NULL, ...) {
+  if (is.null(link))
+    link <- stats::family(object)$linkinv
+
   regsim_common(object, x, num, link)
 }
-
-logit <- function(x) {
-  return(1/(1+exp(-x)))
-}
-
-probit <- function(x){
-  return(stats::pnorm(x))
-}
-

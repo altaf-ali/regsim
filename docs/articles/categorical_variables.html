@@ -80,7 +80,7 @@
     <div class="page-header toc-ignore">
       <h1>Categorical Variables</h1>
             
-            <h4 class="date">2017-09-01</h4>
+            <h4 class="date">2017-09-02</h4>
           </div>
 
     
@@ -119,22 +119,22 @@ mtcars<span class="op">$</span>cyl &lt;-<span class="st"> </span><span class="kw
 
 sim &lt;-<span class="st"> </span><span class="kw"><a href="../reference/regsim.html">regsim</a></span>(model, x)
 <span class="kw">summary</span>(sim)</code></pre></div>
-<pre><code>##    wt cyl     2.5%      50%    97.5%
-## 1   1   4 28.16024 30.71328 32.95949
-## 2   2   4 25.87735 27.51758 28.96809
-## 3   3   4 22.38437 24.28436 26.19653
-## 4   4   4 18.14050 21.14946 24.01730
-## 5   5   4 13.60481 17.98495 22.23135
-## 6   1   6 22.66032 26.58250 30.03032
-## 7   2   6 20.60471 23.40035 25.88481
-## 8   3   6 18.23163 20.12526 21.97842
-## 9   4   6 14.76836 16.94958 19.24656
-## 10  5   6 10.27819 13.78754 17.17618
-## 11  1   8 20.05955 24.67836 29.24761
-## 12  2   8 18.32365 21.51470 24.69168
-## 13  3   8 16.22225 18.33353 20.26412
-## 14  4   8 13.82363 15.09136 16.38976
-## 15  5   8 10.02655 11.87933 13.95875</code></pre>
+<pre><code>##    wt cyl      2.5%      50%    97.5%
+## 1   1   4 28.451424 30.81788 33.13920
+## 2   2   4 26.102720 27.59825 29.01988
+## 3   3   4 22.546489 24.37793 26.12930
+## 4   4   4 18.431706 21.13861 24.11060
+## 5   5   4 13.939594 17.88233 22.17385
+## 6   1   6 22.989225 26.68657 30.13307
+## 7   2   6 20.786942 23.43181 25.80352
+## 8   3   6 18.357309 20.20898 21.93408
+## 9   4   6 14.893104 16.90105 19.16529
+## 10  5   6 10.688262 13.64172 17.04005
+## 11  1   8 20.164527 24.86457 29.12279
+## 12  2   8 18.303863 21.63959 24.53258
+## 13  3   8 16.294141 18.34317 20.24817
+## 14  4   8 13.804272 15.09777 16.53193
+## 15  5   8  9.956276 11.87839 13.80170</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(sim, <span class="op">~</span><span class="st"> </span>wt <span class="op">+</span><span class="st"> </span>cyl, <span class="dt">lines.col =</span> <span class="st">"Set1"</span>, <span class="dt">lines.lwd =</span> <span class="fl">1.5</span>)</code></pre></div>
 <p><img src="categorical_variables_files/figure-html/unnamed-chunk-4-1.png" width="672"></p>
 </div>

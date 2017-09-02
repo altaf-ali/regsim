@@ -39,9 +39,10 @@ summary.regsim <- function(object, detail = FALSE, rotate = FALSE, ...) {
     else
       print(profile, quote = FALSE)
 
-    cat("\n")
-    print(qi[i,])
-    cat(paste0(paste(rep("-", 34), collapse = ""), "\n\n"))
+    qi_str <- utils::capture.output(print(qi[i,]))
+    len <- nchar(qi_str[2])
+    cat(paste0("\n", paste(qi_str, collapse = "\n")))
+    cat(paste0("\n", paste(rep("-", len), collapse = ""), "\n\n"))
   }
 
   if (nrow(x) == 2) {

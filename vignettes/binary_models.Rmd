@@ -37,6 +37,10 @@ sim <- regsim(model, x)
 summary(sim)
 ```
 
+```{r echo = FALSE}
+set.seed(666)
+```
+
 ```{r}
 x <- list(
   Gender = levels(bes$Gender),

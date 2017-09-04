@@ -30,6 +30,10 @@ data(mtcars)
 model <- lm(mpg ~ wt + cyl, data = mtcars)
 ```
 
+```{r echo = FALSE}
+set.seed(666)
+```
+
 ```{r}
 x <- list(
   wt = seq(1, 5, 0.1),

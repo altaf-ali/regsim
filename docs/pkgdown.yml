@@ -3,6 +3,7 @@ urls:
   article: https://altaf-ali.github.io/regsim/articles
 articles:
   binary_models: binary_models.html
+  categorical_variables: categorical_variables.html
   interaction_terms: interaction_terms.html
   regsim: regsim.html
 

@@ -4,7 +4,7 @@
 \alias{regsim.glm}
 \title{Regression Simulation for Generalized Linear Models}
 \usage{
-\method{regsim}{glm}(object, x, num = 1000, link = logit, ...)
+\method{regsim}{glm}(object, x, num = 1000, link = NULL, ...)
 }
 \arguments{
 \item{object}{a regression model, usually, a result of a call to \link[stats]{glm}}
@@ -24,7 +24,7 @@
 library(regsim)
 
 y <- swiss$Fertility > median(swiss$Fertility)
-model <- glm(y ~ Education + Agriculture, family = "binomial", data = swiss)
+model <- glm(y ~ Education + Agriculture, family = binomial, data = swiss)
 x <- list(
   Agriculture = seq(1, 100, 5),
   Education = mean(swiss$Education)

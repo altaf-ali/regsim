@@ -1,6 +1,5 @@
 ---
 title: "Getting Started"
-date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
@@ -8,39 +7,43 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+## Installation
+
+You can install regsim from github with:
+
+```{r gh-installation, eval = FALSE}
+# install.packages("devtools")
+devtools::install_github("altaf-ali/regsim")
+```
+
+## Example
+
 ```{r}
 library(regsim)
-
-df <- read.csv("http://philippbroniecki.github.io/ML2017.io/data/communities.csv")
 ```
 
-
-```{r}
-m1 <- lm(PctUnemployed ~ pctUrban + householdsize + racePctWhite, data = df)
-
-summary(m1)
+```{r echo = FALSE}
+data(mtcars)
 ```
 
 ```{r}
-set.seed(123)
+model <- lm(mpg ~ wt + cyl, data = mtcars)
+```
 
+```{r}
 x <- list(
-  pctUrban = seq(from = 0, to = 1, by = .1), 
-  householdsize = mean(df$householdsize)
+  wt = seq(1, 5, 0.1),
+  cyl = mean(mtcars$cyl)
 )
 
-sim <- regsim(m1, x)
+sim <- regsim(model, x)
 ```
 
-```{r}
-plot(sim, ~pctUrban, xlab = "Pct Urban", ylab = "Unemployment Rate")
+```{r plot}
+plot(sim, ~ wt)
 ```
 
 ```{r}
 summary(sim)
-```
-
-```{r}
-sim
 ```
 

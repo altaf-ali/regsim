@@ -1,7 +1,7 @@
 Package: regsim
 Type: Package
 Title: Regression Model Simulations
-Version: 0.1.4
+Version: 0.1.5
 Authors@R: c(
     person("Altaf", "Ali", email = "altaf@fastmail.com", role = c("aut", "cre")),
     person("Philipp", "Broniecki", email = "philippbroniecki@gmail.com", role = c("aut"))

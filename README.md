@@ -1,5 +1,5 @@
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+<!-- README.md is generated from README.Rmd. Please DO NOT edit README.md directly -->
 regsim
 ======
 
@@ -22,16 +22,23 @@ Example
 
 ``` r
 library(regsim)
+```
 
+``` r
 model <- lm(mpg ~ wt + cyl, data = mtcars)
+```
+
+``` r
 x <- list(
   wt = seq(1, 5, 0.1), 
   cyl = mean(mtcars$cyl)
 )
 
 sim <- regsim(model, x)
+```
 
+``` r
 plot(sim, ~ wt)
 ```
 
-![](README-example-1.png)
+![](figures/README-plot-1.png)

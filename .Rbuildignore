@@ -1,7 +1,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^docs$
+^figures$
 ^_pkgdown\.yml$
 ^README\.Rmd$
-^README-.*\.png$
 ^\.travis\.yml$

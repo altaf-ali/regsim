@@ -4,3 +4,15 @@ template:
   params:
     bootswatch: cerulean
 
+reference:
+  - title: "Simulation Functions"
+    contents:
+      - regsim
+      - regsim.glm
+      - regsim.lm
+  - title: "Summary Functions"
+    contents:
+      - summary.regsim
+  - title: "Plot Functions"
+    contents:
+      - plot.regsim

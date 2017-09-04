@@ -1,6 +1,5 @@
 ---
 title: "Binary Models"
-date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
@@ -35,7 +34,7 @@ x <- list(
 
 sim <- regsim(model, x)
 
-summary(sim, detail = TRUE, rotate = TRUE)
+summary(sim)
 ```
 
 ```{r}
@@ -45,8 +44,6 @@ x <- list(
 )
 
 sim <- regsim(model, x)
-
-summary(sim, detail = TRUE, rotate = TRUE)
 ```
 
 ```{r}

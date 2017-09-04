@@ -4,7 +4,7 @@
 \alias{summary.regsim}
 \title{Summarizing Regression Simulations}
 \usage{
-\method{summary}{regsim}(object, detail = FALSE, rotate = FALSE, ...)
+\method{summary}{regsim}(object, detail = TRUE, long = detail, ...)
 }
 \arguments{
 \item{object}{an object of class \code{regsim}, usually obtained by calling the
@@ -12,7 +12,7 @@
 
 \item{detail}{print detail format}
 
-\item{rotate}{rotate covariates vertically}
+\item{long}{print summary in long format (default is TRUE in detail mode)}
 
 \item{...}{additional arguments passed to class-specific functions}
 }
@@ -28,5 +28,5 @@ x <- list(
   cyl = mean(mtcars$cyl)
 )
 sim <- regsim(model, x)
-summary(sim, detail = TRUE, rotate = TRUE)
+summary(sim)
 }

@@ -2,14 +2,10 @@
 output: github_document
 ---
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+<!-- README.md is generated from README.Rmd. Please DO NOT edit README.md directly -->
 
 ```{r, echo = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.path = "README-"
-)
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", fig.path = "figures/README-")
 ```
 
 # regsim
@@ -29,16 +25,24 @@ devtools::install_github("altaf-ali/regsim")
 
 ## Example
 
-```{r example}
+```{r}
 library(regsim)
+```
 
+```{r}
 model <- lm(mpg ~ wt + cyl, data = mtcars)
+```
+
+```{r}
 x <- list(
   wt = seq(1, 5, 0.1), 
   cyl = mean(mtcars$cyl)
 )
 
 sim <- regsim(model, x)
+```
 
+```{r plot}
 plot(sim, ~ wt)
 ```
+

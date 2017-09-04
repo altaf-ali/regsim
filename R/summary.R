@@ -5,7 +5,7 @@
 #' @param object an object of class \code{regsim}, usually obtained by calling the
 #' \link{regsim} function.
 #' @param detail print detail format
-#' @param rotate rotate covariates vertically
+#' @param long print summary in long format (default is TRUE in detail mode)
 #' @param ... additional arguments passed to class-specific functions
 #' @examples
 #' library(regsim)
@@ -16,9 +16,9 @@
 #'   cyl = mean(mtcars$cyl)
 #' )
 #' sim <- regsim(model, x)
-#' summary(sim, detail = TRUE, rotate = TRUE)
+#' summary(sim)
 #' @export
-summary.regsim <- function(object, detail = FALSE, rotate = FALSE, ...) {
+summary.regsim <- function(object, detail = TRUE, long = detail, ...) {
   x <- object$x
 
   qi <- calc_summary(object$ev)
@@ -29,12 +29,12 @@ summary.regsim <- function(object, detail = FALSE, rotate = FALSE, ...) {
   profile_id <- paste("Profile", rownames(x))
   profile_id_short <- paste0("p", rownames(x))
 
-  rownames(x) <- ifelse(rep(rotate, nrow(x)), profile_id, profile_id_short)
+  rownames(x) <- ifelse(rep(long, nrow(x)), profile_id, profile_id_short)
   rownames(qi) <- profile_id_short
 
   for (i in 1:nrow(x)) {
     profile <- x[i,]
-    if (rotate)
+    if (long)
       print(t(profile), quote = FALSE)
     else
       print(profile, quote = FALSE)

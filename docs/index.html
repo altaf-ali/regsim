@@ -82,7 +82,7 @@
     
     
 <div class="contents">
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+<!-- README.md is generated from README.Rmd. Please DO NOT edit README.md directly -->
 <div id="regsim" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#regsim" class="anchor"></a>regsim</h1></div>
@@ -98,18 +98,16 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(regsim)
-
-model &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>wt <span class="op">+</span><span class="st"> </span>cyl, <span class="dt">data =</span> mtcars)
-x &lt;-<span class="st"> </span><span class="kw">list</span>(
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(regsim)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>wt <span class="op">+</span><span class="st"> </span>cyl, <span class="dt">data =</span> mtcars)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">list</span>(
   <span class="dt">wt =</span> <span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">5</span>, <span class="fl">0.1</span>), 
   <span class="dt">cyl =</span> <span class="kw">mean</span>(mtcars<span class="op">$</span>cyl)
 )
 
-sim &lt;-<span class="st"> </span><span class="kw"><a href="reference/regsim.html">regsim</a></span>(model, x)
-
-<span class="kw">plot</span>(sim, <span class="op">~</span><span class="st"> </span>wt)</code></pre></div>
-<p><img src="README-example-1.png" width="672"></p>
+sim &lt;-<span class="st"> </span><span class="kw"><a href="reference/regsim.html">regsim</a></span>(model, x)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(sim, <span class="op">~</span><span class="st"> </span>wt)</code></pre></div>
+<p><img src="figures/README-plot-1.png" width="672"></p>
 </div>
 </div>
 </div>

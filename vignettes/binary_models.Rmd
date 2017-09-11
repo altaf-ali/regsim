@@ -27,6 +27,10 @@ model <- glm(Turnout ~ Income + polinfoindex + Influence + Gender + Age +
 summary(model)
 ```
 
+```{r echo = FALSE}
+set.seed(666)
+```
+
 ```{r}
 x <- list(
   Gender = levels(bes$Gender)

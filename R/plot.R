@@ -17,8 +17,11 @@
 #' sim <- regsim(model, x)
 #' plot(sim, ~wt)
 #' @export
-plot.regsim <- function(x, formula, ...) {
+plot.regsim <- function(x, formula = NULL, ...) {
   regsim_summary <- summary(x, detail = FALSE)
+
+  if (is.null(formula))
+    formula = formula(x$model)
 
   vars <- labels(stats::terms(formula))
   unknown_vars <- setdiff(vars, names(regsim_summary))

@@ -4,7 +4,7 @@
 \alias{plot.regsim}
 \title{Plot Regression Simulations}
 \usage{
-\method{plot}{regsim}(x, formula, ...)
+\method{plot}{regsim}(x, formula = NULL, ...)
 }
 \arguments{
 \item{x}{an object of class \code{regsim}, usually obtained by calling the

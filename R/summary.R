@@ -33,7 +33,7 @@ summary.regsim <- function(object, detail = TRUE, long = detail, ...) {
   rownames(qi) <- profile_id_short
 
   for (i in 1:nrow(x)) {
-    profile <- x[i,]
+    profile <- x[i,, drop = FALSE]
     if (long)
       print(t(profile), quote = FALSE)
     else

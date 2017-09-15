@@ -29,16 +29,13 @@ model <- lm(mpg ~ wt + cyl, data = mtcars)
 ```
 
 ``` r
-x <- list(
-  wt = seq(1, 5, 0.1), 
-  cyl = mean(mtcars$cyl)
-)
+x <- list(wt = seq(1, 5, 0.1))
 
 sim <- regsim(model, x)
 ```
 
 ``` r
-plot(sim, ~ wt)
+plot(sim)
 ```
 
 ![](figures/README-plot-1.png)

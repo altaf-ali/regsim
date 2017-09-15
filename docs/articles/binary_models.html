@@ -131,9 +131,7 @@ bes<span class="op">$</span>Gender &lt;-<span class="st"> </span><span class="kw
 ## AIC: 4003.9
 ## 
 ## Number of Fisher Scoring iterations: 5</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">list</span>(
-  <span class="dt">Gender =</span> <span class="kw">levels</span>(bes<span class="op">$</span>Gender)
-)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">Gender =</span> <span class="kw">levels</span>(bes<span class="op">$</span>Gender))
 
 sim &lt;-<span class="st"> </span><span class="kw"><a href="../reference/regsim.html">regsim</a></span>(model, x)
 
@@ -176,10 +174,7 @@ sim &lt;-<span class="st"> </span><span class="kw"><a href="../reference/regsim.
 ## 
 ##           2.5%         50%       97.5%
 ## fd -0.08578415 -0.05678465 -0.03106922</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">list</span>(
-  <span class="dt">Gender =</span> <span class="kw">levels</span>(bes<span class="op">$</span>Gender),
-  <span class="dt">Income =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">13</span>
-)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">Gender =</span> <span class="kw">levels</span>(bes<span class="op">$</span>Gender), <span class="dt">Income =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">13</span>)
 
 sim &lt;-<span class="st"> </span><span class="kw"><a href="../reference/regsim.html">regsim</a></span>(model, x)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(sim, <span class="op">~</span>Income <span class="op">+</span><span class="st"> </span>Gender, 

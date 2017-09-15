@@ -35,16 +35,13 @@ set.seed(666)
 ```
 
 ```{r}
-x <- list(
-  wt = seq(1, 5, 0.1),
-  cyl = mean(mtcars$cyl)
-)
+x <- list(wt = seq(1, 5, 0.1))
 
 sim <- regsim(model, x)
 ```
 
 ```{r plot}
-plot(sim, ~ wt)
+plot(sim)
 ```
 
 ```{r}

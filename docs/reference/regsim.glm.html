@@ -142,10 +142,7 @@
 
 <span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='no'>swiss</span>$<span class='no'>Fertility</span> <span class='kw'>&gt;</span> <span class='fu'>median</span>(<span class='no'>swiss</span>$<span class='no'>Fertility</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'>glm</span>(<span class='no'>y</span> ~ <span class='no'>Education</span> + <span class='no'>Agriculture</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='no'>binomial</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>swiss</span>)
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>list</span>(
-  <span class='kw'>Agriculture</span> <span class='kw'>=</span> <span class='fu'>seq</span>(<span class='fl'>1</span>, <span class='fl'>100</span>, <span class='fl'>5</span>),
-  <span class='kw'>Education</span> <span class='kw'>=</span> <span class='fu'>mean</span>(<span class='no'>swiss</span>$<span class='no'>Education</span>)
-)
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>list</span>(<span class='kw'>Agriculture</span> <span class='kw'>=</span> <span class='fu'>seq</span>(<span class='fl'>1</span>, <span class='fl'>100</span>, <span class='fl'>5</span>))
 <span class='no'>sim</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='regsim.html'>regsim</a></span>(<span class='no'>model</span>, <span class='no'>x</span>)
 <span class='fu'>summary</span>(<span class='no'>sim</span>)</div><div class='output co'>#&gt;             Profile 1
 #&gt; Agriculture   1.00000

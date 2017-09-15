@@ -21,10 +21,7 @@ plots regression simulation results
 library(regsim)
 
 model <- lm(mpg ~ wt + cyl, data = mtcars)
-x <- list(
-  wt = seq(1, 5, 0.1),
-  cyl = mean(mtcars$cyl)
-)
+x <- list(wt = seq(1, 5, 0.1))
 sim <- regsim(model, x)
-plot(sim, ~wt)
+plot(sim)
 }

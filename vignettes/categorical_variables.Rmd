@@ -15,7 +15,7 @@ mtcars$cyl <- as.factor(mtcars$cyl)
 ```
 
 ```{r}
-model <- lm(mpg ~ wt + cyl, mtcars)
+model <- lm(mpg ~ wt + disp + cyl, mtcars)
 summary(model)
 ```
 
@@ -24,10 +24,7 @@ set.seed(666)
 ```
 
 ```{r}
-x <- list(
-  wt = seq(1, 5),
-  cyl = levels(mtcars$cyl)
-)
+x <- list(wt = seq(1, 5), cyl = levels(mtcars$cyl))
 
 sim <- regsim(model, x)
 summary(sim)

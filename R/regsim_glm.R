@@ -12,10 +12,7 @@
 #'
 #' y <- swiss$Fertility > median(swiss$Fertility)
 #' model <- glm(y ~ Education + Agriculture, family = binomial, data = swiss)
-#' x <- list(
-#'   Agriculture = seq(1, 100, 5),
-#'   Education = mean(swiss$Education)
-#' )
+#' x <- list(Agriculture = seq(1, 100, 5))
 #' sim <- regsim(model, x)
 #' summary(sim)
 #' @export

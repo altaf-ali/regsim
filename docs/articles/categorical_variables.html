@@ -89,154 +89,167 @@
 
 <span class="kw">data</span>(mtcars)
 mtcars<span class="op">$</span>cyl &lt;-<span class="st"> </span><span class="kw">as.factor</span>(mtcars<span class="op">$</span>cyl)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>wt <span class="op">+</span><span class="st"> </span>cyl, mtcars)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>wt <span class="op">+</span><span class="st"> </span>disp <span class="op">+</span><span class="st"> </span>cyl, mtcars)
 <span class="kw">summary</span>(model)</code></pre></div>
 <pre><code>## 
 ## Call:
-## lm(formula = mpg ~ wt + cyl, data = mtcars)
+## lm(formula = mpg ~ wt + disp + cyl, data = mtcars)
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -4.5890 -1.2357 -0.5159  1.3845  5.7915 
+## -4.5965 -1.2361 -0.4855  1.4740  5.8043 
 ## 
 ## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  33.9908     1.8878  18.006  &lt; 2e-16 ***
-## wt           -3.2056     0.7539  -4.252 0.000213 ***
-## cyl6         -4.2556     1.3861  -3.070 0.004718 ** 
-## cyl8         -6.0709     1.6523  -3.674 0.000999 ***
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 34.041673   1.963039  17.341 3.66e-16 ***
+## wt          -3.306751   1.105083  -2.992  0.00586 ** 
+## disp         0.001715   0.013481   0.127  0.89972    
+## cyl6        -4.305559   1.464760  -2.939  0.00666 ** 
+## cyl8        -6.322786   2.598416  -2.433  0.02186 *  
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 2.557 on 28 degrees of freedom
-## Multiple R-squared:  0.8374, Adjusted R-squared:   0.82 
-## F-statistic: 48.08 on 3 and 28 DF,  p-value: 3.594e-11</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">list</span>(
-  <span class="dt">wt =</span> <span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">5</span>),
-  <span class="dt">cyl =</span> <span class="kw">levels</span>(mtcars<span class="op">$</span>cyl)
-)
+## Residual standard error: 2.603 on 27 degrees of freedom
+## Multiple R-squared:  0.8375, Adjusted R-squared:  0.8135 
+## F-statistic:  34.8 on 4 and 27 DF,  p-value: 2.726e-10</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">wt =</span> <span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">5</span>), <span class="dt">cyl =</span> <span class="kw">levels</span>(mtcars<span class="op">$</span>cyl))
 
 sim &lt;-<span class="st"> </span><span class="kw"><a href="../reference/regsim.html">regsim</a></span>(model, x)
 <span class="kw">summary</span>(sim)</code></pre></div>
-<pre><code>##     Profile 1
-## wt  1        
-## cyl 4        
-## 
-##      2.5%      50%    97.5%
-## p1 28.402 30.73434 33.08339
-## ---------------------------
-## 
-##     Profile 2
-## wt  2        
-## cyl 4        
+<pre><code>##      Profile 1
+## wt   1        
+## cyl  4        
+## disp 230.7219 
 ## 
 ##        2.5%      50%    97.5%
-## p2 26.06621 27.61693 29.16212
+## p1 25.56391 31.10842 36.89383
 ## -----------------------------
 ## 
-##     Profile 3
-## wt  3        
-## cyl 4        
-## 
-##        2.5%     50%    97.5%
-## p3 22.61179 24.3658 26.18657
-## ----------------------------
-## 
-##     Profile 4
-## wt  4        
-## cyl 4        
+##      Profile 2
+## wt   2        
+## cyl  4        
+## disp 230.7219 
 ## 
 ##        2.5%      50%    97.5%
-## p4 18.35803 21.13481 24.11215
+## p2 23.99886 27.78313 31.90591
 ## -----------------------------
 ## 
-##     Profile 5
-## wt  5        
-## cyl 4        
+##      Profile 3
+## wt   3        
+## cyl  4        
+## disp 230.7219 
 ## 
 ##        2.5%      50%   97.5%
-## p5 13.76666 17.92929 22.3678
+## p3 21.82099 24.51221 27.3655
 ## ----------------------------
 ## 
-##     Profile 6
-## wt  1        
-## cyl 6        
+##      Profile 4
+## wt   4        
+## cyl  4        
+## disp 230.7219 
 ## 
 ##        2.5%      50%    97.5%
-## p6 22.83436 26.46504 30.00619
+## p4 18.22641 21.28332 24.18166
 ## -----------------------------
 ## 
-##     Profile 7
-## wt  2        
-## cyl 6        
+##      Profile 5
+## wt   5        
+## cyl  4        
+## disp 230.7219 
 ## 
-##        2.5%      50%    97.5%
-## p7 20.79781 23.24167 25.72551
-## -----------------------------
-## 
-##     Profile 8
-## wt  3        
-## cyl 6        
-## 
-##        2.5%     50%    97.5%
-## p8 18.26309 20.0765 21.93037
+##       2.5%      50%    97.5%
+## p5 13.5847 17.92686 22.46591
 ## ----------------------------
 ## 
-##     Profile 9
-## wt  4        
-## cyl 6        
+##      Profile 6
+## wt   1        
+## cyl  6        
+## disp 230.7219 
+## 
+##        2.5%      50%   97.5%
+## p6 20.67071 26.83756 32.2676
+## ----------------------------
+## 
+##      Profile 7
+## wt   2        
+## cyl  6        
+## disp 230.7219 
 ## 
 ##        2.5%      50%    97.5%
-## p9 14.65431 16.91258 19.03329
+## p7 19.31662 23.51637 27.17672
 ## -----------------------------
 ## 
-##     Profile 10
-## wt  5         
-## cyl 6         
+##      Profile 8
+## wt   3        
+## cyl  6        
+## disp 230.7219 
 ## 
 ##        2.5%      50%    97.5%
-## p10 10.4203 13.76792 16.84883
+## p8 17.89272 20.16748 22.53182
 ## -----------------------------
 ## 
-##     Profile 11
-## wt  1         
-## cyl 8         
+##      Profile 9
+## wt   4        
+## cyl  6        
+## disp 230.7219 
+## 
+##        2.5%      50%    97.5%
+## p9 14.54709 16.90482 19.14244
+## -----------------------------
+## 
+##      Profile 10
+## wt   5         
+## cyl  6         
+## disp 230.7219  
+## 
+##         2.5%      50%   97.5%
+## p10 9.776385 13.58769 17.3142
+## -----------------------------
+## 
+##      Profile 11
+## wt   1         
+## cyl  8         
+## disp 230.7219  
+## 
+##         2.5%      50%    97.5%
+## p11 19.92288 24.85967 29.66922
+## ------------------------------
+## 
+##      Profile 12
+## wt   2         
+## cyl  8         
+## disp 230.7219  
 ## 
 ##         2.5%     50%    97.5%
-## p11 20.24037 24.6712 29.29384
+## p12 18.24777 21.4852 24.70022
 ## -----------------------------
 ## 
-##     Profile 12
-## wt  2         
-## cyl 8         
+##      Profile 13
+## wt   3         
+## cyl  8         
+## disp 230.7219  
 ## 
 ##         2.5%      50%    97.5%
-## p12 18.33143 21.48769 24.72654
+## p13 15.58305 18.20112 20.76528
 ## ------------------------------
 ## 
-##     Profile 13
-## wt  3         
-## cyl 8         
+##      Profile 14
+## wt   4         
+## cyl  8         
+## disp 230.7219  
 ## 
 ##         2.5%      50%    97.5%
-## p13 16.35026 18.33144 20.26709
+## p14 11.47673 14.93413 18.60458
 ## ------------------------------
 ## 
-##     Profile 14
-## wt  4         
-## cyl 8         
+##      Profile 15
+## wt   5         
+## cyl  8         
+## disp 230.7219  
 ## 
-##         2.5%      50%    97.5%
-## p14 13.80696 15.12915 16.52591
-## ------------------------------
-## 
-##     Profile 15
-## wt  5         
-## cyl 8         
-## 
-##         2.5%      50%    97.5%
-## p15 9.934425 11.94711 13.87155
-## ------------------------------</code></pre>
+##        2.5%      50%  97.5%
+## p15 6.39727 11.63853 17.192
+## ---------------------------</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(sim, <span class="op">~</span><span class="st"> </span>wt <span class="op">+</span><span class="st"> </span>cyl, <span class="dt">lines.col =</span> <span class="st">"Set1"</span>, <span class="dt">lines.lwd =</span> <span class="fl">1.5</span>)</code></pre></div>
 <p><img src="categorical_variables_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>
 </div>

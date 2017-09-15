@@ -24,10 +24,7 @@ set.seed(666)
 ```
 
 ```{r}
-x <- list(
-  former_col = 0:1,
-  wbgi_cce = -2:3
-)
+x <- list(former_col = 0:1, wbgi_cce = -2:3)
 
 sim <- regsim(model, x)
 summary(sim)

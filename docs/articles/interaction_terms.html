@@ -113,10 +113,7 @@ world_data &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rd
 ##   (19 observations deleted due to missingness)
 ## Multiple R-squared:  0.5589, Adjusted R-squared:  0.5512 
 ## F-statistic: 72.23 on 3 and 171 DF,  p-value: &lt; 2.2e-16</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">list</span>(
-  <span class="dt">former_col =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">1</span>,
-  <span class="dt">wbgi_cce =</span> <span class="op">-</span><span class="dv">2</span><span class="op">:</span><span class="dv">3</span>
-)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">former_col =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">1</span>, <span class="dt">wbgi_cce =</span> <span class="op">-</span><span class="dv">2</span><span class="op">:</span><span class="dv">3</span>)
 
 sim &lt;-<span class="st"> </span><span class="kw"><a href="../reference/regsim.html">regsim</a></span>(model, x)
 <span class="kw">summary</span>(sim)</code></pre></div>

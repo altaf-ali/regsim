@@ -40,6 +40,9 @@ central_tendency <- function(x) {
 regsim_common <- function(object, x, num = 1000, link = NULL) {
   formula_rhs_terms <- attr(stats::terms(stats::formula(object)), "term.labels")
   
+  # check explanatory variables given to us
+  unknown_vars <- setdiff(names(x), formula_rhs_terms)
+  
   # poly option
   a.poly <- grepl("poly", formula_rhs_terms)
   if (length(a.poly)) a.poly <- which(a.poly)
@@ -49,9 +52,6 @@ regsim_common <- function(object, x, num = 1000, link = NULL) {
       if (length(unknown_vars)>1) unknown_vars <- unknown_vars[-a.poly]
     }
   }
-
-  # check explanatory variables given to us
-  unknown_vars <- setdiff(names(x), formula_rhs_terms)
 
   if (length(unknown_vars))
     stop(paste(paste(unknown_vars, collapse = ", "), "not in the model"))

@@ -88,7 +88,7 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(foreign)
 <span class="kw">library</span>(regsim)
 
-world_data &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/foreign/topics/read.dta">read.dta</a></span>(<span class="st">"http://uclspp.github.io/PUBLG100/data/QoG2012.dta"</span>)</code></pre></div>
+world_data &lt;-<span class="st"> </span><span class="kw">read.dta</span>(<span class="st">"http://uclspp.github.io/PUBLG100/data/QoG2012.dta"</span>)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model &lt;-<span class="st"> </span><span class="kw">lm</span>(undp_hdi <span class="op">~</span><span class="st"> </span>wbgi_cce <span class="op">+</span><span class="st"> </span>former_col <span class="op">+</span><span class="st"> </span>wbgi_cce<span class="op">:</span>former_col, <span class="dt">data =</span> world_data)
 <span class="kw">summary</span>(model)</code></pre></div>
 <pre><code>## 

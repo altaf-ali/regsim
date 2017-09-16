@@ -87,7 +87,7 @@
 <div class="contents">
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(foreign)
 <span class="kw">library</span>(regsim)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bes &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/foreign/topics/read.dta">read.dta</a></span>(<span class="st">"http://uclspp.github.io/PUBLG100/data/bes.dta"</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bes &lt;-<span class="st"> </span><span class="kw">read.dta</span>(<span class="st">"http://uclspp.github.io/PUBLG100/data/bes.dta"</span>)
 
 bes<span class="op">$</span>Gender &lt;-<span class="st"> </span><span class="kw">factor</span>(bes<span class="op">$</span>Gender, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">"Female"</span>, <span class="st">"Male"</span>))</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model &lt;-<span class="st"> </span><span class="kw">glm</span>(Turnout <span class="op">~</span><span class="st"> </span>Income <span class="op">+</span><span class="st"> </span>polinfoindex <span class="op">+</span><span class="st"> </span>Influence <span class="op">+</span><span class="st"> </span>Gender <span class="op">+</span><span class="st"> </span>Age <span class="op">+</span><span class="st"> </span>
@@ -150,7 +150,7 @@ sim &lt;-<span class="st"> </span><span class="kw"><a href="../reference/regsim.
 ## in_uni       0          
 ## 
 ##         2.5%       50%     97.5%
-## p1 0.7930571 0.8193284 0.8449907
+## p1 0.7929766 0.8193257 0.8452601
 ## --------------------------------
 ## 
 ##              Profile 2  
@@ -167,13 +167,13 @@ sim &lt;-<span class="st"> </span><span class="kw"><a href="../reference/regsim.
 ## in_uni       0          
 ## 
 ##         2.5%       50%     97.5%
-## p2 0.7286079 0.7613495 0.7921563
+## p2 0.7299238 0.7614173 0.7923184
 ## --------------------------------
 ## 
 ## First Differences:
 ## 
 ##           2.5%         50%       97.5%
-## fd -0.08578415 -0.05678465 -0.03106922</code></pre>
+## fd -0.08558134 -0.05660184 -0.03071958</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">Gender =</span> <span class="kw">levels</span>(bes<span class="op">$</span>Gender), <span class="dt">Income =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">13</span>)
 
 sim &lt;-<span class="st"> </span><span class="kw"><a href="../reference/regsim.html">regsim</a></span>(model, x)</code></pre></div>

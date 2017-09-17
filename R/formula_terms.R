@@ -9,7 +9,7 @@ formula_terms.formula <- function(formula) {
   term_labels <- labels(stats::terms(formula))
 
   # this captures any transformation functions (log, lag, as.factor, poly, etc)
-  # test regex at https://regex101.com/r/CS0cSm/1
+  # test regex at https://regex101.com/r/tknU6o/3
 
   regex_expr <- "^([a-zA-Z][a-zA-Z0-9_\\.]*)(?:\\s*(?:[+-:\\*]\\s*[a-zA-Z0-9]*|\\(\\s*([a-zA-Z0-9_\\.]*)(?:\\s*(?:[\\^\\*+-]\\s*[a-zA-Z0-9_\\.]*|,\\s*[a-zA-Z0-9_\\.]*\\s*)*)\\s*\\))){0,1}\\s*$"
 

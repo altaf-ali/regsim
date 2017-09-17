@@ -19,11 +19,15 @@ regsim <- function (object, x, num = 1000, ...) {
   UseMethod("regsim", object)
 }
 
+#----------------------------------------------------------------------
+# extract right hand side of a formula
 formula_rhs <- function(object) {
   f <- stats::formula(object)[[3]]
   eval(substitute(~ f))
 }
 
+#----------------------------------------------------------------------
+# return the central tendency of a vector
 central_tendency <- function(x) {
   if (is.character(x))
     x <- as.factor(x)
@@ -37,12 +41,29 @@ central_tendency <- function(x) {
   return(mean(x))
 }
 
+#----------------------------------------------------------------------
+# return formula terms from a model object, stripping any functions
+formula_terms <- function(object) {
+  term_labels <- attr(stats::terms(stats::formula(object)), "term.labels")
+
+  # this captures any transformation functions (log, lag, as.factor, poly, etc)
+  regex_expr <- "^([a-zA-Z][a-zA-Z0-9_\\.]*)(\\s*\\((\\s*[a-zA-Z0-9_\\.]*)\\s*(,\\s*[a-zA-Z0-9_\\.]+\\s*)*\\)\\s*){0,1}$"
+  regex_matches <- regmatches(term_labels, regexec(regex_expr, term_labels))
+
+  regex_matches <- lapply(regex_matches, trimws)                    # trim whitespace
+  regex_matches <- lapply(regex_matches, setdiff, '')               # remove empty strings
+  regex_matches <- regex_matches[lapply(regex_matches, length) > 0] # remove 0-length vectors
+  return(sapply(regex_matches, tail, n=1))
+}
+
+#----------------------------------------------------------------------
+# common regsim function called by regsim.lm and regsim.glm
 regsim_common <- function(object, x, num = 1000, link = NULL) {
   formula_rhs_terms <- attr(stats::terms(stats::formula(object)), "term.labels")
-  
+
   # check explanatory variables given to us
   unknown_vars <- setdiff(names(x), formula_rhs_terms)
-  
+
   # poly option
   a.poly <- grepl("poly", formula_rhs_terms)
   if (length(a.poly)) a.poly <- which(a.poly)

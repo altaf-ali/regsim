@@ -25,5 +25,5 @@ regsim.glm <- function(object, x, num = 1000, link = NULL, ...) {
 
 #----------------------------------------------------------------------
 formula_terms.glm <- function(object) {
-  return(formula_terms_common(stats::formula(object)))
+  return(formula_terms(stats::formula(object)))
 }

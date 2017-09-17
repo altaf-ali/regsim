@@ -20,6 +20,6 @@ regsim.lm <- function(object, x, num = 1000, ...) {
 
 #----------------------------------------------------------------------
 formula_terms.lm <- function(object) {
-  return(formula_terms_common(stats::formula(object)))
+  return(formula_terms(stats::formula(object)))
 }
 

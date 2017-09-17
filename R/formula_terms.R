@@ -4,13 +4,8 @@ formula_terms <- function (object) {
 }
 
 #----------------------------------------------------------------------
-formula_terms.formula <- function(formula) {
-  return(formula_terms_common(formula))
-}
-
-#----------------------------------------------------------------------
 # return formula terms from a model object, stripping any functions
-formula_terms_common <- function(formula) {
+formula_terms.formula <- function(formula) {
   term_labels <- labels(stats::terms(formula))
 
   # this captures any transformation functions (log, lag, as.factor, poly, etc)

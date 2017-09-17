@@ -47,7 +47,7 @@ formula_terms <- function(object) {
   term_labels <- attr(stats::terms(stats::formula(object)), "term.labels")
 
   # this captures any transformation functions (log, lag, as.factor, poly, etc)
-  regex_expr <- "^([a-zA-Z][a-zA-Z0-9_\\.]*)(\\s*\\((\\s*[a-zA-Z0-9_\\.]*)\\s*(,\\s*[a-zA-Z0-9_\\.]+\\s*)*\\)\\s*){0,1}$"
+  regex_expr <- "^([a-zA-Z][a-zA-Z0-9_\\.]*)(?:\\s*\\(\\s*([a-zA-Z0-9_\\.]*\\s*)(?:,\\s*[a-zA-Z0-9_\\.]*\\s*)*\\)){0,1}\\s*$"
   regex_matches <- regmatches(term_labels, regexec(regex_expr, term_labels))
 
   regex_matches <- lapply(regex_matches, trimws)                    # trim whitespace
@@ -59,7 +59,7 @@ formula_terms <- function(object) {
 #----------------------------------------------------------------------
 # common regsim function called by regsim.lm and regsim.glm
 regsim_common <- function(object, x, num = 1000, link = NULL) {
-  formula_rhs_terms <- attr(stats::terms(stats::formula(object)), "term.labels")
+  formula_rhs_terms <- formula_terms(object)
 
   # check explanatory variables given to us
   unknown_vars <- setdiff(names(x), formula_rhs_terms)

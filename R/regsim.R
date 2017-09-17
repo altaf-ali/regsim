@@ -20,13 +20,6 @@ regsim <- function (object, x, num = 1000, ...) {
 }
 
 #----------------------------------------------------------------------
-# extract right hand side of a formula
-formula_rhs <- function(object) {
-  f <- stats::formula(object)[[3]]
-  eval(substitute(~ f))
-}
-
-#----------------------------------------------------------------------
 # return the central tendency of a vector
 central_tendency <- function(x) {
   if (is.character(x))
@@ -39,6 +32,18 @@ central_tendency <- function(x) {
     return(stats::median(x))
 
   return(mean(x))
+}
+
+#----------------------------------------------------------------------
+# extract right hand side of a formula
+formula_rhs <- function(object) {
+  f <- stats::formula(object)[[3]]
+  eval(substitute(~ f))
+}
+
+#----------------------------------------------------------------------
+formula.regsim <- function(object) {
+  return(stats::formula(object$model))
 }
 
 #----------------------------------------------------------------------
@@ -102,10 +107,4 @@ regsim_common <- function(object, x, num = 1000, link = NULL) {
 
   return(return_value)
 }
-
-#----------------------------------------------------------------------
-formula.regsim <- function(object) {
-  return(stats::formula(object$model))
-}
-
 

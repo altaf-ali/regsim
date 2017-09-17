@@ -9,12 +9,15 @@ formula_terms.formula <- function(formula) {
   term_labels <- labels(stats::terms(formula))
 
   # this captures any transformation functions (log, lag, as.factor, poly, etc)
-  regex_expr <- "^([a-zA-Z][a-zA-Z0-9_\\.]*)(?:\\s*\\(\\s*([a-zA-Z0-9_\\.]*\\s*)(?:,\\s*[a-zA-Z0-9_\\.]*\\s*)*\\)){0,1}\\s*$"
+  # test regex at https://regex101.com/r/CS0cSm/1
+
+  regex_expr <- "^([a-zA-Z][a-zA-Z0-9_\\.]*)(?:\\s*(?:[+-:\\*]\\s*[a-zA-Z0-9]*|\\(\\s*([a-zA-Z0-9_\\.]*)(?:\\s*(?:[\\^\\*+-]\\s*[a-zA-Z0-9_\\.]*|,\\s*[a-zA-Z0-9_\\.]*\\s*)*)\\s*\\))){0,1}\\s*$"
+
   regex_matches <- regmatches(term_labels, regexec(regex_expr, term_labels))
 
   regex_matches <- lapply(regex_matches, trimws)                    # trim whitespace
   regex_matches <- lapply(regex_matches, setdiff, '')               # remove empty strings
   regex_matches <- regex_matches[lapply(regex_matches, length) > 0] # remove 0-length vectors
-  return(sapply(regex_matches, utils::tail, n=1))
+  return(sapply(regex_matches, utils::tail, n=1))  # we only care about the last captured group
 }
 

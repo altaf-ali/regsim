@@ -103,3 +103,9 @@ regsim_common <- function(object, x, num = 1000, link = NULL) {
   return(return_value)
 }
 
+#----------------------------------------------------------------------
+formula.regsim <- function(object) {
+  return(stats::formula(object$model))
+}
+
+

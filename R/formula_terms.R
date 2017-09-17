@@ -1,11 +1,11 @@
 #----------------------------------------------------------------------
-formula.regsim <- function(object) {
-  formula(object$model)
+formula_terms <- function (object) {
+  UseMethod("formula_terms", object)
 }
 
 #----------------------------------------------------------------------
-formula_terms <- function (object) {
-  UseMethod("formula_terms", object)
+formula_terms.formula <- function(formula) {
+  return(formula_terms_common(formula))
 }
 
 #----------------------------------------------------------------------
@@ -20,20 +20,6 @@ formula_terms_common <- function(formula) {
   regex_matches <- lapply(regex_matches, trimws)                    # trim whitespace
   regex_matches <- lapply(regex_matches, setdiff, '')               # remove empty strings
   regex_matches <- regex_matches[lapply(regex_matches, length) > 0] # remove 0-length vectors
-  return(sapply(regex_matches, tail, n=1))
+  return(sapply(regex_matches, utils::tail, n=1))
 }
 
-#----------------------------------------------------------------------
-formula_terms.formula <- function(formula) {
-  formula_terms_common(formula)
-}
-
-#----------------------------------------------------------------------
-formula_terms.lm <- function(object) {
-  formula_terms_common(formula(object))
-}
-
-#----------------------------------------------------------------------
-formula_terms.glm <- function(object) {
-  formula_terms_common(formula(object))
-}

@@ -17,3 +17,9 @@
 regsim.lm <- function(object, x, num = 1000, ...) {
   return(regsim_common(object, x, num, ...))
 }
+
+#----------------------------------------------------------------------
+formula_terms.lm <- function(object) {
+  return(formula_terms_common(stats::formula(object)))
+}
+

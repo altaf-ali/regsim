@@ -18,6 +18,7 @@ Imports:
   MASS, 
   stats, 
   graphics,
+  stringr,
   RColorBrewer
 Suggests: 
   foreign,

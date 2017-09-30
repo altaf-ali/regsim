@@ -18,9 +18,9 @@ plot.regsim <- function(x, formula = NULL, ...) {
   regsim_summary <- summary(x, detail = FALSE)
 
   if (is.null(formula))
-    formula <- formula(x$model)
+    formula <- formula(x)
 
-  vars <- labels(stats::terms(formula))
+  vars <- formula_terms(formula)
   unknown_vars <- setdiff(vars, names(regsim_summary))
 
   if (length(unknown_vars))

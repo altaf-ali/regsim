@@ -20,5 +20,10 @@ regsim.glm <- function(object, x, num = 1000, link = NULL, ...) {
   if (is.null(link))
     link <- stats::family(object)$linkinv
 
-  regsim_common(object, x, num, link)
+  return(regsim_common(object, x, num, link))
+}
+
+#----------------------------------------------------------------------
+formula_terms.glm <- function(object) {
+  return(formula_terms(stats::formula(object)))
 }

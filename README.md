@@ -17,6 +17,12 @@ You can install regsim from github with:
 devtools::install_github("altaf-ali/regsim")
 ```
 
+You can also install the latest development version from:
+
+``` r
+devtools::install_github("altaf-ali/regsim@dev")
+```
+
 Example
 -------
 

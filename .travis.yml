@@ -10,7 +10,7 @@ r_github_packages:
 - hadley/pkgdown
 
 after_success:
-- Rscript -e 'pkgdown:::build_site_rstudio()'
+- Rscript -e 'pkgdown:::build_site()'
 
 deploy:
   provider: pages

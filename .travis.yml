@@ -6,13 +6,10 @@ env:
   global:
     secure: Jz8t1EhJjg5NT01/Yjv3PBehWDbC6BRmpYt22s41yc1a6aCkqUwBISyWUjHO8wV8/0JcmrVTBmJ7RPBC641lBMo7+ClQMULbQsxifUDZfRDkTkDqe56Ry6fO2MpkgQx7/zjcieISNC/ozOVYVKA7c/OCpFTEnqnRw+7m4VGvgH6E1IirAnRu7WUtM9VrvAYPGywNpzxh1tk4yarh02+s9lumIAHLwLF5xPYzMXtSr8F6Oe+re5fuptJiuWwKeUZQS7/tZEUtBhpRwAkQK+S/TEGLN+ugd36kRdZ34GL2RQQIIVAQEVac/AokdPX4GkR2FB6rrhiW41qd3WPcZRdXfSt+fjxZW+RXTKqJlRwIYSr/Vct9DE0g1VsmjF/c/N/Wj5Doelp3A52Ip7XADSHeFtJSTU2zDEBXfXNIsoXgLrZTeLPacTNE8FT3lWs4TAmkNirvd6PG63vE17CzEritY6slK5nCSgfwOJDmGWdHTswkNBqOZ4tw9lB0UTLiX8Li04XwiutfLv8DKL6vWsdnunGOzVb8G9o3LEfIZ2i8cyKK5Ia4iyl4OcFsVhc9PJ1ncVP2EzaRx0DZcboU/x4A125cK2ExKyJ7vxJ4gXzlZYK0XKfOsny78XelM3kxl1VdAjFdhPm/DBQvhk+RnXTuOCq2rzco4+BnQUYZ1k5KXdc=
 
-r_github_packages:
-- hadley/pkgdown
-
 script:
 - R CMD build .
-- R CMD check ${PKG_TARBALL} --as-cran --no-manual
-- R CMD INSTALL ${PKG_TARBALL}
+- R CMD check regsim_*.tar.gz --as-cran --no-manual
+- R CMD INSTALL regsim_*.tar.gz
 - Rscript -e "pkgdown::build_site(path = '_site')"
 
 deploy:

@@ -21,12 +21,14 @@ plot.regsim <- function(x, formula = NULL, ...) {
     formula <- formula(x)
 
   vars <- formula_terms(formula)
+
   unknown_vars <- setdiff(vars, names(regsim_summary))
 
   if (length(unknown_vars))
     stop(paste(paste(unknown_vars, collapse = ", "), "not in the model"))
 
   xvar <- vars[1]
+  yvar <- all.vars(stats::terms(formula))[1]
 
   if (length(vars) > 1) {
     zvar <- vars[2]
@@ -49,7 +51,7 @@ plot.regsim <- function(x, formula = NULL, ...) {
     xlim = range(plot_data$x),
     ylim = c(min(plot_data$y_min), max(plot_data$y_max)),
     xlab = xvar,
-    ylab = "Expected Value"
+    ylab = yvar
   )
 
   # capture all ... args

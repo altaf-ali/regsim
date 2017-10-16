@@ -10,6 +10,7 @@ r_github_packages:
 - hadley/pkgdown
 
 after_success:
+- R CMD install *tar.gz
 - Rscript -e 'pkgdown:::build_site()'
 
 deploy:

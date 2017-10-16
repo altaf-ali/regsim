@@ -10,8 +10,8 @@ r_github_packages:
 - hadley/pkgdown
 
 script:
-- R CMD BUILD
-- R CMD CHECK *tar.gz
+- R CMD build
+- R CMD check *tar.gz
 - R CMD INSTALL *tar.gz
 - Rscript -e 'pkgdown:::build_site()'
 

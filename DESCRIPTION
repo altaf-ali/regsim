@@ -24,7 +24,8 @@ Suggests:
   foreign,
   testthat,
   knitr,
-  rmarkdown
+  rmarkdown,
+  pkgdown
 Remotes: 
   hadley/pkgdown
-  
+

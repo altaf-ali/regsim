@@ -11,16 +11,16 @@ r_github_packages:
 
 script:
 - R CMD build .
-- R CMD check *.tar.gz
-- R CMD INSTALL *.tar.gz
-- Rscript -e 'pkgdown:::build_site()'
+- R CMD check ${PKG_TARBALL} --as-cran --no-manual
+- R CMD INSTALL ${PKG_TARBALL}
+- Rscript -e "pkgdown::build_site(path = '_site')"
 
 deploy:
   provider: pages
   skip_cleanup: true
   on:
     branch: master
-  local_dir: docs
+  local_dir: _site
   github_token: $GITHUB_TOKEN
 
 notifications:

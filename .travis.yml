@@ -9,8 +9,10 @@ env:
 r_github_packages:
 - hadley/pkgdown
 
-after_success:
-- R CMD install *tar.gz
+script:
+- R CMD BUILD
+- R CMD CHECK *tar.gz
+- R CMD INSTALL *tar.gz
 - Rscript -e 'pkgdown:::build_site()'
 
 deploy:

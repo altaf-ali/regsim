@@ -15,14 +15,14 @@ script:
 - R CMD build .
 - R CMD check ${PKG_TARBALL} --as-cran --no-manual
 - R CMD INSTALL ${PKG_TARBALL}
-- Rscript -e "pkgdown::build_site(path = '_site')"
+- Rscript -e "pkgdown::build_site()"
 
 deploy:
   provider: pages
   skip_cleanup: true
   on:
     branch: master
-  local_dir: _site
+  local_dir: docs
   github_token: $GITHUB_TOKEN
 
 notifications:
